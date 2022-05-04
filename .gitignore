@@ -5,17 +5,11 @@ pom.xml.releaseBackup
 pom.xml.versionsBackup
 release.properties
 
-# Eclipse
-.project
-.classpath
-.settings/
-bin/
-
-# IntelliJ
+### IntelliJ IDEA ###
 .idea
-*.ipr
-*.iml
 *.iws
+*.iml
+*.ipr
 
 # NetBeans
 nb-configuration.xml
@@ -37,3 +31,38 @@ nb-configuration.xml
 
 # Local environment
 .env
+
+### GERAL ###
+*
+!.gitignore
+!.gitattributes
+!README.md
+!src
+!src/**/*
+!pom.xml
+
+HELP.md
+!.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**
+!**/src/test/**
+
+### STS - Eclipse ###
+.project
+.classpath
+.settings/
+bin/
+.apt_generated
+.settings
+.springBeans
+.sts4-cache
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+build/
+
+### VS Code ###
+.vscode/
