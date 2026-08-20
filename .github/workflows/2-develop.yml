@@ -1,16 +1,16 @@
 name: "2 - [DEV] Build & Deploy"
 
 on:
-#  pull_request:
-#    types: closed
-#    branches:
-#      - develop
+  pull_request:
+    types: closed
+    branches:
+      - develop
   push:
     branches:
       - develop
-  workflow_dispatch:
-  schedule:
-    - cron: '0 6 * * 0' # weekly on Sundays at 06:00 UTC (change as needed)
+#  workflow_dispatch:
+#  schedule:
+#    - cron: '0 6 * * 0' # weekly on Sundays at 06:00 UTC (change as needed)
 
 permissions:
   contents: write
@@ -42,47 +42,47 @@ jobs:
 
       - name: Build and run tests
         run: mvn -B clean test
-  open-pr:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Create PR if none exists
-        uses: actions/github-script@v6
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          script: |
-            const source = 'develop';         // branch to open from
-            const target = 'main';            // branch to open into — change if desired
-            const title = `Automatic PR: ${source} → ${target}`;
-            const body = `This PR was created automatically.`;
-
-            try {
-              // Check for existing open PR from source -> target
-              const { data: existing } = await github.rest.pulls.list({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                state: 'open',
-                head: `${context.repo.owner}:${source}`,
-                base: target,
-                per_page: 100,
-              });
-
-              if (existing.length > 0) {
-                core.info(`An open PR already exists (#${existing[0].number}): ${existing[0].html_url}`);
-                return;
-              }
-
-              // Create a new PR
-              const { data: pr } = await github.rest.pulls.create({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                title,
-                head: source,
-                base: target,
-                body,
-                maintainer_can_modify: true,
-              });
-
-              core.info(`Created PR #${pr.number}: ${pr.html_url}`);
-            } catch (error) {
-              core.setFailed(error.message);
-            }
+#  open-pr:
+#    runs-on: ubuntu-latest
+#    steps:
+#      - name: Create PR if none exists
+#        uses: actions/github-script@v6
+#        with:
+#          github-token: ${{ secrets.GITHUB_TOKEN }}
+#          script: |
+#            const source = 'develop';         // branch to open from
+#            const target = 'main';            // branch to open into — change if desired
+#            const title = `Automatic PR: ${source} → ${target}`;
+#            const body = `This PR was created automatically.`;
+#
+#            try {
+#              // Check for existing open PR from source -> target
+#              const { data: existing } = await github.rest.pulls.list({
+#                owner: context.repo.owner,
+#                repo: context.repo.repo,
+#                state: 'open',
+#                head: `${context.repo.owner}:${source}`,
+#                base: target,
+#                per_page: 100,
+#              });
+#
+#              if (existing.length > 0) {
+#                core.info(`An open PR already exists (#${existing[0].number}): ${existing[0].html_url}`);
+#                return;
+#              }
+#
+#              // Create a new PR
+#              const { data: pr } = await github.rest.pulls.create({
+#                owner: context.repo.owner,
+#                repo: context.repo.repo,
+#                title,
+#                head: source,
+#                base: target,
+#                body,
+#                maintainer_can_modify: true,
+#              });
+#
+#              core.info(`Created PR #${pr.number}: ${pr.html_url}`);
+#            } catch (error) {
+#              core.setFailed(error.message);
+#            }
