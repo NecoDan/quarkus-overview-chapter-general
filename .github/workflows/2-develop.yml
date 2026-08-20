@@ -1,10 +1,10 @@
 name: "2 - [DEV] Build & Deploy"
 
 on:
-  pull_request:
-    types: closed
-    branches:
-      - develop
+#  pull_request:
+#    types: closed
+#    branches:
+#      - develop
   push:
     branches:
       - develop
@@ -12,7 +12,36 @@ on:
   schedule:
     - cron: '0 6 * * 0' # weekly on Sundays at 06:00 UTC (change as needed)
 
+permissions:
+  contents: write
+  pull-requests: write
+
 jobs:
+  build:
+    name: Build and Test
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Java 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+
+      - name: Cache Maven dependencies
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-maven-
+
+      - name: Build and run tests
+        run: mvn -B clean test
   open-pr:
     runs-on: ubuntu-latest
     steps:
@@ -24,7 +53,7 @@ jobs:
             const source = 'develop';         // branch to open from
             const target = 'main';            // branch to open into — change if desired
             const title = `Automatic PR: ${source} → ${target}`;
-            const body = `This pull request was created automatically by the workflow \`.github/workflows/auto-open-pr.yml\`.`;
+            const body = `This PR was created automatically.`;
 
             try {
               // Check for existing open PR from source -> target
@@ -57,28 +86,3 @@ jobs:
             } catch (error) {
               core.setFailed(error.message);
             }
-  build:
-    name: Build and Test
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Set up Java 21
-        uses: actions/setup-java@v4
-        with:
-          distribution: 'temurin'
-          java-version: '21'
-
-      - name: Cache Maven dependencies
-        uses: actions/cache@v4
-        with:
-          path: |
-            ~/.m2/repository
-          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
-          restore-keys: |
-            ${{ runner.os }}-maven-
-
-      - name: Build and run tests
-        run: mvn -B clean test
