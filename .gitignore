@@ -1,39 +1,8 @@
-#Maven
-target/
-pom.xml.tag
-pom.xml.releaseBackup
-pom.xml.versionsBackup
-release.properties
-
-### IntelliJ IDEA ###
-.idea
-*.iws
-*.iml
-*.ipr
-
-# NetBeans
-nb-configuration.xml
-
-# Visual Studio Code
-.vscode
-.factorypath
-
-# OSX
+# --- Sistemas Operacionais ---
 .DS_Store
-
-# Vim
-*.swp
-*.swo
-
-# patch
-*.orig
-*.rej
-
-# Local environment
-.env
+Thumbs.db
 
 ### GERAL ###
-*
 !.gitignore
 !.gitattributes
 !README.md
@@ -41,17 +10,34 @@ nb-configuration.xml
 !src/**/*
 !pom.xml
 
+# --- Maven ---
 HELP.md
-!.mvn/wrapper/maven-wrapper.jar
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+dependency-reduced-pom.xml
+buildNumber.properties
 !**/src/main/**
 !**/src/test/**
+.mvn/timing.properties
+.mvn/wrapper/maven-wrapper.jar
+.mvn/wrapper/MavenWrapperDownloader.java
+.mvn/wrapper/maven-wrapper.properties
+.mvnw/*
+.mvn/*
+mvnw*
+*mvnw
+mvnw
+mvnw.cmd
 
-### STS - Eclipse ###
-.project
-.classpath
-.settings/
-bin/
+### STS ###
 .apt_generated
+.classpath
+.factorypath
+.project
 .settings
 .springBeans
 .sts4-cache
@@ -66,3 +52,16 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### IntelliJ IDEA ###
+#--- JAVA --#
+.idea
+*.iws
+*.iml
+*.ipr
+*.class
+*.log
+*.ctxt
+.tmp
+.settings/
+.idea/
