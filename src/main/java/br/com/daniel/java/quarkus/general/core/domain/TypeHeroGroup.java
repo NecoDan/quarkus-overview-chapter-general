@@ -34,6 +34,14 @@ public enum TypeHeroGroup {
                 .orElseThrow(() -> new IllegalArgumentException("Não foi possível gerar um Tipo Grupo Herois aleatório."));
     }
 
+    public boolean isAvengers() {
+        return this == MARVEL_VINGADORES;
+    }
+
+    public boolean isJusticeLeague() {
+        return this == DC_LIGA_JUSTICA;
+    }
+
     private static Stream<TypeHeroGroup> getStreamValues() {
         return Stream.of(TypeHeroGroup.values());
     }

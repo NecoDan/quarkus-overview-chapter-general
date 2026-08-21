@@ -1,8 +1,7 @@
 package br.com.daniel.java.quarkus.general.adapter.in.http.controllers.uol_challenge;
 
-import br.com.daniel.java.quarkus.general.core.usecase.itau_challenge.output.TransactionItauOutput;
 import br.com.daniel.java.quarkus.general.core.usecase.uol_challenge.input.GamePlayerInput;
-import br.com.daniel.java.quarkus.general.core.usecase.uol_challenge.GamePlayerUolUseCase;
+import br.com.daniel.java.quarkus.general.core.usecase.uol_challenge.GamePlayerUolCreateUseCase;
 import br.com.daniel.java.quarkus.general.core.usecase.uol_challenge.output.GamePlayerOutput;
 import br.com.daniel.java.quarkus.general.utils.logs.MdcUtils;
 import jakarta.enterprise.context.ApplicationScoped;
@@ -29,7 +28,7 @@ import org.eclipse.microprofile.openapi.annotations.responses.APIResponses;
 public class GamePlayerUolController {
 
     @Inject
-    GamePlayerUolUseCase gamePlayerUolUseCase;
+    GamePlayerUolCreateUseCase gamePlayerUolUseCase;
 
     @POST
     @Path(value = "/v1")

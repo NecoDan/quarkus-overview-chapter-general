@@ -2,6 +2,7 @@ package br.com.daniel.java.quarkus.general.adapter.out.entities.uol_challenge;
 
 import br.com.daniel.java.quarkus.general.config.EncryptoManagerConfig;
 import br.com.daniel.java.quarkus.general.core.domain.GamePlayerUol;
+import br.com.daniel.java.quarkus.general.core.domain.TypeHeroGroup;
 import br.com.daniel.java.quarkus.general.exceptions.ParseEntityFailedException;
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import jakarta.persistence.*;
@@ -11,6 +12,7 @@ import org.apache.commons.beanutils.BeanUtils;
 import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 @Data
 @NoArgsConstructor
@@ -32,10 +34,10 @@ public class GamePlayerUolEntity extends PanacheEntityBase implements Serializab
     @Column(name = "email", nullable = false)
     private String email;
 
-    @Column(name = "telefone", nullable = false)
+    @Column(name = "telefone")
     private String encryptedPhoneNumber;
 
-    @Column(name = "codinome")
+    @Column(name = "codinome", nullable = false)
     private String codeName;
 
     @Column(name = "codigo_grupo", columnDefinition = "int")
@@ -67,6 +69,10 @@ public class GamePlayerUolEntity extends PanacheEntityBase implements Serializab
     public GamePlayerUolEntity(GamePlayerUol entity) {
         try {
             BeanUtils.copyProperties(this, entity);
+
+            if (Objects.nonNull(entity.getGroupCode())) {
+                this.groupCode = entity.getGroupCode().getCodigo();
+            }
         } catch (InvocationTargetException | IllegalAccessException e) {
             throw new ParseEntityFailedException(e);
         }

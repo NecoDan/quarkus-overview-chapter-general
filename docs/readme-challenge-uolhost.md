@@ -32,11 +32,11 @@ https://raw.githubusercontent.com/uolhost/test-backEnd-Java/master/referencias/v
 ### Casos de uso
 
 + Cadastro com sucesso:
-	1. O usuário 'Felipe' cadastra seu nome, e-mail e telefone, e escolhe a lista vingadores.json
+	1. O usuário 'Felipe' cadastra seu nome, e-mail e telefone, e escolhe a lista vingadores.json ✅
 	2. O sistema recebe o cadastro e verifica se há codinomes disponíveis na lista vingadores.json
 	3. O sistema encontra um codinome livre e o escolhe
-	4. O sistema persiste nome, e-mail, telefone, codinome e arquivo de referência em um banco de dados em memória ou em um arquivo
-	5. O sistema informa que o usuário foi cadastrado corretamente e mostra uma imagem de sucesso
+	4. O sistema persiste nome, e-mail, telefone, codinome e arquivo de referência em um banco de dados em memória ou em um arquivo ✅
+	5. O sistema informa que o usuário foi cadastrado corretamente e mostra uma imagem de sucesso ✅
 	
 + Lista escolhida não tem codinomes disponíveis:
 	1. O usuário 'João' cadastra seu nome, e-mail e telefone, e escolhe a lista liga_da_justica.xml

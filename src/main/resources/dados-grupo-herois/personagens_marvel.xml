@@ -1,0 +1,63 @@
+<?xml version='1.0' encoding='utf-8'?>
+<marvel_personagens>
+    <personagem>
+        <codinome>Homem de Ferro</codinome>
+    </personagem>
+    <personagem>
+        <codinome>Capitão América</codinome>
+    </personagem>
+    <personagem>
+        <codinome>Thor</codinome>
+    </personagem>
+    <personagem>
+        <codinome>Hulk</codinome>
+    </personagem>
+    <personagem>
+        <codinome>Viúva Negra</codinome>
+    </personagem>
+    <personagem>
+        <codinome>Gavião Arqueiro</codinome>
+    </personagem>
+    <personagem>
+        <codinome>Homem-Aranha</codinome>
+    </personagem>
+    <personagem>
+        <codinome>Pantera Negra</codinome>
+    </personagem>
+    <personagem>
+        <codinome>Doutor Estranho</codinome>
+    </personagem>
+    <personagem>
+        <codinome>Wolverine</codinome>
+    </personagem>
+    <personagem>
+        <codinome>Jean Grey</codinome>
+    </personagem>
+    <personagem>
+        <codinome>Ciclope</codinome>
+    </personagem>
+    <personagem>
+        <codinome>Tempestade</codinome>
+    </personagem>
+    <personagem>
+        <codinome>Magneto</codinome>
+    </personagem>
+    <personagem>
+        <codinome>Professor X</codinome>
+    </personagem>
+    <personagem>
+        <codinome>Deadpool</codinome>
+    </personagem>
+    <personagem>
+        <codinome>Capitã Marvel</codinome>
+    </personagem>
+    <personagem>
+        <codinome>Feiticeira Escarlate</codinome>
+    </personagem>
+    <personagem>
+        <codinome>Visão</codinome>
+    </personagem>
+    <personagem>
+        <codinome>Homem-Formiga</codinome>
+    </personagem>
+</marvel_personagens>

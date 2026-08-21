@@ -10,7 +10,7 @@ import jakarta.validation.constraints.NotNull;
 @JsonInclude(value = JsonInclude.Include.NON_NULL)
 public record GamePlayerInput(@NotBlank(message = "O numero documento é obrigatorio") String name,
                               @Email @NotBlank(message = "Email deve ser valido e é obrigatorio") String email,
-                              @NotBlank(message = "Telefone deve ser valido e obrigatorio") String phone,
+                              String phone,
                               @NotNull Integer codeHeroGroup
 ) {
 }

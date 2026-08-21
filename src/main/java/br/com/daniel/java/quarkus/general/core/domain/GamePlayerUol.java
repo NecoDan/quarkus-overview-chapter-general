@@ -6,10 +6,12 @@ import br.com.daniel.java.quarkus.general.core.usecase.uol_challenge.input.GameP
 import br.com.daniel.java.quarkus.general.exceptions.ParseEntityFailedException;
 import lombok.*;
 import org.apache.commons.beanutils.BeanUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 @Data
 @NoArgsConstructor
@@ -42,6 +44,8 @@ public class GamePlayerUol implements Serializable {
         try {
             BeanUtils.copyProperties(this, input);
 
+            this.name = input.name();
+            this.email = input.email();
             this.rawPhoneNumber = input.phone();
             this.groupCode = TypeHeroGroup.of(input.codeHeroGroup());
             this.createdAt = LocalDateTime.now();
@@ -50,5 +54,26 @@ public class GamePlayerUol implements Serializable {
         } catch (InvocationTargetException | IllegalAccessException e) {
             throw new ParseEntityFailedException(e);
         }
+    }
+
+    public boolean isCodenameInValid(){
+        return StringUtils.isEmpty(this.codeName);
+    }
+
+    public boolean isAvengers() {
+        return isGroupCodeValid() && this.groupCode.isAvengers();
+    }
+
+    public boolean isJusticeLeague() {
+        return isGroupCodeValid() && this.groupCode.isJusticeLeague();
+    }
+
+    private boolean isGroupCodeValid() {
+        return Objects.nonNull(this.getGroupCode());
+    }
+
+    public GamePlayerUol addGroupCode(int groupCode) {
+        this.groupCode = TypeHeroGroup.of(groupCode);
+        return this;
     }
 }

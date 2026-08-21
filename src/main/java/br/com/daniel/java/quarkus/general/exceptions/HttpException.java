@@ -13,6 +13,9 @@ public abstract class HttpException extends RuntimeException {
 
     protected String rootCauseMessage;
 
+    protected HttpException() {
+    }
+
     protected HttpException(String message) {
         super(message);
     }
@@ -23,7 +26,13 @@ public abstract class HttpException extends RuntimeException {
         if (Objects.nonNull(rootCause)) this.rootCauseMessage = rootCause.getMessage();
     }
 
-    protected HttpException(){}
+    protected HttpException(String message, Exception e) {
+        super(message, e);
+    }
+
+    protected HttpException(Exception e) {
+        super(e);
+    }
 
     public abstract HttpResponseStatus getHttpStatus();
 }
