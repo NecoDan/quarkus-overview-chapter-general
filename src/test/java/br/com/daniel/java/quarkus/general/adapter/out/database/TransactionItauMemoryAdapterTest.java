@@ -1,5 +1,6 @@
 package br.com.daniel.java.quarkus.general.adapter.out.database;
 
+import br.com.daniel.java.quarkus.general.adapter.out.database.itau_challenge.TransactionItauMemoryAdapter;
 import br.com.daniel.java.quarkus.general.core.domain.TransactionItau;
 import br.com.daniel.java.quarkus.general.exceptions.api.TransactionItauNotFoundException;
 import org.junit.jupiter.api.Test;

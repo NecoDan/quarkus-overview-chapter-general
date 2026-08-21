@@ -1,7 +1,7 @@
-package br.com.daniel.java.quarkus.general.core.usecase;
+package br.com.daniel.java.quarkus.general.core.usecase.itau_challenge;
 
-import br.com.daniel.java.quarkus.general.adapter.out.database.TransactionItauMemoryAdapter;
-import br.com.daniel.java.quarkus.general.core.usecase.output.StatisticsItauOutput;
+import br.com.daniel.java.quarkus.general.adapter.out.database.itau_challenge.TransactionItauMemoryAdapter;
+import br.com.daniel.java.quarkus.general.core.usecase.itau_challenge.output.StatisticsItauOutput;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 import lombok.extern.slf4j.Slf4j;

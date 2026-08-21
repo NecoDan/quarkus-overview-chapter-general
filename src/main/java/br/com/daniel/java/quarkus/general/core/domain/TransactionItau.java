@@ -1,8 +1,8 @@
 package br.com.daniel.java.quarkus.general.core.domain;
 
-import br.com.daniel.java.quarkus.general.adapter.out.entities.TransactionItauEntity;
+import br.com.daniel.java.quarkus.general.adapter.out.entities.itau_challenge.TransactionItauEntity;
 import br.com.daniel.java.quarkus.general.config.EncryptoManagerConfig;
-import br.com.daniel.java.quarkus.general.core.usecase.input.TransactionItauInput;
+import br.com.daniel.java.quarkus.general.core.usecase.itau_challenge.input.TransactionItauInput;
 import br.com.daniel.java.quarkus.general.exceptions.ParseEntityFailedException;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

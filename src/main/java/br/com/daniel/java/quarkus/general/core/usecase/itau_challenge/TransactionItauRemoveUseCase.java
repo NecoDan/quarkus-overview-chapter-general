@@ -1,4 +1,4 @@
-package br.com.daniel.java.quarkus.general.core.usecase;
+package br.com.daniel.java.quarkus.general.core.usecase.itau_challenge;
 
 /**
  * Interface que define os casos de uso relacionados à remoção de transações do Itaú.

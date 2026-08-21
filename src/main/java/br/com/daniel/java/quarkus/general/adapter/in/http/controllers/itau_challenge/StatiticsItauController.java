@@ -1,8 +1,8 @@
 package br.com.daniel.java.quarkus.general.adapter.in.http.controllers.itau_challenge;
 
 
-import br.com.daniel.java.quarkus.general.core.usecase.StatiticsTransactionItauUseCase;
-import br.com.daniel.java.quarkus.general.core.usecase.output.StatisticsItauOutput;
+import br.com.daniel.java.quarkus.general.core.usecase.itau_challenge.StatiticsTransactionItauUseCase;
+import br.com.daniel.java.quarkus.general.core.usecase.itau_challenge.output.StatisticsItauOutput;
 import br.com.daniel.java.quarkus.general.utils.logs.MdcUtils;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;

@@ -1,5 +1,4 @@
 # 📚 Documentação Detalhada de Implementação
-## Repositório: quarkus-overview-chapter-general
 
 ---
 

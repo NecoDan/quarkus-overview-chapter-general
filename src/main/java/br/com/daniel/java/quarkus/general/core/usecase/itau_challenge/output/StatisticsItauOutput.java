@@ -1,4 +1,4 @@
-package br.com.daniel.java.quarkus.general.core.usecase.output;
+package br.com.daniel.java.quarkus.general.core.usecase.itau_challenge.output;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;

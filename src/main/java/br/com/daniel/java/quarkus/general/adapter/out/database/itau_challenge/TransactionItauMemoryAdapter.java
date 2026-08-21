@@ -1,4 +1,4 @@
-package br.com.daniel.java.quarkus.general.adapter.out.database;
+package br.com.daniel.java.quarkus.general.adapter.out.database.itau_challenge;
 
 import br.com.daniel.java.quarkus.general.core.domain.TransactionItau;
 import br.com.daniel.java.quarkus.general.core.port.TransactionItauMemoryPort;

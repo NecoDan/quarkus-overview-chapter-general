@@ -1,10 +1,10 @@
 package br.com.daniel.java.quarkus.general.adapter.in.http.controllers.itau_challenge;
 
-import br.com.daniel.java.quarkus.general.core.usecase.TransactionItauCreateUseCase;
-import br.com.daniel.java.quarkus.general.core.usecase.TransactionItauGetsUseCase;
-import br.com.daniel.java.quarkus.general.core.usecase.TransactionItauRemoveUseCase;
-import br.com.daniel.java.quarkus.general.core.usecase.input.TransactionItauInput;
-import br.com.daniel.java.quarkus.general.core.usecase.output.TransactionItauOutput;
+import br.com.daniel.java.quarkus.general.core.usecase.itau_challenge.TransactionItauCreateUseCase;
+import br.com.daniel.java.quarkus.general.core.usecase.itau_challenge.TransactionItauGetsUseCase;
+import br.com.daniel.java.quarkus.general.core.usecase.itau_challenge.TransactionItauRemoveUseCase;
+import br.com.daniel.java.quarkus.general.core.usecase.itau_challenge.input.TransactionItauInput;
+import br.com.daniel.java.quarkus.general.core.usecase.itau_challenge.output.TransactionItauOutput;
 import br.com.daniel.java.quarkus.general.utils.logs.MdcUtils;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;

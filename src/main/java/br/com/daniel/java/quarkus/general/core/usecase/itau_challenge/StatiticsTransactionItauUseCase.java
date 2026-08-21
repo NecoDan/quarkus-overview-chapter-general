@@ -1,6 +1,6 @@
-package br.com.daniel.java.quarkus.general.core.usecase;
+package br.com.daniel.java.quarkus.general.core.usecase.itau_challenge;
 
-import br.com.daniel.java.quarkus.general.core.usecase.output.StatisticsItauOutput;
+import br.com.daniel.java.quarkus.general.core.usecase.itau_challenge.output.StatisticsItauOutput;
 
 /**
  * Interface responsável por definir o contrato para o cálculo de estatísticas

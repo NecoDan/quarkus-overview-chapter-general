@@ -1,4 +1,4 @@
-package br.com.daniel.java.quarkus.general.core.usecase;
+package br.com.daniel.java.quarkus.general.core.usecase.itau_challenge;
 
 import br.com.daniel.java.quarkus.general.core.port.TransactionItauMemoryPort;
 import jakarta.inject.Inject;

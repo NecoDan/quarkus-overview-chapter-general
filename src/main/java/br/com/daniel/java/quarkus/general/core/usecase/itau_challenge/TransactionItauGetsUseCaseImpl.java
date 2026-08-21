@@ -1,8 +1,8 @@
-package br.com.daniel.java.quarkus.general.core.usecase;
+package br.com.daniel.java.quarkus.general.core.usecase.itau_challenge;
 
 import br.com.daniel.java.quarkus.general.core.port.TransactionItauMemoryPort;
 import br.com.daniel.java.quarkus.general.core.port.TransactionItauPort;
-import br.com.daniel.java.quarkus.general.core.usecase.output.TransactionItauOutput;
+import br.com.daniel.java.quarkus.general.core.usecase.itau_challenge.output.TransactionItauOutput;
 import br.com.daniel.java.quarkus.general.exceptions.api.TransactionItauNotFoundException;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;

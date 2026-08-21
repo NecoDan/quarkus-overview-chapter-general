@@ -1,7 +1,7 @@
 package br.com.daniel.java.quarkus.general.util.factory;
 
 import br.com.daniel.java.quarkus.general.core.domain.TransactionItau;
-import br.com.daniel.java.quarkus.general.core.usecase.input.TransactionItauInput;
+import br.com.daniel.java.quarkus.general.core.usecase.itau_challenge.input.TransactionItauInput;
 import br.com.daniel.java.quarkus.general.utils.RandomUtils;
 
 import java.math.BigDecimal;

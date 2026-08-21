@@ -2,8 +2,8 @@ package br.com.daniel.java.quarkus.general.core;
 
 import br.com.daniel.java.quarkus.general.core.port.TransactionItauMemoryPort;
 import br.com.daniel.java.quarkus.general.core.port.TransactionItauPort;
-import br.com.daniel.java.quarkus.general.core.usecase.TransactionItauCreateUseCaseImpl;
-import br.com.daniel.java.quarkus.general.core.usecase.input.TransactionItauInput;
+import br.com.daniel.java.quarkus.general.core.usecase.itau_challenge.TransactionItauCreateUseCaseImpl;
+import br.com.daniel.java.quarkus.general.core.usecase.itau_challenge.input.TransactionItauInput;
 import br.com.daniel.java.quarkus.general.exceptions.EntityCreateFailedException;
 import br.com.daniel.java.quarkus.general.util.factory.ItauTransactionFactory;
 import io.quarkus.test.junit.QuarkusTest;

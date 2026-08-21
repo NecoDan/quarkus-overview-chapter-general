@@ -1,4 +1,4 @@
-package br.com.daniel.java.quarkus.general.adapter.out.entities;
+package br.com.daniel.java.quarkus.general.adapter.out.entities.itau_challenge;
 
 import br.com.daniel.java.quarkus.general.config.EncryptoManagerConfig;
 import br.com.daniel.java.quarkus.general.core.domain.TransactionItau;
@@ -73,13 +73,6 @@ public class TransactionItauEntity extends PanacheEntityBase implements Serializ
     public TransactionItauEntity(TransactionItau transactionItau) {
         try {
             BeanUtils.copyProperties(this, transactionItau);
-
-//            this.transactionId = transactionItau.getTransactionId();
-//            this.createdAt = transactionItau.getCreatedAt();
-//            this.rawUserDocument = transactionItau.getRawUserDocument();
-//            this.rawCreditCardToken = transactionItau.getRawCreditCardToken();
-//            this.amount = Objects.isNull(transactionItau.getAmount()) ? BigDecimal.ZERO : transactionItau.getAmount();
-//            this.transactionValue = this.amount.longValue();
         } catch (InvocationTargetException | IllegalAccessException e) {
             throw new ParseEntityFailedException(e);
         }

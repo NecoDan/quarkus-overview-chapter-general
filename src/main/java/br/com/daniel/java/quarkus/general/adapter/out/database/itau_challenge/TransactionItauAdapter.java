@@ -1,7 +1,7 @@
-package br.com.daniel.java.quarkus.general.adapter.out.database;
+package br.com.daniel.java.quarkus.general.adapter.out.database.itau_challenge;
 
-import br.com.daniel.java.quarkus.general.adapter.out.database.repository.TransactionItauRepository;
-import br.com.daniel.java.quarkus.general.adapter.out.entities.TransactionItauEntity;
+import br.com.daniel.java.quarkus.general.adapter.out.database.itau_challenge.repository.TransactionItauRepository;
+import br.com.daniel.java.quarkus.general.adapter.out.entities.itau_challenge.TransactionItauEntity;
 import br.com.daniel.java.quarkus.general.core.domain.TransactionItau;
 import br.com.daniel.java.quarkus.general.core.port.TransactionItauPort;
 import jakarta.enterprise.context.ApplicationScoped;
