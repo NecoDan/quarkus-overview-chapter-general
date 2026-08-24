@@ -12,7 +12,6 @@ import org.apache.commons.beanutils.BeanUtils;
 import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
 import java.time.LocalDateTime;
-import java.util.Objects;
 
 @Data
 @NoArgsConstructor
@@ -41,7 +40,7 @@ public class GamePlayerUolEntity extends PanacheEntityBase implements Serializab
     private String codeName;
 
     @Column(name = "codigo_grupo", columnDefinition = "int")
-    private Integer groupCode;
+    private Integer groupCodeInt;
 
     @Column(name = "dt_criacao", columnDefinition = "datetime")
     private LocalDateTime createdAt;
@@ -56,23 +55,24 @@ public class GamePlayerUolEntity extends PanacheEntityBase implements Serializab
     @Transient
     private String rawPhoneNumber;
 
+    @Transient
+    private TypeHeroGroup groupCode;
+
     @PrePersist
     public void prePersist() {
         this.encryptedPhoneNumber = EncryptoManagerConfig.encrypt(rawPhoneNumber);
+        this.groupCodeInt = this.groupCode.getCode();
     }
 
     @PostLoad
     public void postLoad() {
         this.rawPhoneNumber = EncryptoManagerConfig.decrypt(encryptedPhoneNumber);
+        this.groupCode = TypeHeroGroup.of(this.groupCodeInt);
     }
 
     public GamePlayerUolEntity(GamePlayerUol entity) {
         try {
             BeanUtils.copyProperties(this, entity);
-
-            if (Objects.nonNull(entity.getGroupCode())) {
-                this.groupCode = entity.getGroupCode().getCodigo();
-            }
         } catch (InvocationTargetException | IllegalAccessException e) {
             throw new ParseEntityFailedException(e);
         }

@@ -22,7 +22,7 @@ public class GamePlayerUolAdapter implements GamePlayerUolPort {
 
     @Override
     public List<String> findListExistingCodenames(TypeHeroGroup typeHeroGroup) {
-        log.info("Recuperando a lista de codinomes salvo(s)/utilizado(s) ");
+        log.info("UOL_CHALLENGE - Recuperando a lista de codinomes salvo(s)/utilizado(s)");
 
         return repository.findByGroupCode(typeHeroGroup)
                 .stream()
@@ -31,10 +31,19 @@ public class GamePlayerUolAdapter implements GamePlayerUolPort {
                 .toList();
     }
 
+    public List<GamePlayerUol> findAll() {
+        log.info("UOL_CHALLENGE - Recuperando a lista de todos os jogadores salvo(s)");
+
+        return repository.findAll()
+                .stream()
+                .map(GamePlayerUol::new)
+                .toList();
+    }
+
     @Transactional
     @Override
     public void salvarGamePlayer(GamePlayerUol gamePlayerUol) {
-        log.info("Salvando novo jogador na base de dados. Dados: {}", gamePlayerUol);
+        log.info("UOL_CHALLENGE - Salvando novo jogador na base de dados. Dados: {}", gamePlayerUol);
         repository.persistAndFlush(new GamePlayerUolEntity(gamePlayerUol));
     }
 }

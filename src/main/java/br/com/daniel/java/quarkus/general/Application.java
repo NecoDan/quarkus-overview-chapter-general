@@ -22,7 +22,6 @@ public class Application implements QuarkusApplication {
         // 3. Se for uma aplicação web/REST, você pode aguardar os comandos de parada (bloqueia a thread principal)
         // Se for uma aplicação de linha de comando (CLI), você pode apenas retornar 0 para encerrar.
         Quarkus.waitForExit();
-
         return 0; // Código de saída (exit code)
     }
 }

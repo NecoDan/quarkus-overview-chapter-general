@@ -8,21 +8,21 @@ import java.util.stream.Stream;
 @Getter
 public enum TypeHeroGroup {
 
-    MARVEL_VINGADORES(1, "Os Vingadores"),
+    MARVEL_VINGADORES(1, "Vingadores"),
     DC_LIGA_JUSTICA(2, "Liga da Justiça");
 
-    private final int codigo;
-    private final String nome;
+    private final int code;
+    private final String description;
     private static final Random RANDOM = new Random();
 
-    TypeHeroGroup(int codigo, String nome) {
-        this.codigo = codigo;
-        this.nome = nome;
+    TypeHeroGroup(int codigo, String description) {
+        this.code = codigo;
+        this.description = description;
     }
 
-    public static TypeHeroGroup of(int codigo) {
+    public static TypeHeroGroup of(int code) {
         return getStreamValues()
-                .filter(type -> type.getCodigo() == codigo)
+                .filter(type -> type.getCode() == code)
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("Código inválido e/ou inexistente para o Tipo Grupo Herois."));
     }

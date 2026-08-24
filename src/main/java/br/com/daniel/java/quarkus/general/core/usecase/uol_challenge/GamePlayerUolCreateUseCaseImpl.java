@@ -1,16 +1,14 @@
 package br.com.daniel.java.quarkus.general.core.usecase.uol_challenge;
 
-import br.com.daniel.java.quarkus.general.adapter.out.apis.HeroGroupUolApiPort;
+import br.com.daniel.java.quarkus.general.adapter.out.apis.uol_challenge.HeroGroupUolApiAdapter;
 import br.com.daniel.java.quarkus.general.adapter.out.dto.uol_challenge.HeroMarvelOutputDTO;
 import br.com.daniel.java.quarkus.general.core.domain.GamePlayerUol;
 import br.com.daniel.java.quarkus.general.core.port.GamePlayerUolPort;
 import br.com.daniel.java.quarkus.general.core.usecase.uol_challenge.input.GamePlayerInput;
 import br.com.daniel.java.quarkus.general.core.usecase.uol_challenge.output.GamePlayerOutput;
-import br.com.daniel.java.quarkus.general.exceptions.EntityCreateFailedException;
 import br.com.daniel.java.quarkus.general.exceptions.api.GamePlayerUolCreateFailedException;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
-import jakarta.inject.Singleton;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.RandomUtils;
@@ -27,12 +25,12 @@ public class GamePlayerUolCreateUseCaseImpl implements GamePlayerUolCreateUseCas
     GamePlayerUolPort gamePlayerUolPort;
 
     @Inject
-    HeroGroupUolApiPort heroGroupUolApiPort;
+    HeroGroupUolApiAdapter heroGroupUolApiAdapter;
 
     @Override
     public GamePlayerOutput createPlayer(GamePlayerInput input) {
         try {
-            log.info("Inicializando processamento pra criação novo jogador. Payload: {}", input);
+            log.info("UOL_CHALLENGE - Inicializando processamento pra criação novo jogador. Payload: {}", input);
             var gamePlayerUol = new GamePlayerUol(input);
             loadValidateHeroGroupAndSetCodename(gamePlayerUol);
 
@@ -41,10 +39,10 @@ public class GamePlayerUolCreateUseCaseImpl implements GamePlayerUolCreateUseCas
 
             return GamePlayerOutput.from(
                     gamePlayerUol.getCodeName(),
-                    gamePlayerUol.getGroupCode().getNome()
+                    gamePlayerUol.getGroupCode().getDescription()
             );
         } catch (Exception e) {
-            log.error("Falha ao criar um novo jogador. Payload: {}. Erro: {}", input, e.getMessage());
+            log.error("UOL_CHALLENGE - Falha ao criar um novo jogador. Payload: {}. Erro: {}", input, e.getMessage());
             throw new GamePlayerUolCreateFailedException("Falha ao criar um novo jogador. Payload: %s. Erro: %s"
                     .formatted(input, e.getMessage()), e
             );
@@ -55,7 +53,7 @@ public class GamePlayerUolCreateUseCaseImpl implements GamePlayerUolCreateUseCas
                                            GamePlayerUol gamePlayerUol) {
 
         if (gamePlayerUol.isJusticeLeague() && gamePlayerUol.isCodenameInValid()) {
-            log.error("Falha ao criar um novo jogador. Payload: {}. Erro: Codinome não disponiveis para o grupo de herois: {}",
+            log.error("UOL_CHALLENGE - Falha ao criar um novo jogador. Payload: {}. Erro: Codinome não disponiveis para o grupo de herois: {}",
                     input, gamePlayerUol.getGroupCode());
             throw new GamePlayerUolCreateFailedException("Falha ao criar um novo jogador. Erro: " +
                     "Codinome não disponiveis para o grupo de herois: %s".formatted(gamePlayerUol.getGroupCode()));
@@ -101,12 +99,12 @@ public class GamePlayerUolCreateUseCaseImpl implements GamePlayerUolCreateUseCas
     }
 
     private List<String> getCodenameListJusticeLeague() {
-        return heroGroupUolApiPort.getDCSuperHeroGroups()
+        return heroGroupUolApiAdapter.getDCSuperHeroGroups()
                 .getCodinomes();
     }
 
     private List<String> getCodenameListAvengers() {
-        return heroGroupUolApiPort.getMarvelSuperHeroGroups()
+        return heroGroupUolApiAdapter.getMarvelSuperHeroGroups()
                 .vingadores()
                 .stream()
                 .map(HeroMarvelOutputDTO::codinome)

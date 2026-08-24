@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro do jogador UOL</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .card-cadastro {
+            border: 2px solid #000;
+            padding: 25px;
+            width: 350px;
+            background-color: #fff;
+            box-shadow: 4px 4px 0px #000;
+        }
+
+        h2 {
+            font-size: 18px;
+            margin-top: 0;
+            margin-bottom: 20px;
+        }
+
+        .campo {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+
+        .campo label {
+            width: 80px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .campo input[type="text"],
+        .campo input[type="email"],
+        .campo input[type="tel"] {
+            flex: 1;
+            padding: 8px;
+            border: 1px solid #000;
+            border-radius: 4px;
+            outline: none;
+        }
+
+        .grupo-secao {
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+
+        .grupo-secao p {
+            font-weight: bold;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        .radio-opcao {
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        .botoes-container {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+            margin-top: 25px;
+        }
+
+        .botoes-container button {
+            flex: 1;
+            padding: 10px;
+            background-color: #666;
+            color: white;
+            border: 1px solid #000;
+            border-radius: 4px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .botoes-container button:hover {
+            background-color: #555;
+        }
+    </style>
+</head>
+<body>
+
+<div class="card-cadastro">
+    <h2>Cadastro do jogador UOL</h2>
+
+    <form>
+        <div class="campo">
+            <label for="nome">Nome:</label>
+            <input type="text" id="nome" name="nome">
+        </div>
+
+        <div class="campo">
+            <label for="email">E-mail:</label>
+            <input type="email" id="email" name="email">
+        </div>
+
+        <div class="campo">
+            <label for="telefone">Telefone:</label>
+            <input type="tel" id="telefone" name="telefone">
+        </div>
+
+        <div class="grupo-secao">
+            <p>Quero ser do grupo:</p>
+            <div class="radio-opcao">
+                <input type="radio" id="liga" name="grupo" value="Liga da Justiça" checked>
+                <label for="liga" style="font-weight: normal;">Liga da Justiça</label>
+            </div>
+            <div class="radio-opcao">
+                <input type="radio" id="vingadores" name="grupo" value="Os Vingadores">
+                <label for="vingadores" style="font-weight: normal;">Os Vingadores</label>
+            </div>
+        </div>
+
+        <div class="botoes-container">
+            <button type="submit">Cadastrar</button>
+            <button type="button">Listar jogadores</button>
+        </div>
+    </form>
+</div>
+
+</body>
+</html>

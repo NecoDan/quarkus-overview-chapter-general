@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jogadores cadastrados</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        .card-container {
+            border: 2px solid #000;
+            padding: 25px;
+            width: 800px;
+            background-color: #fff;
+            box-shadow: 4px 4px 0px #000;
+        }
+
+        h2 {
+            font-size: 18px;
+            margin-top: 0;
+            margin-bottom: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+            margin-bottom: 25px;
+        }
+
+        th, td {
+            padding: 8px 6px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            font-weight: bold;
+            border-bottom: 2px solid #000;
+        }
+
+        .acoes {
+            text-align: right;
+            white-space: nowrap;
+        }
+
+        .acoes a {
+            color: #000;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .acoes a:hover {
+            text-decoration: underline;
+        }
+
+        .botao-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .btn-novo {
+            padding: 10px 25px;
+            background-color: #666;
+            color: white;
+            border: 1px solid #000;
+            border-radius: 4px;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .btn-novo:hover {
+            background-color: #555;
+        }
+    </style>
+</head>
+<body>
+
+<div class="card-container">
+    <h2>Jogadores cadastrados</h2>
+
+    <table>
+        <thead>
+        <tr>
+            <th>Nome</th>
+            <th>E-mail</th>
+            <th>Telefone</th>
+            <th>Codinome</th>
+            <th>Grupo</th>
+            <th class="acoes"></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>Felipe</td>
+            <td>felipe@uol.com.br</td>
+            <td>(11) 99999-8888</td>
+            <td>Hulk</td>
+            <td>Vingadores</td>
+            <td class="acoes">
+                <a href="#">editar</a> | <a href="#">excluir</a>
+            </td>
+        </tr>
+        <tr>
+            <td>Paulo</td>
+            <td>paulo@uol.com.br</td>
+            <td>(11) 99999-7777</td>
+            <td>Capitão América</td>
+            <td>Vingadores</td>
+            <td class="acoes">
+                <a href="#">editar</a> | <a href="#">excluir</a>
+            </td>
+        </tr>
+        <tr>
+            <td>Leandro</td>
+            <td>paulo@uol.com.br</td>
+            <td>(11) 99889-7777</td>
+            <td>Batman</td>
+            <td>Liga da Justiça</td>
+            <td class="acoes">
+                <a href="#">editar</a> | <a href="#">excluir</a>
+            </td>
+        </tr>
+        <tr>
+            <td>Douglas</td>
+            <td>douglas@uol.com.br</td>
+            <td>(17) 99999-7777</td>
+            <td>Pantera Negra</td>
+            <td>Vingadores</td>
+            <td class="acoes">
+                <a href="#">editar</a> | <a href="#">excluir</a>
+            </td>
+        </tr>
+        <tr>
+            <td>Gabi</td>
+            <td>gabi@uol.com.br</td>
+            <td>(11) 77889-7777</td>
+            <td>Mulher Maravilha</td>
+            <td>Liga da Justiça</td>
+            <td class="acoes">
+                <a href="#">editar</a> | <a href="#">excluir</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <div class="botao-container">
+        <button type="button" class="btn-novo">Novo jogador</button>
+    </div>
+</div>
+
+</body>
+</html>

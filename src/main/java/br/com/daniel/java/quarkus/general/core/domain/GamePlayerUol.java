@@ -35,6 +35,10 @@ public class GamePlayerUol implements Serializable {
         try {
             BeanUtils.copyProperties(this, entity);
             this.rawPhoneNumber = EncryptoManagerConfig.decrypt(this.encryptedPhoneNumber);
+
+            if (!this.isGroupCodeValid()) {
+                this.groupCode = TypeHeroGroup.of(entity.getGroupCodeInt());
+            }
         } catch (InvocationTargetException | IllegalAccessException e) {
             throw new ParseEntityFailedException(e);
         }
@@ -56,7 +60,7 @@ public class GamePlayerUol implements Serializable {
         }
     }
 
-    public boolean isCodenameInValid(){
+    public boolean isCodenameInValid() {
         return StringUtils.isEmpty(this.codeName);
     }
 
@@ -68,7 +72,7 @@ public class GamePlayerUol implements Serializable {
         return isGroupCodeValid() && this.groupCode.isJusticeLeague();
     }
 
-    private boolean isGroupCodeValid() {
+    public boolean isGroupCodeValid() {
         return Objects.nonNull(this.getGroupCode());
     }
 

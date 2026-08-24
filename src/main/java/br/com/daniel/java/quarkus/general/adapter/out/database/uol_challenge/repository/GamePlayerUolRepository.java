@@ -11,6 +11,6 @@ import java.util.List;
 public class GamePlayerUolRepository implements PanacheRepository<GamePlayerUolEntity> {
 
     public List<GamePlayerUolEntity> findByGroupCode(final TypeHeroGroup typeHeroGroup) {
-        return list("codigo_grupo = = ?1", typeHeroGroup.getCodigo());
+        return list("groupCodeInt=?1", typeHeroGroup.getCode());
     }
 }

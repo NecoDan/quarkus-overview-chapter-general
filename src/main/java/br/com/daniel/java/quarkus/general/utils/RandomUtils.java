@@ -18,7 +18,7 @@ public final class RandomUtils {
     private static final Set<String> IDENTIFICADORES = new HashSet<>();
 
     private RandomUtils() {
-        throw new IllegalStateException("This is a utility class RandomicoUtil and cannot be instantiated");
+        throw new IllegalStateException("This is a utility class RandomUtils and cannot be instantiated");
     }
 
     private static Random getRandom() {
