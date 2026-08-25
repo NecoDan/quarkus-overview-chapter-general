@@ -22,7 +22,7 @@ class HeroGroupUolApiAdapterTest {
 
     @Test
     void delegatesMarvelLookupToManualAdapter() {
-        var expected = mock(AvengersMarvelOutputDTO.class);
+        var expected = new AvengersMarvelOutputDTO(java.util.List.of());
         when(manualAdapter.getMarvelSuperHeroGroups()).thenReturn(expected);
 
         assertSame(expected, adapter.getMarvelSuperHeroGroups());
