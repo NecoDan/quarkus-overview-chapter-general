@@ -7,6 +7,7 @@ import br.com.daniel.java.quarkus.general.core.domain.TypeHeroGroup;
 import br.com.daniel.java.quarkus.general.core.port.GamePlayerUolPort;
 import br.com.daniel.java.quarkus.general.core.usecase.uol_challenge.input.GamePlayerInput;
 import br.com.daniel.java.quarkus.general.exceptions.api.GamePlayerUolCreateFailedException;
+import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
@@ -43,10 +44,8 @@ class GamePlayerUolCreateUseCaseImplTest {
                 new GamePlayerInput("Clark", "clark@example.com", "999999999", 2)
         );
 
-        // TODO: verificar e corrigir esses asserts
-
-        //        assertEquals("Superman", output);
-        //        assertEquals("Liga da Justiça", output.groupHeroDescription());
+        assertTrue(StringUtils.containsAny("Superman", output.respostaSucesso()));
+        assertTrue(StringUtils.containsAny("Liga da Justiça", output.respostaSucesso()));
 
         var playerCaptor = ArgumentCaptor.forClass(GamePlayerUol.class);
         verify(gamePlayerUolPort).salvarGamePlayer(playerCaptor.capture());

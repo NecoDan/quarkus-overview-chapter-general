@@ -65,3 +65,6 @@ build/
 .tmp
 .settings/
 .idea/
+
+# SQLite
+*.db
