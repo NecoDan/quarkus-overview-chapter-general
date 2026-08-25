@@ -69,7 +69,10 @@ public class TransactionItauAdapter implements TransactionItauPort {
 
     @Override
     public List<TransactionItau> getTransactionsByDateTime(OffsetDateTime dateTimeRange) {
-        return null;
+        return transactionItauRepository.list("createdAt > ?1", dateTimeRange.toLocalDateTime())
+                .stream()
+                .map(TransactionItau::new)
+                .toList();
     }
 
     @Override
