@@ -72,8 +72,8 @@ Não há certo ou errado. Queremos apenas saber mais sobre seus conhecimentos na
 ## Regras
 1. Você poderá utilizar o Java em qualquer versão :) ✅
 2. Você poderá utilizar quaisquer frameworks da linguagem Java :) ✅
-3. Para persistir as informações, você poderá utilizar um banco de dados em memória gerenciado por você
-4. Ou utilizar um banco, como HSQLDB (Falta fazer).
+3. Para persistir as informações, você poderá utilizar um banco de dados em memória gerenciado por você ✅
+4. Ou utilizar um banco, como HSQLDB/SQLite (Falta fazer).
 5. Você também pode optar por gravar em arquivo (Falta fazer).
 6. Não vale utilizar o codinome de um mesmo arquivo mais de uma vez. ✅
 7. Detalhes como criação de testes unitários, ordenação da lista de cadastrados ou filtro da lista são opcionais. Mas, se você fizer iremos apreciar! =) ✅
