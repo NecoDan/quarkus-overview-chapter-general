@@ -1,4 +1,4 @@
-package br.com.daniel.java.quarkus.general.core;
+package br.com.daniel.java.quarkus.general.core.usecase.itau_challenge;
 
 import br.com.daniel.java.quarkus.general.adapter.out.database.itau_challenge.TransactionItauAdapter;
 import br.com.daniel.java.quarkus.general.core.usecase.itau_challenge.TransactionItauGetsUseCaseImpl;
@@ -22,7 +22,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @DisplayName("TransactionItauGetsUseCase")
 @Transactional
-class TransactionItauGetsUseCaseImplTest {
+class TransactionItauGetsUseCaseImplV2Test {
 
     @Inject
     TransactionItauGetsUseCaseImpl transactionItauGetsUseCase;

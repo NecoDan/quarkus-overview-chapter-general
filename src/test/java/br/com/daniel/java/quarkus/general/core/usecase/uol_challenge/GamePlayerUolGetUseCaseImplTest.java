@@ -33,6 +33,7 @@ class GamePlayerUolGetUseCaseImplTest {
                 .codeName("Superman")
                 .groupCode(TypeHeroGroup.DC_LIGA_JUSTICA)
                 .build();
+
         when(gamePlayerUolAdapter.findAll()).thenReturn(List.of(player));
 
         var reports = useCase.getAll();
