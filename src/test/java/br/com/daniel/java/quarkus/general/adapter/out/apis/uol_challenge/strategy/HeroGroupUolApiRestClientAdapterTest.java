@@ -23,7 +23,7 @@ class HeroGroupUolApiRestClientAdapterTest {
 
     @Test
     void returnsMarvelHeroesFromRestClient() {
-        var expected = mock(AvengersMarvelOutputDTO.class);
+        var expected = new AvengersMarvelOutputDTO(java.util.List.of());
         when(client.getMarvelSuperHeroGroups()).thenReturn(expected);
 
         assertSame(expected, adapter.getMarvelSuperHeroGroups());
