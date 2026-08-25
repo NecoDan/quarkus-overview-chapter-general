@@ -1,0 +1,63 @@
+package br.com.daniel.java.quarkus.general.core.usecase.uol_challenge;
+
+import br.com.daniel.java.quarkus.general.adapter.out.apis.uol_challenge.HeroGroupUolApiAdapter;
+import br.com.daniel.java.quarkus.general.adapter.out.dto.uol_challenge.JusticeLeagueDcDTO;
+import br.com.daniel.java.quarkus.general.core.domain.GamePlayerUol;
+import br.com.daniel.java.quarkus.general.core.domain.TypeHeroGroup;
+import br.com.daniel.java.quarkus.general.core.port.GamePlayerUolPort;
+import br.com.daniel.java.quarkus.general.core.usecase.uol_challenge.input.GamePlayerInput;
+import br.com.daniel.java.quarkus.general.exceptions.api.GamePlayerUolCreateFailedException;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentCaptor;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
+
+@ExtendWith(MockitoExtension.class)
+class GamePlayerUolCreateUseCaseImplTest {
+
+    @Mock
+    GamePlayerUolPort gamePlayerUolPort;
+
+    @Mock
+    HeroGroupUolApiAdapter heroGroupUolApiAdapter;
+
+    @InjectMocks
+    GamePlayerUolCreateUseCaseImpl useCase;
+
+    @Test
+    void assignsAnAvailableJusticeLeagueCodenameAndSavesPlayer() {
+        when(heroGroupUolApiAdapter.getDCSuperHeroGroups())
+                .thenReturn(new JusticeLeagueDcDTO(List.of("Batman", "Superman")));
+        when(gamePlayerUolPort.findListExistingCodenames(TypeHeroGroup.DC_LIGA_JUSTICA))
+                .thenReturn(List.of("Batman"));
+
+        var output = useCase.createPlayer(new GamePlayerInput("Clark", "clark@example.com", "999999999", 2));
+
+        assertEquals("Superman", output.codename());
+        assertEquals("Liga da Justiça", output.groupHeroDescription());
+
+        var playerCaptor = ArgumentCaptor.forClass(GamePlayerUol.class);
+        verify(gamePlayerUolPort).salvarGamePlayer(playerCaptor.capture());
+        assertEquals("Superman", playerCaptor.getValue().getCodeName());
+    }
+
+    @Test
+    void rejectsJusticeLeaguePlayerWhenEveryCodenameIsTaken() {
+        when(heroGroupUolApiAdapter.getDCSuperHeroGroups())
+                .thenReturn(new JusticeLeagueDcDTO(List.of("Batman")));
+        when(gamePlayerUolPort.findListExistingCodenames(TypeHeroGroup.DC_LIGA_JUSTICA))
+                .thenReturn(List.of("Batman"));
+
+        assertThrows(GamePlayerUolCreateFailedException.class,
+                () -> useCase.createPlayer(new GamePlayerInput("Bruce", "bruce@example.com", "999999999", 2)));
+
+        verify(gamePlayerUolPort, never()).salvarGamePlayer(any());
+    }
+}
