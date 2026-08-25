@@ -7,6 +7,7 @@ import br.com.daniel.java.quarkus.general.core.domain.TypeHeroGroup;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -28,7 +29,7 @@ class GamePlayerUolAdapterTest {
         var first = GamePlayerUolEntity.builder().codeName("Batman").build();
         var second = GamePlayerUolEntity.builder().codeName("Superman").build();
         when(repository.findByGroupCode(TypeHeroGroup.DC_LIGA_JUSTICA))
-                .thenReturn(List.of(first, null, second));
+                .thenReturn(Arrays.asList(first, null, second));
 
         var result = adapter.findListExistingCodenames(TypeHeroGroup.DC_LIGA_JUSTICA);
 
