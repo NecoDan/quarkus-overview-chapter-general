@@ -42,10 +42,10 @@ public class GamePlayerUolEntity extends PanacheEntityBase implements Serializab
     @Column(name = "codigo_grupo", columnDefinition = "int")
     private Integer groupCodeInt;
 
-    @Column(name = "dt_criacao", columnDefinition = "datetime")
+    @Column(name = "dt_criacao")
     private LocalDateTime createdAt;
 
-    @Column(name = "dt_atualizacao", columnDefinition = "datetime")
+    @Column(name = "dt_atualizacao")
     private LocalDateTime updateAt;
 
     @Column(name = "ativo", nullable = false, columnDefinition = "tinyint")

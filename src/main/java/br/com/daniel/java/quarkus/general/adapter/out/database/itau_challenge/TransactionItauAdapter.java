@@ -4,6 +4,8 @@ import br.com.daniel.java.quarkus.general.adapter.out.database.itau_challenge.re
 import br.com.daniel.java.quarkus.general.adapter.out.entities.itau_challenge.TransactionItauEntity;
 import br.com.daniel.java.quarkus.general.core.domain.TransactionItau;
 import br.com.daniel.java.quarkus.general.core.port.TransactionItauPort;
+import io.quarkus.panache.common.Page;
+import io.quarkus.panache.common.Sort;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
@@ -26,6 +28,23 @@ public class TransactionItauAdapter implements TransactionItauPort {
         log.info("Buscando todas as transações existentes.");
 
         return transactionItauRepository.listAll()
+                .stream()
+                .map(TransactionItau::new)
+                .toList();
+    }
+
+    public List<TransactionItau> getAllPageable(int pages) {
+        return transactionItauRepository.findAll()
+                .page(Page.ofSize(pages).index(0))
+                .list()
+                .stream()
+                .map(TransactionItau::new)
+                .toList();
+    }
+
+    public List<TransactionItau> getAllOrderByAmount() {
+        return transactionItauRepository.listAll(Sort.by("")
+                        .and("", Sort.Direction.Descending))
                 .stream()
                 .map(TransactionItau::new)
                 .toList();
@@ -63,14 +82,14 @@ public class TransactionItauAdapter implements TransactionItauPort {
     @Transactional
     @Override
     public void deleteById(Long transactionId) {
-        log.info("");
+        log.info("Deletar uma única transação por ID: {}", transactionId);
         transactionItauRepository.deleteById(transactionId);
     }
 
     @Transactional
     @Override
     public void deleteAll() {
-        log.info("");
+        log.info("Deletar todas as transações existentes.");
         transactionItauRepository.deleteAll();
     }
 
