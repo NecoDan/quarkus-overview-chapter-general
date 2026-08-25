@@ -1,7 +1,6 @@
 package br.com.daniel.java.quarkus.general.core.usecase.itau_challenge;
 
 import br.com.daniel.java.quarkus.general.adapter.out.database.itau_challenge.TransactionItauAdapter;
-import br.com.daniel.java.quarkus.general.core.usecase.itau_challenge.TransactionItauGetsUseCaseImpl;
 import br.com.daniel.java.quarkus.general.core.usecase.itau_challenge.output.TransactionItauOutput;
 import br.com.daniel.java.quarkus.general.exceptions.api.TransactionItauNotFoundException;
 import br.com.daniel.java.quarkus.general.util.factory.ItauTransactionFactory;
