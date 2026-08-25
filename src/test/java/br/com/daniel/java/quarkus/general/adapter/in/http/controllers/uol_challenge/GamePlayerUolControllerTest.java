@@ -31,7 +31,7 @@ class GamePlayerUolControllerTest {
     @Test
     void createsPlayerWithCreatedStatus() {
         var input = new GamePlayerInput("Clark", "clark@example.com", "999999999", 2);
-        var output = new GamePlayerOutput("Superman", "Liga da Justiça");
+        var output = GamePlayerOutput.from("Superman", "Liga da Justiça");
         when(createUseCase.createPlayer(input)).thenReturn(output);
 
         var response = controller.create(input);
