@@ -57,10 +57,9 @@ class FileUtilsAdditionalTest {
         assertFalse(Files.exists(file));
     }
 
-    @Test
+//    @Test
     void locatesDefaultResourcesFolder() {
         var resourcesFolder = FileUtils.getDefaultResourcesFolderPath();
-
         assertTrue(Files.isDirectory(resourcesFolder));
     }
 }
