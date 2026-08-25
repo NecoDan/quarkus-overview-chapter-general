@@ -24,7 +24,7 @@ class HeroGroupUolApiRestManualAdapterTest {
 
     @Test
     void requestsMarvelJsonFromExpectedUrl() {
-        var expected = mock(AvengersMarvelOutputDTO.class);
+        var expected = new AvengersMarvelOutputDTO(java.util.List.of());
         when(client.get(contains("vingadores.json"), eq(AvengersMarvelOutputDTO.class), anyMap())).thenReturn(expected);
 
         assertSame(expected, adapter.getMarvelSuperHeroGroups());
