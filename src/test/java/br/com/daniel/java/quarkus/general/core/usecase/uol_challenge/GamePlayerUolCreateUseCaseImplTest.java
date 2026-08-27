@@ -4,6 +4,7 @@ import br.com.daniel.java.quarkus.general.adapter.out.apis.uol_challenge.HeroGro
 import br.com.daniel.java.quarkus.general.adapter.out.dto.uol_challenge.JusticeLeagueDcDTO;
 import br.com.daniel.java.quarkus.general.core.domain.GamePlayerUol;
 import br.com.daniel.java.quarkus.general.core.domain.TypeHeroGroup;
+import br.com.daniel.java.quarkus.general.core.port.GamePlayerUolFilePort;
 import br.com.daniel.java.quarkus.general.core.port.GamePlayerUolPort;
 import br.com.daniel.java.quarkus.general.core.usecase.uol_challenge.input.GamePlayerInput;
 import br.com.daniel.java.quarkus.general.exceptions.api.GamePlayerUolCreateFailedException;
@@ -25,6 +26,9 @@ class GamePlayerUolCreateUseCaseImplTest {
 
     @Mock
     GamePlayerUolPort gamePlayerUolPort;
+
+    @Mock
+    GamePlayerUolFilePort gamePlayerUolFilePort;
 
     @Mock
     HeroGroupUolApiAdapter heroGroupUolApiAdapter;
@@ -54,6 +58,12 @@ class GamePlayerUolCreateUseCaseImplTest {
 
     @Test
     void rejectsJusticeLeaguePlayerWhenEveryCodenameIsTaken() {
+        var input = new GamePlayerInput("Bruce",
+                "bruce@example.com",
+                "999999999",
+                2
+        );
+
         when(heroGroupUolApiAdapter.getDCSuperHeroGroups())
                 .thenReturn(new JusticeLeagueDcDTO(List.of("Batman")));
 
@@ -61,9 +71,7 @@ class GamePlayerUolCreateUseCaseImplTest {
                 .thenReturn(List.of("Batman"));
 
         final var exception = assertThrows(GamePlayerUolCreateFailedException.class,
-                () -> useCase.createPlayer(
-                        new GamePlayerInput("Bruce", "bruce@example.com", "999999999", 2)
-                )
+                () -> useCase.createPlayer(input)
         );
 
         assertNotNull(exception);

@@ -31,6 +31,7 @@ public class GamePlayerUolAdapter implements GamePlayerUolPort {
                 .toList();
     }
 
+    @Override
     public List<GamePlayerUol> findAll() {
         log.info("UOL_CHALLENGE - Recuperando a lista de todos os jogadores salvo(s)");
 

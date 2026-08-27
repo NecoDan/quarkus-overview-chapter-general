@@ -14,12 +14,15 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 
+import static org.apache.commons.lang3.StringUtils.*;
+
 public final class FunctionalUtils {
+
     private FunctionalUtils() {
         throw new IllegalStateException("This is a utility class FunctionalUtils and cannot be instantiated");
     }
 
-    private static final String BR_DATETIME_FORMAT = "dd/MM/yyyy HH:mm:ss";
+    public static final String BR_DATETIME_FORMAT = "dd/MM/yyyy HH:mm:ss";
 
     private static final Locale PT_BR = new Locale.Builder().setLanguage("pt").setRegion("BR").build();
 
@@ -33,6 +36,49 @@ public final class FunctionalUtils {
 
     public static String formatCreationDateBy(LocalDateTime localDateTime) {
         return localDateTime.format(DateTimeFormatter.ofPattern(BR_DATETIME_FORMAT));
+    }
+
+    public static LocalDateTime onlyLocalDateTimeDefaultEnglish(String value) {
+        if (!isStringValida(value))
+            throw new IllegalStateException("Conteudo do valor p/ conversao de data/hora inválida e/ou inexistente.");
+
+        if (value.length() > 19) {
+            value = value.substring(0, 19);
+        }
+
+        return LocalDateTime.parse(value, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+    }
+
+    public static LocalDateTime onlyLocalDateTimeBy(final String value,
+                                                    final String format) {
+        if (!isStringValida(value) || !isStringValida(format))
+            throw new IllegalStateException("Conteudo do valor p/ conversao de data/hora inválida e/ou inexistente.");
+
+        return LocalDateTime.parse(value, DateTimeFormatter.ofPattern(format));
+    }
+
+    public static long onlyLongNumbers(String base) {
+        return (isStringValida(base))
+                ? Long.parseLong(onlyNumbers(base))
+                : 0L;
+    }
+
+    public static String onlyNumbers(String base) {
+        return (Objects.isNull(base)) ? StringUtils.EMPTY : base.replaceAll("\\D", StringUtils.EMPTY);
+    }
+
+    public static int onlyIntNumbers(String base) {
+        return onlyIntegerNumbers(base);
+    }
+
+    public static boolean isStringValida(final String value) {
+        return (isNotEmpty(value) && isNotBlank(value));
+    }
+
+    public static Integer onlyIntegerNumbers(String base) {
+        return isStringValida(base)
+                ? Integer.parseInt(base)
+                : 0;
     }
 
     public static String formatDecimalNumberBy(Double value) {

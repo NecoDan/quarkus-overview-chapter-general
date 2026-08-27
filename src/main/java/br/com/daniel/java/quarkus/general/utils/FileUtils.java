@@ -9,6 +9,8 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonSyntaxException;
 import com.opencsv.CSVWriter;
 import jakarta.xml.bind.JAXBContext;
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVParser;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.*;
@@ -17,10 +19,7 @@ import java.nio.file.FileSystemException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Stream;
 
 /**
@@ -67,28 +66,6 @@ public final class FileUtils {
         }
     }
 
-    /**
-     * Obtém um fluxo de entrada (InputStream) para ler um recurso a partir do carregador de classes (ClassLoader)
-     * associado à thread atual.
-     *
-     * @param fileName o nome ou caminho do recurso a ser buscado
-     * @return um {@link InputStream} para o recurso, ou {@code null} se o recurso não for encontrado
-     */
-    public static InputStream getResourceAsStream(String fileName) {
-        return Thread.currentThread()
-                .getContextClassLoader()
-                .getResourceAsStream(fileName);
-    }
-
-    /**
-     * Recupera o carregador de classes (ClassLoader) atualmente associado ao contexto da thread em execução.
-     *
-     * @return o {@link ClassLoader} do contexto da thread atual
-     */
-    public static ClassLoader getClassLoader() {
-        return Thread.currentThread()
-                .getContextClassLoader();
-    }
 
     public static boolean isValidJson(String jsonStr) {
         if (jsonStr == null || jsonStr.isBlank()) {
@@ -97,7 +74,8 @@ public final class FileUtils {
         }
 
         try {
-            GSON.fromJson(jsonStr, Object.class);
+            final var obj = GSON.fromJson(jsonStr, Object.class);
+            System.out.println(obj);
             return true;
         } catch (JsonSyntaxException e) {
             System.err.printf("Is content file json invalid e/or failed: %s.%n", e.getMessage());
@@ -198,6 +176,30 @@ public final class FileUtils {
         }
     }
 
+    public static Optional<CSVParser> getCsvParserFrom(Path pathFileName) {
+
+        //        final var csvFormat = CSVFormat.DEFAULT.builder()
+        //                .setHeader()                   // Auto-detect header names from first row
+        //                .setSkipHeaderRecord(true)     // Skip the header when iterating over records
+        //                .setIgnoreSurroundingSpaces(true) // Trim leading/trailing whitespace around fields
+        //                .build();
+
+        try (var reader = Files.newBufferedReader(pathFileName);
+            // org.apache.commons.csv.CSVParser csvParser = csvFormat.parse(reader)) {
+             var csvParser = CSVFormat.DEFAULT.builder()
+                     .setHeader()
+                     .setSkipHeaderRecord(true)
+                     .build()
+                     .parse(reader)) {
+            return Optional.of(csvParser);
+        } catch (IOException e) {
+            String errorMessage = String.format("Failed to create and/or convert object from CSV content value: %s", e.getMessage());
+            System.out.printf(errorMessage);
+        }
+
+        return Optional.empty();
+    }
+
     /**
      * Gera um arquivo CSV no caminho especificado a partir de uma lista de dados.
      *
@@ -238,6 +240,29 @@ public final class FileUtils {
     }
 
     /**
+     * Obtém um fluxo de entrada (InputStream) para ler um recurso a partir do carregador de classes (ClassLoader)
+     * associado à thread atual.
+     *
+     * @param fileName o nome ou caminho do recurso a ser buscado
+     * @return um {@link InputStream} para o recurso, ou {@code null} se o recurso não for encontrado
+     */
+    public static InputStream getResourceAsStream(String fileName) {
+        return Thread.currentThread()
+                .getContextClassLoader()
+                .getResourceAsStream(fileName);
+    }
+
+    /**
+     * Recupera o carregador de classes (ClassLoader) atualmente associado ao contexto da thread em execução.
+     *
+     * @return o {@link ClassLoader} do contexto da thread atual
+     */
+    public static ClassLoader getClassLoader() {
+        return Thread.currentThread()
+                .getContextClassLoader();
+    }
+
+    /**
      * Obtém o caminho da pasta de recursos padrão do projeto.
      * <p>
      * Este método tenta localizar a pasta de recursos padrão utilizando o classloader
@@ -255,6 +280,7 @@ public final class FileUtils {
                 System.out.println("Default resources folder: " + resourcePath.toAbsolutePath());
                 return resourcePath;
             }
+
             System.err.println("Resources folder not found.");
             throw new IllegalStateException("Failed/error Resources folder not found.");
         } catch (Exception e) {

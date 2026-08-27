@@ -60,8 +60,8 @@ public class GamePlayerUolEntity extends PanacheEntityBase implements Serializab
 
     @PrePersist
     public void prePersist() {
-        this.encryptedPhoneNumber = EncryptoManagerConfig.encrypt(rawPhoneNumber);
-        this.groupCodeInt = this.groupCode.getCode();
+        defineEncryptedPhoneNumber();
+        defineGroupCodeInt();
     }
 
     @PostLoad
@@ -76,5 +76,13 @@ public class GamePlayerUolEntity extends PanacheEntityBase implements Serializab
         } catch (InvocationTargetException | IllegalAccessException e) {
             throw new ParseEntityFailedException(e);
         }
+    }
+
+    public void defineEncryptedPhoneNumber() {
+        this.encryptedPhoneNumber = EncryptoManagerConfig.encrypt(rawPhoneNumber);
+    }
+
+    public void defineGroupCodeInt() {
+        this.groupCodeInt = this.groupCode.getCode();
     }
 }
