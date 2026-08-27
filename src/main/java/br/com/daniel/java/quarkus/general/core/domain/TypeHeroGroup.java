@@ -3,6 +3,8 @@ package br.com.daniel.java.quarkus.general.core.domain;
 import lombok.Getter;
 
 import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @Getter
@@ -29,7 +31,8 @@ public enum TypeHeroGroup {
 
     public static TypeHeroGroup randomTypeHeroGroup() {
         return getStreamValues()
-                .skip((int) (Math.random() * getStreamValues().count()))
+                //.skip((int) (Math.random() * getStreamValues().count()))
+                .skip(ThreadLocalRandom.current().nextInt(getStreamValues().toList().size()))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("Não foi possível gerar um Tipo Grupo Herois aleatório."));
     }

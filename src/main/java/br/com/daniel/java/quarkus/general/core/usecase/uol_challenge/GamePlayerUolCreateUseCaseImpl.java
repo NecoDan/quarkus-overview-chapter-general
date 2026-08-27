@@ -3,6 +3,7 @@ package br.com.daniel.java.quarkus.general.core.usecase.uol_challenge;
 import br.com.daniel.java.quarkus.general.adapter.out.apis.uol_challenge.HeroGroupUolApiAdapter;
 import br.com.daniel.java.quarkus.general.adapter.out.dto.uol_challenge.HeroMarvelOutputDTO;
 import br.com.daniel.java.quarkus.general.core.domain.GamePlayerUol;
+import br.com.daniel.java.quarkus.general.core.port.GamePlayerUolFilePort;
 import br.com.daniel.java.quarkus.general.core.port.GamePlayerUolPort;
 import br.com.daniel.java.quarkus.general.core.usecase.uol_challenge.input.GamePlayerInput;
 import br.com.daniel.java.quarkus.general.core.usecase.uol_challenge.output.GamePlayerOutput;
@@ -25,6 +26,9 @@ public class GamePlayerUolCreateUseCaseImpl implements GamePlayerUolCreateUseCas
     GamePlayerUolPort gamePlayerUolPort;
 
     @Inject
+    GamePlayerUolFilePort gamePlayerUolFilePort;
+
+    @Inject
     HeroGroupUolApiAdapter heroGroupUolApiAdapter;
 
     @Override
@@ -36,6 +40,7 @@ public class GamePlayerUolCreateUseCaseImpl implements GamePlayerUolCreateUseCas
 
             validateNewPlayerCreation(input, gamePlayerUol);
             gamePlayerUolPort.salvarGamePlayer(gamePlayerUol);
+            gamePlayerUolFilePort.salvarGamePlayer(gamePlayerUol);
 
             return GamePlayerOutput.from(
                     gamePlayerUol.getCodeName(),
@@ -75,6 +80,7 @@ public class GamePlayerUolCreateUseCaseImpl implements GamePlayerUolCreateUseCas
 
     private String extractCodenameThroughJusticeLeagueGroupList(GamePlayerUol gamePlayerUol) {
         final var existingCodenameList = gamePlayerUolPort.findListExistingCodenames(gamePlayerUol.getGroupCode());
+
         final var codenameListJusticeLeague = getCodenameListJusticeLeague();
 
         if (CollectionUtils.isEmpty(existingCodenameList)) {
