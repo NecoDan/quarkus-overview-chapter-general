@@ -9,8 +9,6 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonSyntaxException;
 import com.opencsv.CSVWriter;
 import jakarta.xml.bind.JAXBContext;
-import org.apache.commons.csv.CSVFormat;
-import org.apache.commons.csv.CSVParser;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.*;
@@ -19,7 +17,10 @@ import java.nio.file.FileSystemException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Stream;
 
 /**
@@ -66,7 +67,19 @@ public final class FileUtils {
         }
     }
 
-
+    /**
+     * Verifica se o conteúdo informado possui um formato JSON válido.
+     *
+     * <p>O método considera inválido um conteúdo {@code null} ou em branco.
+     * Para os demais casos, realiza o parsing do conteúdo utilizando o
+     * {@code GSON}. Caso ocorra um erro de sintaxe durante o parsing,
+     * o conteúdo é considerado inválido.</p>
+     *
+     * @param jsonStr conteúdo em formato {@code String} que será validado
+     * @return {@code true} se o conteúdo for um JSON válido;
+     * {@code false} caso seja nulo, vazio, em branco ou apresente
+     * erro de sintaxe
+     */
     public static boolean isValidJson(String jsonStr) {
         if (jsonStr == null || jsonStr.isBlank()) {
             System.err.println("Is content file json invalid");
@@ -125,6 +138,23 @@ public final class FileUtils {
         }
     }
 
+    /**
+     * Converte o conteúdo JSON de um arquivo para uma instância do tipo informado.
+     *
+     * <p>O conteúdo recebido é convertido utilizando o {@code ObjectMapper}
+     * configurado em {@code MAPPER}. O tipo de destino é construído a partir
+     * da classe informada no parâmetro {@code clazz}.</p>
+     *
+     * <p>Caso ocorra qualquer erro durante a conversão, uma
+     * {@link IllegalStateException} é lançada contendo a mensagem do erro
+     * original.</p>
+     *
+     * @param contentFile conteúdo JSON que será convertido para o objeto de destino
+     * @param clazz       classe do objeto de destino
+     * @param <T>         tipo do objeto que será retornado
+     * @return uma instância de {@code T} criada a partir do conteúdo JSON informado
+     * @throws IllegalStateException caso ocorra um erro durante a conversão
+     */
     public static <T> T toOjectFromFileContentJSON(String contentFile,
                                                    Class<T> clazz) {
         try {
@@ -138,6 +168,24 @@ public final class FileUtils {
         }
     }
 
+    /**
+     * Converte o conteúdo XML de um arquivo para uma instância do tipo informado.
+     *
+     * <p>A conversão é realizada utilizando o {@code XML_MAPPER}, que é
+     * responsável por desserializar o conteúdo XML e criar uma instância
+     * da classe de destino especificada.</p>
+     *
+     * <p>Caso ocorra qualquer erro durante a criação do tipo ou durante a
+     * desserialização do conteúdo XML, uma {@link IllegalStateException}
+     * será lançada contendo a mensagem do erro ocorrido.</p>
+     *
+     * @param contentFile conteúdo XML que será convertido para o objeto de destino
+     * @param clazz       classe do objeto de destino
+     * @param <T>         tipo do objeto que será retornado
+     * @return uma instância de {@code T} criada a partir do conteúdo XML informado
+     * @throws IllegalStateException caso ocorra um erro durante a conversão
+     *                               ou desserialização do conteúdo XML
+     */
     public static <T> T toOjectFromFileContentXml(String contentFile,
                                                   Class<T> clazz) {
         try {
@@ -174,30 +222,6 @@ public final class FileUtils {
             System.out.printf(errorMessage);
             throw new IllegalStateException(errorMessage, e);
         }
-    }
-
-    public static Optional<CSVParser> getCsvParserFrom(Path pathFileName) {
-
-        //        final var csvFormat = CSVFormat.DEFAULT.builder()
-        //                .setHeader()                   // Auto-detect header names from first row
-        //                .setSkipHeaderRecord(true)     // Skip the header when iterating over records
-        //                .setIgnoreSurroundingSpaces(true) // Trim leading/trailing whitespace around fields
-        //                .build();
-
-        try (var reader = Files.newBufferedReader(pathFileName);
-            // org.apache.commons.csv.CSVParser csvParser = csvFormat.parse(reader)) {
-             var csvParser = CSVFormat.DEFAULT.builder()
-                     .setHeader()
-                     .setSkipHeaderRecord(true)
-                     .build()
-                     .parse(reader)) {
-            return Optional.of(csvParser);
-        } catch (IOException e) {
-            String errorMessage = String.format("Failed to create and/or convert object from CSV content value: %s", e.getMessage());
-            System.out.printf(errorMessage);
-        }
-
-        return Optional.empty();
     }
 
     /**

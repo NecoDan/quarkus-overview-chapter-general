@@ -6,7 +6,6 @@ import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlRootElement;
 import lombok.*;
 import org.apache.commons.lang3.StringUtils;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -26,11 +25,7 @@ import java.util.Map;
 import static org.apache.commons.lang3.StringUtils.isNotEmpty;
 import static org.junit.jupiter.api.Assertions.*;
 
-class FileUtilsTest {
-
-    @BeforeEach
-    void setUp() {
-    }
+class FileUtilsV1Test {
 
     @Test
     @DisplayName("Deve lançar IllegalStateException ao tentar instanciar a classe")
@@ -259,19 +254,6 @@ class FileUtilsTest {
         // Act & Assert
         assertTrue(FileUtils.isValidJson(validJsonArray), "A string deveria ser um array JSON válido");
     }
-
-//    @ParameterizedTest
-//    @DisplayName("Deve retornar false para strings JSON inválidas ou malformadas")
-//    @ValueSource(strings = {
-//            "{\"id\": 1, \"name\": }", // Valor faltando
-//            "{id: 1, name: 'Test'}",     // Chaves sem aspas duplas
-//            "Texto comum sem formato JSON",
-//            "{\"id\": 1"                // Chave não fechada
-//    })
-//    void shouldReturnFalseForInvalidJsonStrings(String invalidJson) {
-//        // Act & Assert
-//        assertFalse(FileUtils.isValidJson(invalidJson), "A string NÃO deveria ser considerada um JSON válido");
-//    }
 
     @ParameterizedTest
     @DisplayName("Deve retornar false para strings nulas, vazias ou em branco")
