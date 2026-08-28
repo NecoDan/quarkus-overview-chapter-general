@@ -189,9 +189,11 @@ public class GamePlayerUolFileRepository {
 
             return entities;
         } catch (IOException e) {
-            System.err.println("Falha ao carregar e obter os dados do arquivo csv: " + e.getMessage());
-            log.error("Falha ao carregar e obter os dados do arquivo csv: " + e.getMessage());
-            throw new ParseEntityFailedException("Falha ao carregar e obter os dados do arquivo csv: " + e.getMessage());
+            var errorMessage = String.format("Failed to create and/or convert object from CSV content value: %s", e.getMessage());
+            System.out.printf(errorMessage);
+
+            log.error(errorMessage);
+            throw new ParseEntityFailedException(errorMessage);
         }
     }
 
