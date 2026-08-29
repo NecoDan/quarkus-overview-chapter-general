@@ -1,4 +1,4 @@
-package br.com.daniel.java.quarkus.general.core.port;
+package br.com.daniel.java.quarkus.general.core.port.uol_challenge;
 
 import br.com.daniel.java.quarkus.general.adapter.out.entities.uol_challenge.GamePlayerUolEntity;
 import br.com.daniel.java.quarkus.general.core.domain.GamePlayerUol;

@@ -4,7 +4,7 @@ import br.com.daniel.java.quarkus.general.adapter.out.entities.uol_challenge.Gam
 import br.com.daniel.java.quarkus.general.adapter.out.files.repository.GamePlayerUolFileRepository;
 import br.com.daniel.java.quarkus.general.core.domain.GamePlayerUol;
 import br.com.daniel.java.quarkus.general.core.domain.TypeHeroGroup;
-import br.com.daniel.java.quarkus.general.core.port.GamePlayerUolFilePort;
+import br.com.daniel.java.quarkus.general.core.port.uol_challenge.GamePlayerUolFilePort;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import lombok.extern.slf4j.Slf4j;

@@ -4,8 +4,8 @@ import br.com.daniel.java.quarkus.general.adapter.out.apis.uol_challenge.HeroGro
 import br.com.daniel.java.quarkus.general.adapter.out.dto.uol_challenge.JusticeLeagueDcDTO;
 import br.com.daniel.java.quarkus.general.core.domain.GamePlayerUol;
 import br.com.daniel.java.quarkus.general.core.domain.TypeHeroGroup;
-import br.com.daniel.java.quarkus.general.core.port.GamePlayerUolFilePort;
-import br.com.daniel.java.quarkus.general.core.port.GamePlayerUolPort;
+import br.com.daniel.java.quarkus.general.core.port.uol_challenge.GamePlayerUolFilePort;
+import br.com.daniel.java.quarkus.general.core.port.uol_challenge.GamePlayerUolPort;
 import br.com.daniel.java.quarkus.general.core.usecase.uol_challenge.input.GamePlayerInput;
 import br.com.daniel.java.quarkus.general.exceptions.api.GamePlayerUolCreateFailedException;
 import org.apache.commons.lang3.StringUtils;

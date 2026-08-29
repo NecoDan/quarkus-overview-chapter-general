@@ -1,4 +1,4 @@
-package br.com.daniel.java.quarkus.general.core.port;
+package br.com.daniel.java.quarkus.general.core.port.itau_challenge;
 
 import br.com.daniel.java.quarkus.general.core.domain.TransactionItau;
 import jakarta.transaction.Transactional;

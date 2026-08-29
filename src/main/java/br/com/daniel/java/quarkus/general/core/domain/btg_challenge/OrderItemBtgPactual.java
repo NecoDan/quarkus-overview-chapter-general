@@ -1,0 +1,66 @@
+package br.com.daniel.java.quarkus.general.core.domain.btg_challenge;
+
+import br.com.daniel.java.quarkus.general.core.usecase.btg_challenge.input.OrderItemBtgPactualInput;
+import br.com.daniel.java.quarkus.general.exceptions.ParseEntityFailedException;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.apache.commons.beanutils.BeanUtils;
+
+import java.io.Serializable;
+import java.lang.reflect.InvocationTargetException;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
+import java.util.Objects;
+import java.util.UUID;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+public class OrderItemBtgPactual implements Serializable {
+
+    private String orderItemId;
+    private Integer item;
+    private String product;
+    private Integer quantity;
+    private BigDecimal price;
+    private boolean active;
+    private LocalDateTime createdAt;
+
+    public OrderItemBtgPactual(OrderItemBtgPactualInput input) {
+        try {
+            BeanUtils.copyProperties(this, input);
+
+            this.orderItemId = UUID.randomUUID().toString();
+            this.product = input.product();
+            this.quantity = input.quantity();
+            this.price = input.price();
+            this.active = Boolean.TRUE;
+
+            defineCreatedAt();
+        } catch (InvocationTargetException | IllegalAccessException e) {
+            throw new ParseEntityFailedException(e);
+        }
+    }
+
+    public void defineCreatedAt() {
+        this.createdAt = LocalDateTime.now().atOffset(ZoneOffset.UTC).toLocalDateTime();
+    }
+
+    public BigDecimal calculateItemValue() {
+        return isValidParamsCalculateItemValue()
+                ? calculateItemValueFinally()
+                : BigDecimal.ZERO;
+    }
+
+    private boolean isValidParamsCalculateItemValue() {
+        return Objects.nonNull(this.price) && Objects.nonNull(this.quantity);
+    }
+
+    private BigDecimal calculateItemValueFinally() {
+        return this.price.multiply(BigDecimal.valueOf(this.quantity));
+    }
+}

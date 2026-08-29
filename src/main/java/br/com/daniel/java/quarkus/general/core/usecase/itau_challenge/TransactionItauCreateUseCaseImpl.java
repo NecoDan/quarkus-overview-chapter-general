@@ -1,8 +1,8 @@
 package br.com.daniel.java.quarkus.general.core.usecase.itau_challenge;
 
 import br.com.daniel.java.quarkus.general.core.domain.TransactionItau;
-import br.com.daniel.java.quarkus.general.core.port.TransactionItauMemoryPort;
-import br.com.daniel.java.quarkus.general.core.port.TransactionItauPort;
+import br.com.daniel.java.quarkus.general.core.port.itau_challenge.TransactionItauMemoryPort;
+import br.com.daniel.java.quarkus.general.core.port.itau_challenge.TransactionItauPort;
 import br.com.daniel.java.quarkus.general.core.usecase.itau_challenge.input.TransactionItauInput;
 import br.com.daniel.java.quarkus.general.core.usecase.itau_challenge.output.TransactionItauOutput;
 import br.com.daniel.java.quarkus.general.exceptions.EntityCreateFailedException;

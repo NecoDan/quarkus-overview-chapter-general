@@ -1,7 +1,7 @@
 package br.com.daniel.java.quarkus.general.core.usecase.itau_challenge;
 
 import br.com.daniel.java.quarkus.general.core.domain.TransactionItau;
-import br.com.daniel.java.quarkus.general.core.port.TransactionItauMemoryPort;
+import br.com.daniel.java.quarkus.general.core.port.itau_challenge.TransactionItauMemoryPort;
 import br.com.daniel.java.quarkus.general.exceptions.api.TransactionItauNotFoundException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

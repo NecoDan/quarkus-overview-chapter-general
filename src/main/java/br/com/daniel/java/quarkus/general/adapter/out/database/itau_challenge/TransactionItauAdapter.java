@@ -3,7 +3,7 @@ package br.com.daniel.java.quarkus.general.adapter.out.database.itau_challenge;
 import br.com.daniel.java.quarkus.general.adapter.out.database.itau_challenge.repository.TransactionItauRepository;
 import br.com.daniel.java.quarkus.general.adapter.out.entities.itau_challenge.TransactionItauEntity;
 import br.com.daniel.java.quarkus.general.core.domain.TransactionItau;
-import br.com.daniel.java.quarkus.general.core.port.TransactionItauPort;
+import br.com.daniel.java.quarkus.general.core.port.itau_challenge.TransactionItauPort;
 import io.quarkus.panache.common.Page;
 import io.quarkus.panache.common.Sort;
 import jakarta.enterprise.context.ApplicationScoped;
@@ -105,5 +105,4 @@ public class TransactionItauAdapter implements TransactionItauPort {
     private void persistirTransactionEntity(TransactionItauEntity transactionItauEntity) {
         transactionItauRepository.persistAndFlush(transactionItauEntity);
     }
-
 }
