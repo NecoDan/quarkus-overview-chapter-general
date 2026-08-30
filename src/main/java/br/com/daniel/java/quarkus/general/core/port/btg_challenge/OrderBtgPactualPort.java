@@ -8,5 +8,5 @@ import java.util.UUID;
 public interface OrderBtgPactualPort {
     Optional<OrderBtgPactual> getOrderById(UUID id);
 
-    OrderBtgPactual saveOrder(OrderBtgPactual orderBtgPactual);
+    Optional<OrderBtgPactual> saveOrder(OrderBtgPactual orderBtgPactual);
 }

@@ -4,6 +4,10 @@ import br.com.daniel.java.quarkus.general.core.domain.btg_challenge.OrderBtgPact
 import br.com.daniel.java.quarkus.general.exceptions.ParseEntityFailedException;
 import io.quarkus.mongodb.panache.PanacheMongoEntityBase;
 import io.quarkus.mongodb.panache.common.MongoEntity;
+import jakarta.validation.constraints.DecimalMin;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.PastOrPresent;
 import lombok.*;
 import org.apache.commons.beanutils.BeanUtils;
 import org.bson.codecs.pojo.annotations.BsonId;
@@ -24,14 +28,21 @@ public class OrderBtgPactualEntity extends PanacheMongoEntityBase {
 
     @BsonId
     @BsonProperty("id_pedido")
+    @NotBlank(message = "O Id do pedido não poder vazio e/ou null")
     private String orderId;
 
     @BsonProperty("id_cliente")
+    @NotBlank(message = "O Id do cliente não poder vazio e/ou null")
     private String customerId;
 
+    @NotNull(message = "O valor total do pedido é obrigatório")
+    @DecimalMin(value = "0.01", message = "O valor total do pedido deve ser maior que zero")
     @BsonProperty("valor_total")
     private BigDecimal totalValue;
 
+    // Data da solicitação não pode ser no futuro
+    @NotNull(message = "A data de criação é obrigatória")
+    @PastOrPresent(message = "A data de criação deve ser no passado ou presente")
     @BsonProperty("data_criacao")
     private LocalDateTime createdAt;
 
