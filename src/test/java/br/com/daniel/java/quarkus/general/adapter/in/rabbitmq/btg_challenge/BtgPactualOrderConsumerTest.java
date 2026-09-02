@@ -1,6 +1,5 @@
 package br.com.daniel.java.quarkus.general.adapter.in.rabbitmq.btg_challenge;
 
-import br.com.daniel.java.quarkus.general.config.jacksonmapper.CustomObjectMapper;
 import br.com.daniel.java.quarkus.general.core.usecase.btg_challenge.OrderBtgPactualCreateUseCase;
 import br.com.daniel.java.quarkus.general.core.usecase.btg_challenge.input.OrderCreatedEventBtgPactualInput;
 import br.com.daniel.java.quarkus.general.core.usecase.btg_challenge.input.OrderItemCreatedEventBtgPactualInput;
