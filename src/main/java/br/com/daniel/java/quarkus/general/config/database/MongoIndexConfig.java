@@ -34,7 +34,7 @@ public class MongoIndexConfig {
         // 1. Índice Simples Ascendente no campo "data_criacao"
         orderCollections.createIndex(Indexes.ascending("createdAt"));
 
-        // 2. Índice Único no campo "id_cliente"
+        // 2. Índice Único no campo "ordeId (idPedidoExterno)"
         orderCollections.createIndex(
                 Indexes.ascending("orderId"),
                 new IndexOptions().unique(true)
