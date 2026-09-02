@@ -7,8 +7,8 @@ import jakarta.validation.constraints.NotNull;
 import java.math.BigDecimal;
 
 @JsonInclude(value = JsonInclude.Include.NON_NULL)
-public record OrderItemCreatedEventBtgPactualInput(@NotNull @JsonProperty("produto") String produto,
-                                                   @NotNull @JsonProperty("quantidade") Integer quantidade,
-                                                   @NotNull @JsonProperty("preco") BigDecimal preco
+public record OrderItemCreatedEventBtgPactualInput(@NotNull @JsonProperty("produto") String product,
+                                                   @NotNull @JsonProperty("quantidade") Integer quantity,
+                                                   @NotNull @JsonProperty("preco") BigDecimal price
 ) {
 }
