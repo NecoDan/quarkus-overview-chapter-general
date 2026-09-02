@@ -6,7 +6,8 @@ import jakarta.validation.constraints.NotNull;
 import java.util.List;
 import java.util.UUID;
 
-public record OrderBtgPactualInput(@NotNull @JsonProperty("codigoCliente") UUID customerId,
+public record OrderBtgPactualInput(@NotNull @JsonProperty("codigoPedido") UUID orderId,
+                                   @NotNull @JsonProperty("codigoCliente") UUID customerId,
                                    @JsonProperty("itens") List<OrderItemBtgPactualInput> items
 ) {
 }

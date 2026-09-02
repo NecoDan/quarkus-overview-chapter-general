@@ -14,36 +14,35 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Builder
 public class OrderItemBtgPactualEntity {
 
-    @BsonProperty("id_item_pedido")
-    @NotBlank(message = "O Id do item do pedido não pode vazio e/ou null")
-    private String orderItemId;
+    @BsonProperty("orderItemId")
+    public String orderItemId;
 
     @NotNull(message = "O valor da ordem do item é obrigatória")
     @BsonProperty("item")
-    private Integer item;
+    public Integer item;
 
-    @BsonProperty("produto")
+    @BsonProperty("product")
     @NotBlank(message = "A descricao do produto não pode ser vazia e/ou null")
-    private String product;
+    public String product;
 
     @NotNull(message = "A quantidade referente ao produto é obrigatória")
     @Min(value = 1, message = "A quantidade referente ao produto deve ser maior que zero")
-    @BsonProperty("qtde")
-    private Integer quantity;
+    @BsonProperty("quantity")
+    public Integer quantity;
 
     @NotNull(message = "O valor do preço do produto é obrigatório")
     @DecimalMin(value = "0.01", message = "O valor do preço do produto deve ser maior que zero")
-    @BsonProperty("valor_preco")
-    private BigDecimal price;
+    @BsonProperty("price")
+    public BigDecimal price;
 
-    @BsonProperty("ativo")
-    private Boolean active;
+    @BsonProperty("active")
+    public Boolean active;
 
-    @BsonProperty("data_criacao")
-    private LocalDateTime createdAt;
+    @BsonProperty("createdAt")
+    public LocalDateTime createdAt;
 }

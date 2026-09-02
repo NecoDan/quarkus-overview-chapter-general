@@ -1,4 +1,4 @@
-package br.com.daniel.java.quarkus.general.config;
+package br.com.daniel.java.quarkus.general.config.database;
 
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoCollection;
@@ -15,7 +15,6 @@ import org.eclipse.microprofile.config.inject.ConfigProperty;
 public class MongoIndexConfig {
 
     private static final String NAME_COLLECTION_TB_ORDER = "tb_btg_orders";
-    private static final String NAME_COLLECTION_TB_ORDER_ITEM = "tb_btg_order_items";
 
     @ConfigProperty(name = "quarkus.mongodb.database")
     String databaseName;
@@ -25,13 +24,6 @@ public class MongoIndexConfig {
 
     void onStart(@Observes StartupEvent ev) {
         defineConfigIndexsOrderCollection();
-        defineConfigIndexsOrderItemCollection();
-
-        // 4. Índice TTL (expira documentos após X segundos no campo "dataExpiracao")
-        //        itemsOrderCollections.createIndex(
-        //                Indexes.ascending("dataExpiracao"),
-        //                new IndexOptions().expireAfter(30L, TimeUnit.DAYS)
-        //        );
     }
 
     private void defineConfigIndexsOrderCollection() {
@@ -40,30 +32,21 @@ public class MongoIndexConfig {
                 .getCollection(NAME_COLLECTION_TB_ORDER);
 
         // 1. Índice Simples Ascendente no campo "data_criacao"
-        orderCollections.createIndex(Indexes.ascending("data_criacao"));
+        orderCollections.createIndex(Indexes.ascending("createdAt"));
 
         // 2. Índice Único no campo "id_cliente"
         orderCollections.createIndex(
-                Indexes.ascending("id_cliente"),
+                Indexes.ascending("orderId"),
                 new IndexOptions().unique(true)
         );
 
         // 3. Índice Composto (data_criacao ASC, valor_total DESC)
         orderCollections.createIndex(
                 Indexes.compoundIndex(
-                        Indexes.ascending("data_criacao"),
-                        Indexes.descending("valor_total")
+                        Indexes.ascending("createdAt"),
+                        Indexes.descending("totalValue")
                 )
         );
-    }
-
-    private void defineConfigIndexsOrderItemCollection() {
-        MongoCollection<Document> orderItemCollections = mongoClient
-                .getDatabase(databaseName)
-                .getCollection(NAME_COLLECTION_TB_ORDER_ITEM);
-
-        // 5. Índice de Texto para busca textual
-        orderItemCollections.createIndex(Indexes.text("produto"));
     }
 }
 

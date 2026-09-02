@@ -4,6 +4,7 @@ import br.com.daniel.java.quarkus.general.core.usecase.btg_challenge.OrderBtgPac
 import br.com.daniel.java.quarkus.general.core.usecase.btg_challenge.OrderBtgPactualGetsUseCase;
 import br.com.daniel.java.quarkus.general.core.usecase.btg_challenge.input.OrderBtgPactualInput;
 import br.com.daniel.java.quarkus.general.core.usecase.btg_challenge.output.OrderCreatedBtgPactualOutput;
+import br.com.daniel.java.quarkus.general.core.usecase.btg_challenge.output.OrderTotalQuantityValuesBtgPactualOutput;
 import br.com.daniel.java.quarkus.general.utils.logs.MdcUtils;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
@@ -12,6 +13,7 @@ import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import lombok.extern.slf4j.Slf4j;
+import org.bson.types.ObjectId;
 import org.eclipse.microprofile.openapi.annotations.Operation;
 import org.eclipse.microprofile.openapi.annotations.media.Content;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
@@ -75,13 +77,92 @@ public class OrderBtgPactualController {
     }
 
     @GET
-    @Path(value = "/v1/{id}")
-    public Response getById(@PathParam("id") String id) {
+    @Path(value = "/v1")
+    public Response getAll(@QueryParam("page") @DefaultValue("0") int page,
+                           @QueryParam("size") @DefaultValue("10") int size,
+                           @QueryParam("expand_items") @DefaultValue("false") boolean expandItems) {
         try {
             MdcUtils.putTransactionIdRandom();
-            log.info("Inicializando rota de busca de pedido por ID: {}", id);
+            log.info("BTG_PACTUAL_CHALLENGE - Inicializando rota de busca de todo(s) pedido(s)");
+
+            return Response.ok(orderBtgPactualGetsUseCase.getAllPageable(page, size, expandItems)).build();
+        } finally {
+            MdcUtils.clear();
+        }
+    }
+
+    @GET
+    @Path(value = "/v1/{id}")
+    public Response getByOrderId(@PathParam("id") ObjectId id) {
+        try {
+            MdcUtils.putTransactionIdRandom();
+            log.info("BTG_PACTUAL_CHALLENGE - Inicializando rota de busca de pedido por ID: {}", id);
 
             return Response.ok(orderBtgPactualGetsUseCase.getById(id)).build();
+        } finally {
+            MdcUtils.clear();
+        }
+    }
+
+    @GET
+    @Path(value = "/v1/{id}/valor_total_pedido")
+    public Response getTotalAmountByOrderId(@PathParam("id") ObjectId id) {
+        try {
+            MdcUtils.putTransactionIdRandom();
+            log.info("BTG_PACTUAL_CHALLENGE - Inicializando rota de busca do valor total do pedido por ID: {}", id);
+
+            return Response.ok(orderBtgPactualGetsUseCase.getTotalAmountBy(id)).build();
+        } finally {
+            MdcUtils.clear();
+        }
+    }
+
+    @GET
+    @Path(value = "/v1/listar_pedidos_cliente")
+    @Operation(
+            summary = "Busca todos os pedidos por cliente",
+            description = "Retorna todos os pedido(s) salvo(s) e sumarizados por cliente."
+    )
+    @APIResponses(value = {
+            @APIResponse(
+                    responseCode = "200",
+                    description = "Lista com pedido(s) sumarizados retornados com sucesso",
+                    content = @Content(
+                            mediaType = MediaType.APPLICATION_JSON,
+                            schema = @Schema(implementation = OrderTotalQuantityValuesBtgPactualOutput.class)
+                    )
+            ),
+            @APIResponse(
+                    responseCode = "404",
+                    description = "Pedido(s) não cadastrados, lista vazia"
+            ),
+            @APIResponse(
+                    responseCode = "400",
+                    description = "Requisição inválida"
+            ),
+            @APIResponse(
+                    responseCode = "500",
+                    description = "Erro interno do servidor"
+            )
+    })
+    public Response getAllOrderByCustomerId(@QueryParam("customerId") UUID customerId) {
+        try {
+            MdcUtils.putTransactionIdRandom();
+            log.info("BTG_PACTUAL_CHALLENGE - Inicializando a busca ");
+            return Response.ok(orderBtgPactualGetsUseCase.getAllOrdersBy(customerId)).build();
+        } finally {
+            MdcUtils.clear();
+        }
+    }
+
+    @GET
+    @Path(value = "/v1/sumarizar_pedidos_cliente")
+    public Response getSummariseOrdersByCustomerId(@QueryParam("customerId") UUID customerId) {
+        try {
+            MdcUtils.putTransactionIdRandom();
+            log.info("BTG_PACTUAL_CHALLENGE - Inicializando a busca ");
+
+            return Response.ok(orderBtgPactualGetsUseCase.getTotalQuantityOrdersBy(customerId)).build();
         } finally {
             MdcUtils.clear();
         }

@@ -1,6 +1,5 @@
 package br.com.daniel.java.quarkus.general.core.domain.btg_challenge;
 
-import br.com.daniel.java.quarkus.general.adapter.out.entities.btg_challenge.OrderBtgPactualEntity;
 import br.com.daniel.java.quarkus.general.core.usecase.btg_challenge.input.OrderBtgPactualInput;
 import br.com.daniel.java.quarkus.general.core.usecase.btg_challenge.input.OrderItemBtgPactualInput;
 import br.com.daniel.java.quarkus.general.exceptions.ParseEntityFailedException;
@@ -10,16 +9,14 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.collections4.CollectionUtils;
+import org.bson.types.ObjectId;
 
 import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
 @Data
@@ -28,8 +25,9 @@ import java.util.concurrent.atomic.AtomicInteger;
 @Builder
 public class OrderBtgPactual implements Serializable {
 
+    private ObjectId id;
     private String orderId;
-    private String customerId;
+    private OrderCustomerBtgPactual customer;
     private BigDecimal totalValue;
     private LocalDateTime createdAt;
     private LocalDateTime updateAt;
@@ -38,8 +36,9 @@ public class OrderBtgPactual implements Serializable {
     public OrderBtgPactual(OrderBtgPactualInput input) {
         try {
             BeanUtils.copyProperties(this, input);
-            this.customerId = input.customerId().toString();
+            this.orderId = input.orderId().toString();
 
+            defineCustomer(input.customerId());
             createItems(input.items());
             calculateTotalValue();
             defineDates();
@@ -48,16 +47,15 @@ public class OrderBtgPactual implements Serializable {
         }
     }
 
-    public OrderBtgPactual(OrderBtgPactualEntity orderEntity) {
-        try {
-            BeanUtils.copyProperties(this, orderEntity);
+    private void defineCustomer(UUID customerId) {
+        this.customer = OrderCustomerBtgPactual.builder()
+                .customerId(customerId.toString())
+                .build()
+                .defineCreatedAt();
+    }
 
-            if (Objects.isNull(this.orderId)) {
-                this.orderId = orderEntity.getOrderId();
-            }
-        } catch (InvocationTargetException | IllegalAccessException e) {
-            throw new ParseEntityFailedException(e);
-        }
+    public String getToStringId() {
+        return this.id.toHexString();
     }
 
     public void defineDates() {
@@ -69,22 +67,19 @@ public class OrderBtgPactual implements Serializable {
         var atomicIntegerValue = new AtomicInteger(1);
 
         items.forEach(itemInput -> {
-                    var itemNewCreated = new OrderItemBtgPactual(itemInput);
-                    itemNewCreated.setItem(atomicIntegerValue.getAndIncrement());
-                    addOrderItem(itemNewCreated);
-                }
-        );
+            var itemNewCreated = new OrderItemBtgPactual(itemInput);
+            itemNewCreated.setItem(atomicIntegerValue.getAndIncrement());
+            addOrderItem(itemNewCreated);
+        });
     }
 
     public void addOrderItem(OrderItemBtgPactual item) {
-        if (isOrderItemsInvalid())
-            this.items = new ArrayList<>();
+        if (isOrderItemsInvalid()) this.items = new ArrayList<>();
         this.items.add(item);
     }
 
     public void addAllOrderItem(Collection<OrderItemBtgPactual> items) {
-        if (isOrderItemsInvalid())
-            this.items = new ArrayList<>();
+        if (isOrderItemsInvalid()) this.items = new ArrayList<>();
         this.items.addAll(items);
     }
 
@@ -94,8 +89,7 @@ public class OrderBtgPactual implements Serializable {
             return;
         }
 
-        this.totalValue = this.items
-                .stream()
+        this.totalValue = this.items.stream()
                 .filter(Objects::nonNull)
                 .map(OrderItemBtgPactual::calculateItemValue)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);

@@ -1,5 +1,6 @@
 package br.com.daniel.java.quarkus.general.core.domain.btg_challenge;
 
+import br.com.daniel.java.quarkus.general.adapter.out.entities.btg_challenge.OrderItemBtgPactualEntity;
 import br.com.daniel.java.quarkus.general.core.usecase.btg_challenge.input.OrderItemBtgPactualInput;
 import br.com.daniel.java.quarkus.general.exceptions.ParseEntityFailedException;
 import lombok.AllArgsConstructor;
@@ -27,7 +28,7 @@ public class OrderItemBtgPactual implements Serializable {
     private String product;
     private Integer quantity;
     private BigDecimal price;
-    private boolean active;
+    private Boolean active;
     private LocalDateTime createdAt;
 
     public OrderItemBtgPactual(OrderItemBtgPactualInput input) {
@@ -41,6 +42,14 @@ public class OrderItemBtgPactual implements Serializable {
             this.active = Boolean.TRUE;
 
             defineCreatedAt();
+        } catch (InvocationTargetException | IllegalAccessException e) {
+            throw new ParseEntityFailedException(e);
+        }
+    }
+
+    public OrderItemBtgPactual(OrderItemBtgPactualEntity entity) {
+        try {
+            BeanUtils.copyProperties(this, entity);
         } catch (InvocationTargetException | IllegalAccessException e) {
             throw new ParseEntityFailedException(e);
         }

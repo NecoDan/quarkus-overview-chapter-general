@@ -8,8 +8,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 @JsonInclude(value = JsonInclude.Include.NON_NULL)
 public record OrderCreatedBtgPactualOutput(@JsonProperty("respostaSucesso") String respostaSucesso
 ) {
-    public static OrderCreatedBtgPactualOutput from(String orderId) {
-        return new OrderCreatedBtgPactualOutput("Pedido %s criado e salvo com sucesso.".formatted(orderId)
+    public static OrderCreatedBtgPactualOutput from(String id) {
+        return new OrderCreatedBtgPactualOutput("Pedido %s criado e salvo com sucesso.".formatted(id)
         );
     }
 }

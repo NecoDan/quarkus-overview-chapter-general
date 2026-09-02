@@ -4,6 +4,7 @@ import br.com.daniel.java.quarkus.general.adapter.out.entities.btg_challenge.Ord
 import io.quarkus.mongodb.panache.PanacheMongoRepositoryBase;
 import io.quarkus.panache.common.Sort;
 import jakarta.enterprise.context.ApplicationScoped;
+import org.bson.types.ObjectId;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -11,7 +12,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 @ApplicationScoped
-public class OrderBtgPactualRepository implements PanacheMongoRepositoryBase<OrderBtgPactualEntity, String> {
+public class OrderBtgPactualRepository implements PanacheMongoRepositoryBase<OrderBtgPactualEntity, ObjectId> {
 
     @Override
     public void persist(OrderBtgPactualEntity entity) {
@@ -32,15 +33,20 @@ public class OrderBtgPactualRepository implements PanacheMongoRepositoryBase<Ord
         PanacheMongoRepositoryBase.super.persist(entities);
     }
 
-    public Optional<OrderBtgPactualEntity> findByIdCustomize(UUID orderId) {
-        return find("where orderId = ?1", orderId).firstResultOptional();
+    public Optional<OrderBtgPactualEntity> findByIdCustom(String id) {
+        ObjectId objectId = new ObjectId(id);
+        return find("_id = ?1", objectId).firstResultOptional();
+    }
+
+    public List<OrderBtgPactualEntity> findByCustomerId(UUID customerId) {
+        return find("customer.customerId = ?1", customerId.toString()).list();
     }
 
     public List<OrderBtgPactualEntity> findByTotalValueGreaterThan(BigDecimal totalValue) {
-        return find("totalValue > ?1", Sort.by("data_criacao"), totalValue).list();
+        return find("totalValue > ?1", Sort.by("createdAt"), totalValue).list();
     }
 
     public List<OrderBtgPactualEntity> findByTotalValueLessThan(BigDecimal totalValue) {
-        return find("totalValue < ?1", Sort.by("data_criacao"), totalValue).list();
+        return find("totalValue < ?1", Sort.by("createdAt"), totalValue).list();
     }
 }

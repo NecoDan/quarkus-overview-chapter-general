@@ -2,6 +2,7 @@ package br.com.daniel.java.quarkus.general.utils;
 
 import io.smallrye.config.SmallRyeConfig;
 import org.apache.commons.lang3.StringUtils;
+import org.bson.types.ObjectId;
 import org.eclipse.microprofile.config.ConfigProvider;
 
 import java.math.BigDecimal;
@@ -13,6 +14,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
+import java.util.UUID;
 
 import static org.apache.commons.lang3.StringUtils.isNotBlank;
 import static org.apache.commons.lang3.StringUtils.isNotEmpty;
@@ -38,6 +40,18 @@ public final class FunctionalUtils {
     public static final String BR_DATETIME_FORMAT = "dd/MM/yyyy HH:mm:ss";
 
     private static final Locale PT_BR = new Locale.Builder().setLanguage("pt").setRegion("BR").build();
+
+
+    public static ObjectId uuidToObjectIdMongoDb(UUID uuid) {
+        // 1. Convert UUID to string without hyphens (32 hex characters)
+        String hexString = uuid.toString().replace("-", "");
+
+        // 2. Truncate to 24 characters (required length for MongoDB ObjectId)
+        String validObjectIdHex = hexString.substring(0, 24);
+
+        // 3. Create the BSON ObjectId
+        return new ObjectId(validObjectIdHex);
+    }
 
     /**
      * Recupera os perfis (profiles) de configuração ativos na aplicação.
