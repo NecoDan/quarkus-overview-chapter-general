@@ -11,7 +11,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.eclipse.microprofile.reactive.messaging.Incoming;
 
-import java.nio.charset.StandardCharsets;
 
 @ApplicationScoped
 @Slf4j
@@ -28,16 +27,15 @@ public class BtgPactualOrderConsumer {
     ObjectMapper objectMapper;
 
     @Incoming("orders-in")
-    public void consumerProcessOrders(byte[] payload) {
+    public void consumerProcessOrders(String payload) {
         MdcUtils.putTransactionIdRandom();
         try {
             log.info("BTG_PACTUAL_CHALLENGE - RabbitMQ evento/payload recebido na fila [{}].", queeNameConsumer);
 
-            String message = new String(payload, StandardCharsets.UTF_8);
-            log.debug("BTG_PACTUAL_CHALLENGE - Payload recebido: {}", message);
+            log.debug("BTG_PACTUAL_CHALLENGE - Payload recebido: {}", payload);
 
             OrderCreatedEventBtgPactualInput payloadEventInput = objectMapper.readValue(
-                    message,
+                    payload,
                     OrderCreatedEventBtgPactualInput.class
             );
 
