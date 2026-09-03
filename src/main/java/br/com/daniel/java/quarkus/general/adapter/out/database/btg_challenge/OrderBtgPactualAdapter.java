@@ -68,6 +68,27 @@ public class OrderBtgPactualAdapter implements OrderBtgPactualPort {
 
         // 1. Create query and set page state
         PanacheQuery<OrderBtgPactualEntity> query = repositoryOrder.findAll();
+        return getOrderBtgPactualPagedOutput(pageIndex, pageSize, expandItems, query);
+    }
+
+    @Override
+    public PagedOutput<OrderBtgPactual> getAllOrdersPageableByCustomer(UUID customerId,
+                                                                       int pageIndex,
+                                                                       int pageSize,
+                                                                       boolean expandItems) {
+        log.info("BTG_PACTUAL_CHALLENGE - Buscar todo(s) pedidos(s) salvo(s) paginado(s) " +
+                "por indicePagina: {} | tamanhoPagina: {} | expandirItems: {}", pageIndex, pageSize, expandItems);
+
+        // 1. Create query and set page state
+        PanacheQuery<OrderBtgPactualEntity> query = repositoryOrder.findFromCustomerId(customerId);
+        return getOrderBtgPactualPagedOutput(pageIndex, pageSize, expandItems, query);
+
+    }
+
+    private PagedOutput<OrderBtgPactual> getOrderBtgPactualPagedOutput(int pageIndex,
+                                                                       int pageSize,
+                                                                       boolean expandItems,
+                                                                       PanacheQuery<OrderBtgPactualEntity> query) {
         query.page(Page.of(pageIndex, pageSize));
 
         var list = query.list()

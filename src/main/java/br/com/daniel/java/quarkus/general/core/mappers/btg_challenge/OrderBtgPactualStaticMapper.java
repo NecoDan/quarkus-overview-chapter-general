@@ -48,6 +48,7 @@ public final class OrderBtgPactualStaticMapper {
                 .product(itemEntity.getProduct())
                 .quantity(itemEntity.getQuantity())
                 .price(itemEntity.getPrice())
+                .totalItemValue(itemEntity.getTotalItemValue())
                 .build();
     }
 }

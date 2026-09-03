@@ -20,6 +20,11 @@ public interface OrderBtgPactualPort {
 
     List<OrderBtgPactual> getAll();
 
+    PagedOutput<OrderBtgPactual> getAllOrdersPageableByCustomer(UUID customerId,
+                                                                int pageIndex,
+                                                                int pageSize,
+                                                                boolean expandItems);
+
     List<OrderBtgPactual> getAllOrdersBy(UUID customerId);
 
     List<OrderBtgPactual> findPagedAndSorted(int pageIndex, int pageSize);

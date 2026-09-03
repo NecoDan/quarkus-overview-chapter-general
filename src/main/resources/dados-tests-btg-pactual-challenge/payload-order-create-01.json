@@ -1,0 +1,36 @@
+{
+  "codigoPedido": "e8b8ae83-bf9a-4052-ba85-3faafec10cb2",
+  "codigoCliente": "088e1990-2b32-4f43-a3f7-bb6bc2cd2b23",
+  "itens": [
+    {
+      "produto": "caneta",
+      "quantidade": 1000,
+      "preco": 2
+    },
+    {
+      "produto": "caderno",
+      "quantidade": 1000,
+      "preco": 2
+    },
+    {
+      "produto": "lápis",
+      "quantidade": 1000,
+      "preco": 1.1
+    },
+    {
+      "produto": "borracha",
+      "quantidade": 500,
+      "preco": 0.25
+    },
+    {
+      "produto": "apontador",
+      "quantidade": 300,
+      "preco": 0.40
+    },
+    {
+      "produto": "cola branca",
+      "quantidade": 100,
+      "preco": 2.50
+    }
+  ]
+}

@@ -11,7 +11,9 @@ import java.util.Objects;
 public record OrderItemBtgPactualOutput(@JsonProperty("numeroItem") Integer item,
                                         @JsonProperty("nomeProduto") String product,
                                         @JsonProperty("qtde") Integer quantity,
-                                        @JsonProperty("valorPreco") BigDecimal price) {
+                                        @JsonProperty("valorTotalItem") BigDecimal totalItemValue,
+                                        @JsonProperty("valorPreco") BigDecimal price
+) {
 
     public static List<OrderItemBtgPactualOutput> buildListFrom(final List<OrderItemBtgPactual> items) {
         return items.stream()
@@ -26,6 +28,7 @@ public record OrderItemBtgPactualOutput(@JsonProperty("numeroItem") Integer item
                 item.getItem(),
                 item.getProduct(),
                 item.getQuantity(),
+                item.getTotalItemValue(),
                 item.getPrice()
         );
     }

@@ -6,7 +6,6 @@ import br.com.daniel.java.quarkus.general.core.usecase.btg_challenge.output.Orde
 import br.com.daniel.java.quarkus.general.core.usecase.generics.PagedOutput;
 import org.bson.types.ObjectId;
 
-import java.util.List;
 import java.util.UUID;
 
 public interface OrderBtgPactualGetsUseCase {
@@ -14,7 +13,7 @@ public interface OrderBtgPactualGetsUseCase {
 
     PagedOutput<OrderBtgPactualOutput> getAllPageable(int pageIndex, int pageSize, boolean expandItems);
 
-    List<OrderBtgPactualOutput> getAllOrdersBy(UUID customerId);
+    PagedOutput<OrderBtgPactualOutput> getAllOrdersPageableByCustomer(UUID customerId, int pageIndex, int pageSize, boolean expandItems);
 
     OrderTotalAmountValueBtgPactualOutput getTotalAmountBy(ObjectId id);
 

@@ -2,6 +2,7 @@ package br.com.daniel.java.quarkus.general.adapter.out.database.btg_challenge.re
 
 import br.com.daniel.java.quarkus.general.adapter.out.entities.btg_challenge.OrderBtgPactualEntity;
 import io.quarkus.mongodb.panache.PanacheMongoRepositoryBase;
+import io.quarkus.mongodb.panache.PanacheQuery;
 import io.quarkus.panache.common.Sort;
 import jakarta.enterprise.context.ApplicationScoped;
 import org.bson.types.ObjectId;
@@ -40,6 +41,10 @@ public class OrderBtgPactualRepository implements PanacheMongoRepositoryBase<Ord
 
     public List<OrderBtgPactualEntity> findByCustomerId(UUID customerId) {
         return find("customer.customerId = ?1", customerId.toString()).list();
+    }
+
+    public PanacheQuery<OrderBtgPactualEntity> findFromCustomerId(UUID customerId) {
+        return find("customer.customerId = ?1", customerId.toString());
     }
 
     public Optional<OrderBtgPactualEntity> findByOrderId(UUID orderId) {

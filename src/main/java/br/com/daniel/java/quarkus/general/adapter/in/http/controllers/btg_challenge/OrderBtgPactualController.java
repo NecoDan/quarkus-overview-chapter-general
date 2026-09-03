@@ -145,11 +145,17 @@ public class OrderBtgPactualController {
                     description = "Erro interno do servidor"
             )
     })
-    public Response getAllOrderByCustomerId(@QueryParam("customerId") UUID customerId) {
+    public Response getAllOrderByCustomerId(@QueryParam("customerId") UUID customerId,
+                                            @QueryParam("page") @DefaultValue("0") int page,
+                                            @QueryParam("size") @DefaultValue("10") int size,
+                                            @QueryParam("expand_items") @DefaultValue("false") boolean expandItems) {
         try {
             MdcUtils.putTransactionIdRandom();
             log.info("BTG_PACTUAL_CHALLENGE - Inicializando a busca ");
-            return Response.ok(orderBtgPactualGetsUseCase.getAllOrdersBy(customerId)).build();
+
+            return Response.ok(orderBtgPactualGetsUseCase.getAllOrdersPageableByCustomer(
+                            customerId, page, size, expandItems
+                    )).build();
         } finally {
             MdcUtils.clear();
         }

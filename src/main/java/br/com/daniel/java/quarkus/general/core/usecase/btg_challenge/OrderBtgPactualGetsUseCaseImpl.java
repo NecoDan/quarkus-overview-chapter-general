@@ -41,40 +41,23 @@ public class OrderBtgPactualGetsUseCaseImpl implements OrderBtgPactualGetsUseCas
     public PagedOutput<OrderBtgPactualOutput> getAllPageable(int pageIndex,
                                                              int pageSize,
                                                              boolean expandItems) {
-        var pagedAndSortedBy = orderBtgPactualPort.findPagedAndSortedBy(
+        var pagedAllOrders = orderBtgPactualPort.findPagedAndSortedBy(
                 pageIndex, pageSize, expandItems
         );
 
-        var finalList = pagedAndSortedBy.getContent()
-                .stream()
-                .map(OrderBtgPactualOutput::buildFrom)
-                .toList();
-
-        return new PagedOutput<>(
-                finalList,
-                pagedAndSortedBy.getPageIndex(),
-                pagedAndSortedBy.getPageSize(),
-                pagedAndSortedBy.getTotalElements(),
-                pagedAndSortedBy.getTotalPages(),
-                pagedAndSortedBy.isHasNext(),
-                pagedAndSortedBy.isHasPrevious()
-        );
+        return getOrderBtgPactualOutputPagedOutput(pagedAllOrders);
     }
 
     @Override
-    public List<OrderBtgPactualOutput> getAllOrdersBy(UUID customerId) {
-        var listOrdersAll = orderBtgPactualPort.getAllOrdersBy(customerId);
+    public PagedOutput<OrderBtgPactualOutput> getAllOrdersPageableByCustomer(UUID customerId,
+                                                                             int pageIndex,
+                                                                             int pageSize,
+                                                                             boolean expandItems) {
+        var pagedAllOrders = orderBtgPactualPort.getAllOrdersPageableByCustomer(customerId, pageIndex,
+                pageSize, expandItems
+        );
 
-        if (CollectionUtils.isEmpty(listOrdersAll)) {
-            log.warn("Não foram encontado(s) pedido(s) por meio do ID Client {} fornecido.", customerId);
-            throw new OrderBtgPactualNotFoundException(
-                    "Não foram encontado(s) pedido(s) por meio do ID Client %s fornecido.".formatted(customerId)
-            );
-        }
-
-        return listOrdersAll.stream()
-                .map(OrderBtgPactualOutput::buildFrom)
-                .toList();
+        return getOrderBtgPactualOutputPagedOutput(pagedAllOrders);
     }
 
     @Override
@@ -94,17 +77,41 @@ public class OrderBtgPactualGetsUseCaseImpl implements OrderBtgPactualGetsUseCas
 
     @Override
     public OrderTotalQuantityValuesBtgPactualOutput getTotalQuantityOrdersBy(UUID customerId) {
-        var listOrdersAll = getAllOrdersBy(customerId);
+        var listOrdersAll = orderBtgPactualPort.getAllOrdersBy(customerId);
+
+        if (CollectionUtils.isEmpty(listOrdersAll)) {
+            log.warn("Não foram encontado(s) pedido(s) por meio do ID Cliente {} fornecido.", customerId);
+            throw new OrderBtgPactualNotFoundException(
+                    "Não foram encontado(s) pedido(s) por meio do ID Cliente %s fornecido.".formatted(customerId)
+            );
+        }
 
         var totalQuantity = listOrdersAll.size();
         var totalAmount = listOrdersAll.stream()
-                .map(OrderBtgPactualOutput::totalValue)
+                .map(OrderBtgPactual::getTotalValue)
                 .filter(Objects::nonNull)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
 
         return OrderTotalQuantityValuesBtgPactualOutput.buildFrom(customerId,
                 totalQuantity,
                 totalAmount
+        );
+    }
+
+    private static PagedOutput<OrderBtgPactualOutput> getOrderBtgPactualOutputPagedOutput(PagedOutput<OrderBtgPactual> pagedAndSortedBy) {
+        var finalList = pagedAndSortedBy.getContent()
+                .stream()
+                .map(OrderBtgPactualOutput::buildFrom)
+                .toList();
+
+        return new PagedOutput<>(
+                finalList,
+                pagedAndSortedBy.getPageIndex(),
+                pagedAndSortedBy.getPageSize(),
+                pagedAndSortedBy.getTotalElements(),
+                pagedAndSortedBy.getTotalPages(),
+                pagedAndSortedBy.isHasNext(),
+                pagedAndSortedBy.isHasPrevious()
         );
     }
 }
