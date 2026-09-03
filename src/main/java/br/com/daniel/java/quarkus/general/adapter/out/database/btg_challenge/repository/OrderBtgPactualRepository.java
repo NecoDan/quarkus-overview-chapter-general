@@ -42,6 +42,10 @@ public class OrderBtgPactualRepository implements PanacheMongoRepositoryBase<Ord
         return find("customer.customerId = ?1", customerId.toString()).list();
     }
 
+    public Optional<OrderBtgPactualEntity> findByOrderId(UUID orderId) {
+        return find("orderId = ?1", orderId.toString()).firstResultOptional();
+    }
+
     public List<OrderBtgPactualEntity> findByTotalValueGreaterThan(BigDecimal totalValue) {
         return find("totalValue > ?1", Sort.by("createdAt"), totalValue).list();
     }

@@ -17,8 +17,12 @@ public class OrderCustomerBtgPactual implements Serializable {
     private String customerId;
     private LocalDateTime createdAt;
 
-    public OrderCustomerBtgPactual defineCreatedAt() {
-        this.createdAt = LocalDateTime.now().atOffset(ZoneOffset.UTC).toLocalDateTime();
+    public OrderCustomerBtgPactual assignCreatedAt() {
+        defineCreatedAt();
         return this;
+    }
+
+    public void defineCreatedAt() {
+        this.createdAt = LocalDateTime.now().atOffset(ZoneOffset.UTC).toLocalDateTime();
     }
 }

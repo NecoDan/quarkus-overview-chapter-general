@@ -18,6 +18,7 @@ import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collectors;
 
 @Data
 @NoArgsConstructor
@@ -48,10 +49,7 @@ public class OrderBtgPactual implements Serializable {
     }
 
     private void defineCustomer(UUID customerId) {
-        this.customer = OrderCustomerBtgPactual.builder()
-                .customerId(customerId.toString())
-                .build()
-                .defineCreatedAt();
+        this.customer = OrderCustomerBtgPactual.builder().customerId(customerId.toString()).build().assignCreatedAt();
     }
 
     public String getToStringId() {
@@ -60,17 +58,96 @@ public class OrderBtgPactual implements Serializable {
 
     public void defineDates() {
         this.createdAt = LocalDateTime.now().atOffset(ZoneOffset.UTC).toLocalDateTime();
+        assignDateUpdateAt();
+    }
+
+    public void assignDateUpdateAt() {
         this.updateAt = LocalDateTime.now().atOffset(ZoneOffset.UTC).toLocalDateTime();
     }
 
-    private void createItems(List<OrderItemBtgPactualInput> items) {
+    public void assignCustomerCode(String customerId) {
+        if (Objects.isNull(this.customer)) {
+            this.customer = OrderCustomerBtgPactual.builder().customerId(customerId).build().assignCreatedAt();
+            return;
+        }
+
+        this.customer.setCustomerId(customerId);
+        this.customer.defineCreatedAt();
+    }
+
+    public void createItems(List<OrderItemBtgPactualInput> itemsInput) {
         var atomicIntegerValue = new AtomicInteger(1);
 
-        items.forEach(itemInput -> {
+        itemsInput.forEach(itemInput -> {
             var itemNewCreated = new OrderItemBtgPactual(itemInput);
             itemNewCreated.setItem(atomicIntegerValue.getAndIncrement());
             addOrderItem(itemNewCreated);
         });
+    }
+
+    public void redistributeCreateNewItems(List<OrderItemBtgPactualInput> itemsInput) {
+        if (CollectionUtils.isEmpty(itemsInput))
+            throw new IllegalArgumentException("Lista de itens do pedido não pode ser nula ou vazia.");
+
+        if (isOrderItemsInvalid()) this.items = new ArrayList<>();
+
+        Set<String> setProductsItemsList = this.items
+                .stream()
+                .map(OrderItemBtgPactual::getProduct)
+                .collect(Collectors.toSet());
+
+        createdNewItemFrom(setProductsItemsList, itemsInput);
+        updateItemsExisting(setProductsItemsList, itemsInput);
+        calculateTotalValue();
+    }
+
+    private void updateItemsExisting(Set<String> setProductsItemsList,
+                                     List<OrderItemBtgPactualInput> itemsInput) {
+
+        var itemsInputNewUpdated = itemsInput.stream()
+                .filter(itemNewInput -> setProductsItemsList.contains(itemNewInput.product()))
+                .toList();
+
+        itemsInputNewUpdated.forEach(itemInput ->
+                this.items.forEach(itemExists -> {
+                            if (isConditionUpdatedItem(itemInput, itemExists)) {
+                                itemExists.setProduct(itemInput.product());
+                                itemExists.setQuantity(itemInput.quantity());
+                                itemExists.setPrice(itemInput.price());
+                                itemExists.calculateItemTotalValue();
+                            }
+                        }
+                )
+        );
+    }
+
+    private void createdNewItemFrom(Set<String> setProductsItemsList,
+                                    List<OrderItemBtgPactualInput> itemsInput) {
+
+        var itemsInputNewCreated = itemsInput.stream()
+                .filter(itemNewInput -> !setProductsItemsList.contains(itemNewInput.product()))
+                .toList();
+
+        itemsInputNewCreated.forEach(this::redistributeCreateNewItemFrom);
+    }
+
+    private boolean isConditionUpdatedItem(OrderItemBtgPactualInput itemInput,
+                                           OrderItemBtgPactual itemExists) {
+        return Objects.nonNull(itemInput) && Objects.nonNull(itemExists)
+                && Objects.equals(itemInput.product(), itemExists.getProduct())
+                && (!Objects.equals(itemInput.quantity(), itemExists.getQuantity())
+                || !Objects.equals(itemInput.price(), itemExists.getPrice()));
+
+    }
+
+    private void redistributeCreateNewItemFrom(OrderItemBtgPactualInput itemInput) {
+        var itemNewCreated = new OrderItemBtgPactual(itemInput);
+
+        var lastItemValue = this.items.getLast().getItem();
+        var atomicIntegerValue = new AtomicInteger(Objects.isNull(lastItemValue) ? 1 : lastItemValue);
+
+        itemNewCreated.setItem(atomicIntegerValue.getAndIncrement());
+        addOrderItem(itemNewCreated);
     }
 
     public void addOrderItem(OrderItemBtgPactual item) {
@@ -89,10 +166,11 @@ public class OrderBtgPactual implements Serializable {
             return;
         }
 
-        this.totalValue = this.items.stream()
+        this.totalValue = this.items
+                .stream()
                 .filter(Objects::nonNull)
-                .map(OrderItemBtgPactual::calculateItemValue)
-                .reduce(BigDecimal.ZERO, BigDecimal::add);
+                .map(OrderItemBtgPactual::calculateItemValue).
+                reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 
     public boolean isOrderItemsInvalid() {

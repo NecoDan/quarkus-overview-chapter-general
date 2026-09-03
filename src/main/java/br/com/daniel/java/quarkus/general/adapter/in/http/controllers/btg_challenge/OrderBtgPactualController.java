@@ -105,7 +105,7 @@ public class OrderBtgPactualController {
     }
 
     @GET
-    @Path(value = "/v1/{id}/valor_total_pedido")
+    @Path(value = "/v1/{id}/totalAmount")
     public Response getTotalAmountByOrderId(@PathParam("id") ObjectId id) {
         try {
             MdcUtils.putTransactionIdRandom();
@@ -118,7 +118,7 @@ public class OrderBtgPactualController {
     }
 
     @GET
-    @Path(value = "/v1/listar_pedidos_cliente")
+    @Path(value = "/v1/consumers/listAll")
     @Operation(
             summary = "Busca todos os pedidos por cliente",
             description = "Retorna todos os pedido(s) salvo(s) e sumarizados por cliente."
@@ -156,7 +156,33 @@ public class OrderBtgPactualController {
     }
 
     @GET
-    @Path(value = "/v1/sumarizar_pedidos_cliente")
+    @Path(value = "/v1/consumers/summarize")
+    @Operation(
+            summary = "Sumarizar os dados de pedidos por cliente",
+            description = "Retorna um resumo sumarizado sos pedido(s) salvo(s) pelo cliente."
+    )
+    @APIResponses(value = {
+            @APIResponse(
+                    responseCode = "200",
+                    description = "Lista com pedido(s) sumarizados retornados com sucesso",
+                    content = @Content(
+                            mediaType = MediaType.APPLICATION_JSON,
+                            schema = @Schema(implementation = OrderTotalQuantityValuesBtgPactualOutput.class)
+                    )
+            ),
+            @APIResponse(
+                    responseCode = "404",
+                    description = "Pedido(s) não cadastrados, lista vazia"
+            ),
+            @APIResponse(
+                    responseCode = "400",
+                    description = "Requisição inválida"
+            ),
+            @APIResponse(
+                    responseCode = "500",
+                    description = "Erro interno do servidor"
+            )
+    })
     public Response getSummariseOrdersByCustomerId(@QueryParam("customerId") UUID customerId) {
         try {
             MdcUtils.putTransactionIdRandom();

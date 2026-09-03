@@ -13,7 +13,7 @@ import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class OrderItemTest {
+class OrderItemBtgPactualTest {
 
     @ParameterizedTest(name = "Preço = {0}, Quantidade = {1} -> Total Esperado = {2}")
     @CsvSource({

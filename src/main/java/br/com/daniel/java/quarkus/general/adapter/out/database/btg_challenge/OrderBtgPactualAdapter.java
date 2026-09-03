@@ -49,6 +49,8 @@ public class OrderBtgPactualAdapter implements OrderBtgPactualPort {
 
     @Override
     public List<OrderBtgPactual> findPagedAndSorted(int pageIndex, int pageSize) {
+        log.info("BTG_PACTUAL_CHALLENGE - Buscar todo(s) pedidos(s) salvo(s) paginado(s) por indicePagina: {} | tamanhoPagina: {}", pageIndex, pageSize);
+
         return repositoryOrder.findAll(Sort.by("createdAt").descending())
                 .page(Page.of(pageIndex, pageSize))
                 .list()
@@ -61,6 +63,9 @@ public class OrderBtgPactualAdapter implements OrderBtgPactualPort {
     public PagedOutput<OrderBtgPactual> findPagedAndSortedBy(int pageIndex,
                                                              int pageSize,
                                                              boolean expandItems) {
+        log.info("BTG_PACTUAL_CHALLENGE - Buscar todo(s) pedidos(s) salvo(s) paginado(s) " +
+                "por indicePagina: {} | tamanhoPagina: {} | expandirItems: {}", pageIndex, pageSize, expandItems);
+
         // 1. Create query and set page state
         PanacheQuery<OrderBtgPactualEntity> query = repositoryOrder.findAll();
         query.page(Page.of(pageIndex, pageSize));
@@ -120,6 +125,14 @@ public class OrderBtgPactualAdapter implements OrderBtgPactualPort {
         return Optional.of(OrderBtgPactualStaticMapper.buildOrderBtgPactual(orderBtgPactualEntity, Boolean.FALSE));
     }
 
+    @Override
+    public Optional<OrderBtgPactual> getOrderByOrderIdExternal(UUID orderId) {
+        log.info("BTG_PACTUAL_CHALLENGE - Buscar pedido por idPedidoExterno: {}", orderId);
+
+        return repositoryOrder.findByOrderId(orderId)
+                .map(entity -> orderBtgPactualMapper.toDomain(entity));
+    }
+
     private OrderBtgPactualEntity saveOrderFinally(OrderBtgPactual orderBtgPactual) {
         AtomicReference<OrderBtgPactualEntity> orderEntity = new AtomicReference<>();
 
@@ -129,7 +142,7 @@ public class OrderBtgPactualAdapter implements OrderBtgPactualPort {
                 // 2. Executa o bloco dentro de uma transação ACID
                 session.withTransaction(() -> {
                     orderEntity.set(orderBtgPactualMapper.toEntity(orderBtgPactual));
-                    repositoryOrder.persist(orderEntity.get()); // Persiste dentro do mesmo contexto
+                    repositoryOrder.persistOrUpdate(orderEntity.get()); // Persiste dentro do mesmo contexto
 
                     session.commitTransaction();
                     return orderEntity; // Retorno do bloco com sucesso (Realiza COMMIT automático)

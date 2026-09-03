@@ -6,8 +6,12 @@ import br.com.daniel.java.quarkus.general.core.domain.btg_challenge.OrderBtgPact
 import br.com.daniel.java.quarkus.general.core.domain.btg_challenge.OrderCustomerBtgPactual;
 import br.com.daniel.java.quarkus.general.core.usecase.btg_challenge.input.OrderBtgPactualInput;
 import br.com.daniel.java.quarkus.general.core.usecase.btg_challenge.input.OrderCreatedEventBtgPactualInput;
+import br.com.daniel.java.quarkus.general.core.usecase.btg_challenge.input.OrderItemBtgPactualInput;
+import br.com.daniel.java.quarkus.general.core.usecase.btg_challenge.input.OrderItemCreatedEventBtgPactualInput;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingConstants;
+
+import java.util.List;
 
 @Mapper(componentModel = MappingConstants.ComponentModel.JAKARTA)
 public interface OrderBtgPactualMapper {
@@ -21,4 +25,6 @@ public interface OrderBtgPactualMapper {
     OrderCustomerBtgPactual toCustomerDomain(OrderCustomerBtgPactualEntity customerEntity);
 
     OrderBtgPactualInput toOrderBtgPactualInput(OrderCreatedEventBtgPactualInput eventInput);
+
+    List<OrderItemBtgPactualInput> toOrderItemBtgPactualList(List<OrderItemCreatedEventBtgPactualInput> items);
 }

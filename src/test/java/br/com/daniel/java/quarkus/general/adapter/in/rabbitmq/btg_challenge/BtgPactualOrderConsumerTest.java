@@ -14,6 +14,7 @@ import org.slf4j.MDC;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -51,8 +52,8 @@ class BtgPactualOrderConsumerTest {
                 """;
 
         validInput = new OrderCreatedEventBtgPactualInput(
-                "PED-001",
-                "CLI-001",
+                UUID.randomUUID(),
+                UUID.randomUUID(),
                 List.of(
                         new OrderItemCreatedEventBtgPactualInput(
                                 "PROD-001",
@@ -91,7 +92,8 @@ class BtgPactualOrderConsumerTest {
     @Test
     void clearsTransactionIdOnJsonProcessingException() throws Exception {
         when(objectMapper.readValue(validPayload, OrderCreatedEventBtgPactualInput.class))
-                .thenThrow(new com.fasterxml.jackson.core.JsonProcessingException("Invalid JSON") {});
+                .thenThrow(new com.fasterxml.jackson.core.JsonProcessingException("Invalid JSON") {
+                });
 
         MDC.put("transactionId", "test-123");
 
@@ -117,7 +119,8 @@ class BtgPactualOrderConsumerTest {
     @Test
     void throwsRuntimeExceptionOnJsonProcessingException() throws Exception {
         com.fasterxml.jackson.core.JsonProcessingException jsonException =
-                new com.fasterxml.jackson.core.JsonProcessingException("Invalid JSON") {};
+                new com.fasterxml.jackson.core.JsonProcessingException("Invalid JSON") {
+                };
 
         when(objectMapper.readValue(validPayload, OrderCreatedEventBtgPactualInput.class))
                 .thenThrow(jsonException);
@@ -187,17 +190,20 @@ class BtgPactualOrderConsumerTest {
 
     @Test
     void handlesEmptyItemsPayload() throws Exception {
-        String emptyItemsPayload = """
+        var codigoPedido = "3c2b66c2-9b3e-4f6a-a0ae-2dc4723a58f0";
+        var codigCliente = "c7e8fb1a-daa6-48fd-bee2-2653601e2893";
+
+        var emptyItemsPayload = """
                 {
-                  "codigoPedido": "PED-002",
-                  "codigoCliente": "CLI-002",
+                  "codigoPedido": "3c2b66c2-9b3e-4f6a-a0ae-2dc4723a58f0",
+                  "codigoCliente": "c7e8fb1a-daa6-48fd-bee2-2653601e2893",
                   "itens": []
                 }
                 """;
 
-        OrderCreatedEventBtgPactualInput emptyInput = new OrderCreatedEventBtgPactualInput(
-                "PED-002",
-                "CLI-002",
+        var emptyInput = new OrderCreatedEventBtgPactualInput(
+                UUID.fromString(codigoPedido),
+                UUID.fromString(codigCliente),
                 List.of()
         );
 
@@ -212,10 +218,13 @@ class BtgPactualOrderConsumerTest {
 
     @Test
     void processesMultipleItemsPayload() throws Exception {
-        String multipleItemsPayload = """
+        var codigoPedido = "088e1990-2b32-4f43-a3f7-bb6bc2cd2b23";
+        var codigCliente = "c9815565-9064-4a12-97ac-a16f2b7ad71d";
+
+        var multipleItemsPayload = """
                 {
-                  "codigoPedido": "PED-003",
-                  "codigoCliente": "CLI-003",
+                  "codigoPedido": "088e1990-2b32-4f43-a3f7-bb6bc2cd2b23",
+                  "codigoCliente": "c9815565-9064-4a12-97ac-a16f2b7ad71d",
                   "itens": [
                     {
                       "produto": "PROD-001",
@@ -232,8 +241,8 @@ class BtgPactualOrderConsumerTest {
                 """;
 
         OrderCreatedEventBtgPactualInput multipleItemsInput = new OrderCreatedEventBtgPactualInput(
-                "PED-003",
-                "CLI-003",
+                UUID.fromString(codigoPedido),
+                UUID.fromString(codigCliente),
                 List.of(
                         new OrderItemCreatedEventBtgPactualInput("PROD-001", 2, BigDecimal.valueOf(100.00)),
                         new OrderItemCreatedEventBtgPactualInput("PROD-002", 1, BigDecimal.valueOf(50.00))
@@ -252,7 +261,8 @@ class BtgPactualOrderConsumerTest {
     @Test
     void doesNotCallUseCaseWhenDeserializationFails() throws Exception {
         when(objectMapper.readValue(validPayload, OrderCreatedEventBtgPactualInput.class))
-                .thenThrow(new com.fasterxml.jackson.core.JsonProcessingException("Invalid JSON") {});
+                .thenThrow(new com.fasterxml.jackson.core.JsonProcessingException("Invalid JSON") {
+                });
 
         assertThrows(RuntimeException.class, () -> consumer.consumerProcessOrders(validPayload));
 

@@ -28,6 +28,7 @@ public class OrderItemBtgPactual implements Serializable {
     private String product;
     private Integer quantity;
     private BigDecimal price;
+    private BigDecimal totalItemValue;
     private Boolean active;
     private LocalDateTime createdAt;
 
@@ -41,6 +42,7 @@ public class OrderItemBtgPactual implements Serializable {
             this.price = input.price();
             this.active = Boolean.TRUE;
 
+            calculateItemTotalValue();
             defineCreatedAt();
         } catch (InvocationTargetException | IllegalAccessException e) {
             throw new ParseEntityFailedException(e);
@@ -59,10 +61,24 @@ public class OrderItemBtgPactual implements Serializable {
         this.createdAt = LocalDateTime.now().atOffset(ZoneOffset.UTC).toLocalDateTime();
     }
 
-    public BigDecimal calculateItemValue() {
-        return isValidParamsCalculateItemValue()
+    public void calculateItemTotalValue() {
+        this.totalItemValue = isValidParamsCalculateItemValue()
                 ? calculateItemValueFinally()
                 : BigDecimal.ZERO;
+    }
+
+    public BigDecimal calculateItemValue() {
+        if (isTotalItemValueNotCalculated()) {
+            this.totalItemValue = isValidParamsCalculateItemValue()
+                    ? calculateItemValueFinally()
+                    : BigDecimal.ZERO;
+        }
+
+        return this.totalItemValue;
+    }
+
+    private boolean isTotalItemValueNotCalculated() {
+        return Objects.isNull(this.totalItemValue) || this.totalItemValue.compareTo(BigDecimal.ZERO) <= 0;
     }
 
     private boolean isValidParamsCalculateItemValue() {

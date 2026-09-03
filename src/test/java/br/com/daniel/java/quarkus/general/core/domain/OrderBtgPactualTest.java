@@ -2,10 +2,13 @@ package br.com.daniel.java.quarkus.general.core.domain;
 
 import br.com.daniel.java.quarkus.general.core.domain.btg_challenge.OrderBtgPactual;
 import br.com.daniel.java.quarkus.general.core.domain.btg_challenge.OrderItemBtgPactual;
+import br.com.daniel.java.quarkus.general.core.usecase.btg_challenge.input.OrderItemBtgPactualInput;
+import br.com.daniel.java.quarkus.general.util.factory.OrderBtgPactualFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -14,13 +17,18 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class OrderTest {
+class OrderBtgPactualTest {
 
-    private OrderBtgPactual orderBtgPactual;
+    private OrderBtgPactual orderBtgPactualVar1;
+
+    private OrderBtgPactual orderBtgPactualVar2;
 
     @BeforeEach
     void setUp() {
-        orderBtgPactual = new OrderBtgPactual();
+        orderBtgPactualVar1 = new OrderBtgPactual();
+
+        orderBtgPactualVar2 = new OrderBtgPactual();
+        orderBtgPactualVar2.setItems(new ArrayList<>());
     }
 
     @Nested
@@ -34,19 +42,19 @@ class OrderTest {
             var beforeExecution = LocalDateTime.now();
 
             // -- 02_Ação
-            orderBtgPactual.defineDates();
+            orderBtgPactualVar1.defineDates();
 
             // -- 03_Verificação_Validação
-            assertNotNull(orderBtgPactual.getCreatedAt());
-            assertNotNull(orderBtgPactual.getUpdateAt());
+            assertNotNull(orderBtgPactualVar1.getCreatedAt());
+            assertNotNull(orderBtgPactualVar1.getUpdateAt());
 
             // Verifica se a data gerada é próxima/posterior ao momento do teste
-            assertTrue(orderBtgPactual.getCreatedAt().isAfter(beforeExecution)
-                    || orderBtgPactual.getCreatedAt().isEqual(beforeExecution)
+            assertTrue(orderBtgPactualVar1.getCreatedAt().isAfter(beforeExecution)
+                    || orderBtgPactualVar1.getCreatedAt().isEqual(beforeExecution)
             );
 
-            assertTrue(orderBtgPactual.getUpdateAt().isAfter(beforeExecution)
-                    || orderBtgPactual.getUpdateAt().isEqual(beforeExecution)
+            assertTrue(orderBtgPactualVar1.getUpdateAt().isAfter(beforeExecution)
+                    || orderBtgPactualVar1.getUpdateAt().isEqual(beforeExecution)
             );
         }
     }
@@ -62,28 +70,28 @@ class OrderTest {
             var orderItem = new OrderItemBtgPactual();
 
             // -- 02_Ação
-            orderBtgPactual.addOrderItem(orderItem);
+            orderBtgPactualVar1.addOrderItem(orderItem);
 
             // -- 03_Verificação_Validação
-            assertNotNull(orderBtgPactual.getItems());
-            assertEquals(1, orderBtgPactual.getItems().size());
-            assertTrue(orderBtgPactual.getItems().contains(orderItem));
+            assertNotNull(orderBtgPactualVar1.getItems());
+            assertEquals(1, orderBtgPactualVar1.getItems().size());
+            assertTrue(orderBtgPactualVar1.getItems().contains(orderItem));
         }
 
         @Test
         @DisplayName("Deve adicionar um item mantendo os itens já existentes na lista")
         void shouldAddSingleItemToExistingList() {
             // -- 01_Cenário
-            orderBtgPactual.setItems(new ArrayList<>());
+            orderBtgPactualVar1.setItems(new ArrayList<>());
             var orderItemVar1 = new OrderItemBtgPactual();
             var orderItemVar2 = new OrderItemBtgPactual();
 
             // -- 02_Ação
-            orderBtgPactual.addOrderItem(orderItemVar1);
-            orderBtgPactual.addOrderItem(orderItemVar2);
+            orderBtgPactualVar1.addOrderItem(orderItemVar1);
+            orderBtgPactualVar1.addOrderItem(orderItemVar2);
 
             // -- 03_Verificação_Validação
-            assertEquals(2, orderBtgPactual.getItems().size());
+            assertEquals(2, orderBtgPactualVar1.getItems().size());
         }
 
         @Test
@@ -95,11 +103,11 @@ class OrderTest {
             );
 
             // -- 02_Ação
-            orderBtgPactual.addAllOrderItem(orderItemList);
+            orderBtgPactualVar1.addAllOrderItem(orderItemList);
 
             // -- 03_Verificação_Validação
-            assertNotNull(orderBtgPactual.getItems());
-            assertEquals(2, orderBtgPactual.getItems().size());
+            assertNotNull(orderBtgPactualVar1.getItems());
+            assertEquals(2, orderBtgPactualVar1.getItems().size());
         }
     }
 
@@ -124,13 +132,13 @@ class OrderTest {
         @DisplayName("Deve definir valor total como ZERO se a lista de itens estiver vazia")
         void shouldSetZeroWhenItemsIsEmpty() {
             // -- 01_Cenário
-            orderBtgPactual.setItems(new ArrayList<>());
+            orderBtgPactualVar1.setItems(new ArrayList<>());
 
             // -- 02_Ação
-            orderBtgPactual.calculateTotalValue();
+            orderBtgPactualVar1.calculateTotalValue();
 
             // -- 03_Verificação_Validação
-            assertEquals(BigDecimal.ZERO, orderBtgPactual.getTotalValue());
+            assertEquals(BigDecimal.ZERO, orderBtgPactualVar1.getTotalValue());
         }
 
         @Test
@@ -142,11 +150,11 @@ class OrderTest {
             var orderItemVar2 = new StubOrderItem(new BigDecimal("20.25"));
             var item3 = new StubOrderItem(new BigDecimal("5.25"));
 
-            orderBtgPactual.setItems(List.of(orderItemVar1, orderItemVar2, item3));
+            orderBtgPactualVar1.setItems(List.of(orderItemVar1, orderItemVar2, item3));
 
-            orderBtgPactual.calculateTotalValue();
+            orderBtgPactualVar1.calculateTotalValue();
 
-            assertEquals(new BigDecimal("36.00"), orderBtgPactual.getTotalValue());
+            assertEquals(new BigDecimal("36.00"), orderBtgPactualVar1.getTotalValue());
         }
 
         @Test
@@ -160,11 +168,11 @@ class OrderTest {
             itemsWithNull.add(null);
 
             // -- 02_Ação
-            orderBtgPactual.setItems(itemsWithNull);
-            orderBtgPactual.calculateTotalValue();
+            orderBtgPactualVar1.setItems(itemsWithNull);
+            orderBtgPactualVar1.calculateTotalValue();
 
             // -- 03_Verificação_Validação
-            assertEquals(new BigDecimal("15.00"), orderBtgPactual.getTotalValue());
+            assertEquals(new BigDecimal("15.00"), orderBtgPactualVar1.getTotalValue());
         }
     }
 
@@ -176,31 +184,95 @@ class OrderTest {
         @DisplayName("Deve retornar true se a lista de itens for nula")
         void shouldReturnTrueWhenNull() {
             // -- 01_Cenário
-            orderBtgPactual.setItems(null);
+            orderBtgPactualVar1.setItems(null);
 
             // -- 02_Ação_&_03_Verificação_Validação
-            assertTrue(orderBtgPactual.isOrderItemsInvalid());
+            assertTrue(orderBtgPactualVar1.isOrderItemsInvalid());
         }
 
         @Test
         @DisplayName("Deve retornar true se a lista de itens estiver vazia")
         void shouldReturnTrueWhenEmpty() {
             // -- 01_Cenário
-            orderBtgPactual.setItems(new ArrayList<>());
+            orderBtgPactualVar1.setItems(new ArrayList<>());
 
             // -- 02_Ação_&_03_Verificação_Validação
-            assertTrue(orderBtgPactual.isOrderItemsInvalid());
+            assertTrue(orderBtgPactualVar1.isOrderItemsInvalid());
         }
 
         @Test
         @DisplayName("Deve retornar false se a lista mantiver itens")
         void shouldReturnFalseWhenHasItems() {
             // -- 01_Cenário
-            orderBtgPactual.setItems(List.of(new OrderItemBtgPactual()));
+            orderBtgPactualVar1.setItems(List.of(new OrderItemBtgPactual()));
 
             // -- 02_Ação_&_03_Verificação_Validação
-            assertFalse(orderBtgPactual.isOrderItemsInvalid());
+            assertFalse(orderBtgPactualVar1.isOrderItemsInvalid());
         }
+    }
+
+//    @Test
+    @DisplayName("Deve criar novos itens quando a lista de itens for inválida")
+    void testRedistributeCreateNewItems_WhenItemsInvalid_ShouldCreateItems() {
+        // -- 01_Cenário
+        List<OrderItemBtgPactualInput> itemsInput = List.of(
+                mockOrderItemInput("Product1", 2, BigDecimal.valueOf(10)),
+                mockOrderItemInput("Product2", 1, BigDecimal.valueOf(20))
+        );
+
+        // -- 02_Ação
+        orderBtgPactualVar2.redistributeCreateNewItems(itemsInput);
+
+        // -- 03_Verificação_Validação
+        assertEquals(2, orderBtgPactualVar2.getItems().size());
+        assertEquals(BigDecimal.valueOf(40), orderBtgPactualVar2.getTotalValue());
+    }
+
+    @Test
+    @DisplayName("Deve criar novos itens e atualizar os existentes quando a lista de itens já contiver elementos")
+    void testRedistributeCreateNewItems_WhenItemsExist_ShouldUpdateAndAddNewItems() {
+        // -- 01_Cenário
+        var orderBtgPactualVar3 = OrderBtgPactualFactory.buildMockOrderNoItems();
+        orderBtgPactualVar3.setItems(new ArrayList<>());
+
+        var existingItem = new OrderItemBtgPactual();
+        existingItem.setItem(1);
+        existingItem.setProduct("Product1");
+        existingItem.setQuantity(1);
+        existingItem.setPrice(BigDecimal.valueOf(10));
+        existingItem.setCreatedAt(LocalDateTime.now());
+
+        orderBtgPactualVar3.addOrderItem(existingItem);
+
+        List<OrderItemBtgPactualInput> itemsInput = List.of(
+                new OrderItemBtgPactualInput("Product1", 3, BigDecimal.valueOf(15)), // Update existing
+                new OrderItemBtgPactualInput("Product2", 2, BigDecimal.valueOf(30)) // Add new
+        );
+
+        // -- 02_Ação
+        orderBtgPactualVar3.redistributeCreateNewItems(itemsInput);
+
+        // -- 03_Verificação_Validação
+        assertEquals(2, orderBtgPactualVar3.getItems().size());
+        assertEquals(BigDecimal.valueOf(105), orderBtgPactualVar3.getTotalValue());
+    }
+
+    private OrderItemBtgPactualInput mockOrderItemInput(String product,
+                                                        int quantity,
+                                                        BigDecimal price) {
+
+        var orderItemBtgPactualInput = Mockito.mock(OrderItemBtgPactualInput.class);
+
+        Mockito.when(orderItemBtgPactualInput.product())
+                .thenReturn(product);
+
+        Mockito.when(orderItemBtgPactualInput.quantity())
+                .thenReturn(quantity);
+
+        Mockito.when(orderItemBtgPactualInput.price())
+                .thenReturn(price);
+
+        return orderItemBtgPactualInput;
     }
 
     // Stub simples para simular o comportamento de OrderItem nos testes de cálculo

@@ -40,6 +40,11 @@ public class OrderItemBtgPactualEntity {
     @BsonProperty("price")
     public BigDecimal price;
 
+    @NotNull(message = "O valor total do item do pedido é obrigatório")
+    @DecimalMin(value = "0.01", message = "O valor total do item pedido deve ser maior que zero")
+    @BsonProperty("totalItemValue")
+    public BigDecimal totalItemValue;
+
     @BsonProperty("active")
     public Boolean active;
 
