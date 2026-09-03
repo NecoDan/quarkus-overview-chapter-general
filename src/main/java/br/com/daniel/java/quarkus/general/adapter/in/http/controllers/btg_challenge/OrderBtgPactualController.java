@@ -155,7 +155,8 @@ public class OrderBtgPactualController {
 
             return Response.ok(orderBtgPactualGetsUseCase.getAllOrdersPageableByCustomer(
                             customerId, page, size, expandItems
-                    )).build();
+                    )
+            ).build();
         } finally {
             MdcUtils.clear();
         }
