@@ -1,6 +1,6 @@
 package br.com.daniel.java.quarkus.general.core.port.itau_challenge;
 
-import br.com.daniel.java.quarkus.general.core.domain.TransactionItau;
+import br.com.daniel.java.quarkus.general.core.domain.itau_challenge.TransactionItau;
 
 import java.time.OffsetDateTime;
 import java.util.List;

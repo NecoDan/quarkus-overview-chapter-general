@@ -1,11 +1,8 @@
 package br.com.daniel.java.quarkus.general.adapter.out.files;
 
 import br.com.daniel.java.quarkus.general.adapter.out.files.repository.GamePlayerUolFileRepository;
-import br.com.daniel.java.quarkus.general.core.domain.TypeHeroGroup;
+import br.com.daniel.java.quarkus.general.core.domain.uol_challenge.TypeHeroGroup;
 import br.com.daniel.java.quarkus.general.util.factory.GamePlayerUolFactory;
-import com.mongodb.client.MongoClient;
-import io.quarkus.test.InjectMock;
-import io.quarkus.test.junit.QuarkusTest;
 import jakarta.inject.Inject;
 import org.junit.jupiter.api.*;
 

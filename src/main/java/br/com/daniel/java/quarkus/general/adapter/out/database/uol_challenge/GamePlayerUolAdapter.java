@@ -2,8 +2,8 @@ package br.com.daniel.java.quarkus.general.adapter.out.database.uol_challenge;
 
 import br.com.daniel.java.quarkus.general.adapter.out.database.uol_challenge.repository.GamePlayerUolRepository;
 import br.com.daniel.java.quarkus.general.adapter.out.entities.uol_challenge.GamePlayerUolEntity;
-import br.com.daniel.java.quarkus.general.core.domain.GamePlayerUol;
-import br.com.daniel.java.quarkus.general.core.domain.TypeHeroGroup;
+import br.com.daniel.java.quarkus.general.core.domain.uol_challenge.GamePlayerUol;
+import br.com.daniel.java.quarkus.general.core.domain.uol_challenge.TypeHeroGroup;
 import br.com.daniel.java.quarkus.general.core.port.uol_challenge.GamePlayerUolPort;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;

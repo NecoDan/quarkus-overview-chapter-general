@@ -1,7 +1,7 @@
 package br.com.daniel.java.quarkus.general.core.port.uol_challenge;
 
-import br.com.daniel.java.quarkus.general.core.domain.GamePlayerUol;
-import br.com.daniel.java.quarkus.general.core.domain.TypeHeroGroup;
+import br.com.daniel.java.quarkus.general.core.domain.uol_challenge.GamePlayerUol;
+import br.com.daniel.java.quarkus.general.core.domain.uol_challenge.TypeHeroGroup;
 import jakarta.transaction.Transactional;
 
 import java.util.List;

@@ -1,7 +1,7 @@
 package br.com.daniel.java.quarkus.general.core.usecase.itau_challenge;
 
 import br.com.daniel.java.quarkus.general.adapter.out.database.itau_challenge.TransactionItauMemoryAdapter;
-import br.com.daniel.java.quarkus.general.core.domain.TransactionItau;
+import br.com.daniel.java.quarkus.general.core.domain.itau_challenge.TransactionItau;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

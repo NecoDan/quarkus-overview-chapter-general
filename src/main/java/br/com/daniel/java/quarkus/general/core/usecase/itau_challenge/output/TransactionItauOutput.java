@@ -1,6 +1,6 @@
 package br.com.daniel.java.quarkus.general.core.usecase.itau_challenge.output;
 
-import br.com.daniel.java.quarkus.general.core.domain.TransactionItau;
+import br.com.daniel.java.quarkus.general.core.domain.itau_challenge.TransactionItau;
 import br.com.daniel.java.quarkus.general.utils.FunctionalUtils;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;

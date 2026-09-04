@@ -1,6 +1,6 @@
 package br.com.daniel.java.quarkus.general.core.usecase.uol_challenge.output;
 
-import br.com.daniel.java.quarkus.general.core.domain.GamePlayerUol;
+import br.com.daniel.java.quarkus.general.core.domain.uol_challenge.GamePlayerUol;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 

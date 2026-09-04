@@ -1,6 +1,6 @@
 package br.com.daniel.java.quarkus.general.adapter.out.database.itau_challenge;
 
-import br.com.daniel.java.quarkus.general.core.domain.TransactionItau;
+import br.com.daniel.java.quarkus.general.core.domain.itau_challenge.TransactionItau;
 import br.com.daniel.java.quarkus.general.core.port.itau_challenge.TransactionItauMemoryPort;
 import br.com.daniel.java.quarkus.general.exceptions.api.TransactionItauCreateFailedException;
 import br.com.daniel.java.quarkus.general.exceptions.api.TransactionItauNotFoundException;

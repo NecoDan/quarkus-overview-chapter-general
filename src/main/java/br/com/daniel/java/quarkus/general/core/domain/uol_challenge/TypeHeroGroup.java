@@ -1,10 +1,9 @@
-package br.com.daniel.java.quarkus.general.core.domain;
+package br.com.daniel.java.quarkus.general.core.domain.uol_challenge;
 
 import lombok.Getter;
 
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @Getter

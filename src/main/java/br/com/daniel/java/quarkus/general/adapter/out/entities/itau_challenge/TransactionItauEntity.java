@@ -1,7 +1,7 @@
 package br.com.daniel.java.quarkus.general.adapter.out.entities.itau_challenge;
 
 import br.com.daniel.java.quarkus.general.config.EncryptoManagerConfig;
-import br.com.daniel.java.quarkus.general.core.domain.TransactionItau;
+import br.com.daniel.java.quarkus.general.core.domain.itau_challenge.TransactionItau;
 import br.com.daniel.java.quarkus.general.exceptions.ParseEntityFailedException;
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import jakarta.persistence.*;
@@ -16,7 +16,6 @@ import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.Objects;
 
 @Data
 @NoArgsConstructor

@@ -1,6 +1,6 @@
 package br.com.daniel.java.quarkus.general.adapter.out.files.repository;
 
-import br.com.daniel.java.quarkus.general.core.domain.TypeHeroGroup;
+import br.com.daniel.java.quarkus.general.core.domain.uol_challenge.TypeHeroGroup;
 import br.com.daniel.java.quarkus.general.exceptions.api.GamePlayerUolNotFoundException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
