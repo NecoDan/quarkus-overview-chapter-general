@@ -15,5 +15,4 @@ public record GamePlayerOutput(@JsonProperty("respostaSucesso") String respostaS
                 .formatted(codeName, groupCode)
         );
     }
-
 }

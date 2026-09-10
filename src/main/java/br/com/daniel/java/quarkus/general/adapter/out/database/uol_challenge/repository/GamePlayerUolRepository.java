@@ -1,7 +1,7 @@
 package br.com.daniel.java.quarkus.general.adapter.out.database.uol_challenge.repository;
 
 import br.com.daniel.java.quarkus.general.adapter.out.entities.uol_challenge.GamePlayerUolEntity;
-import br.com.daniel.java.quarkus.general.core.domain.TypeHeroGroup;
+import br.com.daniel.java.quarkus.general.core.domain.uol_challenge.TypeHeroGroup;
 import io.quarkus.hibernate.orm.panache.PanacheRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 

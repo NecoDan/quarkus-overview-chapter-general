@@ -1,6 +1,6 @@
 package br.com.daniel.java.quarkus.general.core.usecase.itau_challenge;
 
-import br.com.daniel.java.quarkus.general.core.port.TransactionItauMemoryPort;
+import br.com.daniel.java.quarkus.general.core.port.itau_challenge.TransactionItauMemoryPort;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 import lombok.extern.slf4j.Slf4j;

@@ -1,8 +1,8 @@
 package br.com.daniel.java.quarkus.general.core.usecase.uol_challenge;
 
 import br.com.daniel.java.quarkus.general.adapter.out.database.uol_challenge.GamePlayerUolAdapter;
-import br.com.daniel.java.quarkus.general.core.domain.GamePlayerUol;
-import br.com.daniel.java.quarkus.general.core.domain.TypeHeroGroup;
+import br.com.daniel.java.quarkus.general.core.domain.uol_challenge.GamePlayerUol;
+import br.com.daniel.java.quarkus.general.core.domain.uol_challenge.TypeHeroGroup;
 import br.com.daniel.java.quarkus.general.exceptions.api.GamePlayerUolNotFoundException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

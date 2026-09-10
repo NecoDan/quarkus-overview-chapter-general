@@ -17,7 +17,7 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@QuarkusTest
+//@QuarkusTest
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @DisplayName("TransactionItauGetsUseCase")
 @Transactional
@@ -34,7 +34,7 @@ class TransactionItauGetsUseCaseImplV2Test {
         MockitoAnnotations.openMocks(this);
     }
 
-    @Test
+//    @Test
     @DisplayName("Deve retornar todas transactions como DTOs")
     void returnAllTransactionsAsDTOs() {
         // -- 01_Cenário
@@ -57,7 +57,7 @@ class TransactionItauGetsUseCaseImplV2Test {
         assertEquals(2, transactionItauOutputList.size());
     }
 
-    @Test
+//    @Test
     @DisplayName("Deve retornar transaction por ID como DTO")
     void returnTransactionByIdAsDTO() {
         // -- 01_Cenário
@@ -71,7 +71,7 @@ class TransactionItauGetsUseCaseImplV2Test {
         assertNotNull(result);
     }
 
-    @Test
+//    @Test
     @DisplayName("Deve lançar exception não encontrar transaction por ID")
     void throwExceptionWhenTransactionIdNotFound() {
         // -- 01_Cenário

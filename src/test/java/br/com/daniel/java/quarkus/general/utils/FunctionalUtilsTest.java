@@ -15,11 +15,54 @@ import java.lang.reflect.InvocationTargetException;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 class FunctionalUtilsTest {
+
+    @Test
+    @DisplayName("Deve converter UUID para ObjectId de 24 caracteres hexadecimais com sucesso")
+    void shouldConvertUuidToObjectIdSuccessfully() {
+        // -- 01_Cenário
+        var uuid = UUID.fromString("123e4567-e89b-12d3-a456-426614174000");
+
+        // A string sem hífens é "123e4567e89b12d3a456426614174000"
+        // Os primeiros 24 caracteres são "123e4567e89b12d3a4564266"
+        var expectedHex = "123e4567e89b12d3a4564266";
+
+        // -- 02_Ação
+        var objectId = FunctionalUtils.uuidToObjectIdMongoDb(uuid);
+
+        // -- 03_Verificação_Validação
+        assertThat(objectId).isNotNull();
+        assertThat(objectId.toHexString()).isEqualTo(expectedHex);
+    }
+
+    @Test
+    @DisplayName("Deve demonstrar perda de dados (colisão) quando dois UUIDs diferem apenas nos últimos 8 caracteres")
+    void shouldProduceSameObjectIdForUuidsDifferingOnlyInTail() {
+        // -- 01_Cenário
+        var uuid1 = UUID.fromString("123e4567-e89b-12d3-a456-426614174000");
+        var uuid2 = UUID.fromString("123e4567-e89b-12d3-a456-4266ffffffff");
+
+        // -- 02_Ação
+        var objectId1 = FunctionalUtils.uuidToObjectIdMongoDb(uuid1);
+        var objectId2 = FunctionalUtils.uuidToObjectIdMongoDb(uuid2);
+
+        // -- 03_Verificação_Validação
+        assertThat(objectId1).isEqualTo(objectId2);
+    }
+
+    @Test
+    @DisplayName("Deve lançar NullPointerException quando o UUID for nulo")
+    void shouldThrowNullPointerExceptionWhenUuidIsNull() {
+        assertThrows(NullPointerException.class, () -> {
+            FunctionalUtils.uuidToObjectIdMongoDb(null);
+        });
+    }
 
     @Test
     void formatsCreationDatesAndHandlesNull() {

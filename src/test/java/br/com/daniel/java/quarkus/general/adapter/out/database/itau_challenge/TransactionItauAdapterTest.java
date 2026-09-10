@@ -2,7 +2,7 @@ package br.com.daniel.java.quarkus.general.adapter.out.database.itau_challenge;
 
 import br.com.daniel.java.quarkus.general.adapter.out.database.itau_challenge.repository.TransactionItauRepository;
 import br.com.daniel.java.quarkus.general.adapter.out.entities.itau_challenge.TransactionItauEntity;
-import br.com.daniel.java.quarkus.general.core.domain.TransactionItau;
+import br.com.daniel.java.quarkus.general.core.domain.itau_challenge.TransactionItau;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -12,7 +12,6 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
 
 class TransactionItauAdapterTest {
