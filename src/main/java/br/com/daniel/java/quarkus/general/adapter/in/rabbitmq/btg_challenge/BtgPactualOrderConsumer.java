@@ -7,6 +7,7 @@ import br.com.daniel.java.quarkus.general.exceptions.api.OrderBtgPactualCreateFa
 import br.com.daniel.java.quarkus.general.utils.logs.MdcUtils;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.smallrye.common.annotation.Blocking;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import lombok.extern.slf4j.Slf4j;
@@ -18,7 +19,7 @@ import org.eclipse.microprofile.reactive.messaging.Incoming;
 @Slf4j
 public class BtgPactualOrderConsumer {
 
-    @ConfigProperty(defaultValue = "mp.messaging.incoming.orders-in.queue.name")
+    @ConfigProperty(defaultValue = "mp.messaging.incoming.btg-pactual-orderbtgpactual-created-in.queue.name")
     String queeNameConsumer;
 
     @Inject
@@ -28,11 +29,11 @@ public class BtgPactualOrderConsumer {
     @CustomObjectMapper
     ObjectMapper objectMapper;
 
-    @Incoming("orders-in")
+    @Incoming("btg-pactual-orderbtgpactual-created-in")
+    @Blocking
     public void consumerProcessOrders(String payload) {
-        MdcUtils.putTransactionIdRandom();
-
         try {
+            MdcUtils.putTransactionIdRandom();
             log.info("BTG_PACTUAL_CHALLENGE - RabbitMQ evento/payload recebido na fila {}.", queeNameConsumer);
             log.debug("BTG_PACTUAL_CHALLENGE - Payload recebido: {}", payload);
 
