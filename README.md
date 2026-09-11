@@ -216,6 +216,21 @@ Logging estruturado em JSON através de `quarkus-logging-json`.
 
 #### **Produção:**
 - **MySQL:** Requer configuração via `application.properties`
+- **MongoDB:** A coleção `tb_btg_orders` é criada e validada pela migration
+  `src/main/resources/db/migrations/V1__create_btg_orders.js`. O contrato do
+  documento está disponível em
+  `src/main/resources/db/schema/btg-orders.schema.json`.
+
+Para aplicar a migration em um banco local com `mongosh`:
+
+```bash
+mongosh "mongodb://localhost:27017/db_btgpactual" \
+  --file src/main/resources/db/migrations/V1__create_btg_orders.js
+```
+
+A migration é idempotente: registra sua execução em `schema_migrations`, usa
+`collMod` quando a coleção já existe e cria os índices necessários para as
+consultas de pedidos.
 
 #### **ORM:**
 - **Hibernate + Panache:** Abstração sobre JPA com métodos helpers
