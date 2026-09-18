@@ -170,6 +170,24 @@ java -jar target/quarkus-app/quarkus-run.jar
 ./mvnw package -Pnative -Dquarkus.native.container-build=true
 ```
 
+#### **Execução com Docker Compose:**
+
+O arquivo `docker-compose.yml` sobe a aplicação junto com MongoDB e RabbitMQ:
+
+```bash
+docker compose up --build
+```
+
+A API ficará disponível em `http://localhost:8095` e a documentação em
+`http://localhost:8095/q/swagger-ui`. MongoDB e RabbitMQ ficam disponíveis
+internamente para a aplicação na rede do Compose.
+
+Para encerrar os serviços:
+
+```bash
+docker compose down
+```
+
 #### **Propriedades Java:**
 - **Versão Source/Target:** Java 21
 - **Encoding:** UTF-8
