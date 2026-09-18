@@ -5,6 +5,7 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.model.IndexOptions;
 import com.mongodb.client.model.Indexes;
 import io.quarkus.runtime.StartupEvent;
+import io.quarkus.arc.profile.UnlessBuildProfile;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.event.Observes;
 import jakarta.inject.Inject;
@@ -12,6 +13,7 @@ import org.bson.Document;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 
 @ApplicationScoped
+@UnlessBuildProfile("test")
 public class MongoIndexConfig {
 
     private static final String NAME_COLLECTION_TB_ORDER = "tb_btg_orders";
@@ -49,4 +51,3 @@ public class MongoIndexConfig {
         );
     }
 }
-
