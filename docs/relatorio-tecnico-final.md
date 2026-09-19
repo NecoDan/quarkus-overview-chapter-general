@@ -192,9 +192,22 @@ Observação de execução: `mvnw.cmd` não foi executável neste checkout porqu
 - Repositório: https://github.com/NecoDan/quarkus-overview-chapter-general
 - Branch de referência: https://github.com/NecoDan/quarkus-overview-chapter-general/tree/develop
 - README: https://github.com/NecoDan/quarkus-overview-chapter-general/blob/develop/README.md
+- Arquitetura detalhada: https://github.com/NecoDan/quarkus-overview-chapter-general/blob/develop/docs/arquitetura.md
+- Arquitetura executiva: https://github.com/NecoDan/quarkus-overview-chapter-general/blob/develop/docs/arquitetura-executiva.md
+- Arquitetura técnica: https://github.com/NecoDan/quarkus-overview-chapter-general/blob/develop/docs/arquitetura-tecnica.md
 - Implementação detalhada: https://github.com/NecoDan/quarkus-overview-chapter-general/blob/develop/docs/readme-detailed-implementation.md
 - Desafio BTG Pactual: https://github.com/NecoDan/quarkus-overview-chapter-general/blob/develop/docs/readme-challenge-btgpactual.md
 - Desafio UOL: https://github.com/NecoDan/quarkus-overview-chapter-general/blob/develop/docs/readme-challenge-uolhost.md
+
+### Resumo da documentação de arquitetura
+
+A documentação de arquitetura foi organizada em três níveis para atender diferentes públicos e objetivos:
+
+- `docs/arquitetura.md`: visão completa, técnica e detalhada do sistema, com explicação de camadas, pacotes, fluxos, persistência e diagramas.
+- `docs/arquitetura-executiva.md`: visão resumida e estratégica, voltada para apresentação e entendimento geral do desenho arquitetural.
+- `docs/arquitetura-tecnica.md`: visão aprofundada do ponto de vista de implementação, com foco em padrões, contextos de negócio, infraestrutura e testabilidade.
+
+Esses documentos complementam o relatório técnico e ajudam a contextualizar a solução em diferentes níveis de profundidade, desde a visão de negócio até a visão de engenharia.
 
 ### Referências técnicas usadas
 
