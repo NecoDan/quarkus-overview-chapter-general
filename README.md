@@ -1,5 +1,9 @@
 # 📋 Documentação
 
+## Relatório técnico final
+
+O relatório técnico final, incluindo plano previsto versus realizado, arquitetura, modelagem de dados, implantação, testes e referências, está disponível em [`docs/relatorio-tecnico-final.md`](docs/relatorio-tecnico-final.md).
+
 ### 1. **Visão Geral do Projeto**
 
 Este é um projeto de demonstração/aprendizado baseado em **Quarkus** (Java framework supersônico e subatômico) que implementa uma API RESTful geral com suporte a múltiplos padrões de serialização e persistência de dados.
