@@ -35,11 +35,18 @@ public class OrderBtgPactual implements Serializable {
     private List<OrderItemBtgPactual> items;
 
     public OrderBtgPactual(OrderBtgPactualInput input) {
+        if (Objects.isNull(input)) {
+            throw new IllegalArgumentException("payload do pedido não pode ser nulo");
+        }
+
         try {
             BeanUtils.copyProperties(this, input);
             this.orderId = input.orderId().toString();
 
             defineCustomer(input.customerId());
+            if (Objects.isNull(input.items())) {
+                throw new IllegalArgumentException("itens do pedido são obrigatórios");
+            }
             createItems(input.items());
             calculateTotalValue();
             defineDates();
@@ -76,9 +83,17 @@ public class OrderBtgPactual implements Serializable {
     }
 
     public void createItems(List<OrderItemBtgPactualInput> itemsInput) {
+        if (Objects.isNull(itemsInput)) {
+            throw new IllegalArgumentException("itens do pedido são obrigatórios");
+        }
+
         var atomicIntegerValue = new AtomicInteger(1);
 
         itemsInput.forEach(itemInput -> {
+            if (Objects.isNull(itemInput)) {
+                throw new IllegalArgumentException("item do pedido não pode ser nulo");
+            }
+
             var itemNewCreated = new OrderItemBtgPactual(itemInput);
             itemNewCreated.setItem(atomicIntegerValue.getAndIncrement());
             addOrderItem(itemNewCreated);

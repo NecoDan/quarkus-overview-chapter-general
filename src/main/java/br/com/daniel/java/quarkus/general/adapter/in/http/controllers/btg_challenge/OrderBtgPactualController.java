@@ -9,6 +9,7 @@ import br.com.daniel.java.quarkus.general.utils.logs.MdcUtils;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
@@ -145,10 +146,14 @@ public class OrderBtgPactualController {
                     description = "Erro interno do servidor"
             )
     })
-    public Response getAllOrderByCustomerId(@QueryParam("customerId") UUID customerId,
+    public Response getAllOrderByCustomerId(@QueryParam("customerId") @NotNull(message = "customerId é obrigatório") UUID customerId,
                                             @QueryParam("page") @DefaultValue("0") int page,
                                             @QueryParam("size") @DefaultValue("10") int size,
                                             @QueryParam("expand_items") @DefaultValue("false") boolean expandItems) {
+        if (customerId == null) {
+            throw new BadRequestException("customerId é obrigatório");
+        }
+
         try {
             MdcUtils.putTransactionIdRandom();
             log.info("BTG_PACTUAL_CHALLENGE - Inicializando a busca ");
@@ -190,7 +195,11 @@ public class OrderBtgPactualController {
                     description = "Erro interno do servidor"
             )
     })
-    public Response getSummariseOrdersByCustomerId(@QueryParam("customerId") UUID customerId) {
+    public Response getSummariseOrdersByCustomerId(@QueryParam("customerId") @NotNull(message = "customerId é obrigatório") UUID customerId) {
+        if (customerId == null) {
+            throw new BadRequestException("customerId é obrigatório");
+        }
+
         try {
             MdcUtils.putTransactionIdRandom();
             log.info("BTG_PACTUAL_CHALLENGE - Inicializando a busca ");

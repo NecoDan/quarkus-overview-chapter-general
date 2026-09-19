@@ -33,6 +33,10 @@ public class OrderItemBtgPactual implements Serializable {
     private LocalDateTime createdAt;
 
     public OrderItemBtgPactual(OrderItemBtgPactualInput input) {
+        if (Objects.isNull(input)) {
+            throw new IllegalArgumentException("item do pedido não pode ser nulo");
+        }
+
         try {
             BeanUtils.copyProperties(this, input);
 

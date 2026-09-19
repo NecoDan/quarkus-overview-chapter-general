@@ -53,6 +53,14 @@ public class OrderBtgPactualGetsUseCaseImpl implements OrderBtgPactualGetsUseCas
                                                                              int pageIndex,
                                                                              int pageSize,
                                                                              boolean expandItems) {
+        if (Objects.isNull(customerId)) {
+            throw new IllegalArgumentException("customerId é obrigatório");
+        }
+
+        if (pageIndex < 0 || pageSize <= 0) {
+            throw new IllegalArgumentException("page e size devem ser valores válidos");
+        }
+
         var pagedAllOrders = orderBtgPactualPort.getAllOrdersPageableByCustomer(customerId, pageIndex,
                 pageSize, expandItems
         );
@@ -77,6 +85,10 @@ public class OrderBtgPactualGetsUseCaseImpl implements OrderBtgPactualGetsUseCas
 
     @Override
     public OrderTotalQuantityValuesBtgPactualOutput getTotalQuantityOrdersBy(UUID customerId) {
+        if (Objects.isNull(customerId)) {
+            throw new IllegalArgumentException("customerId é obrigatório");
+        }
+
         var listOrdersAll = orderBtgPactualPort.getAllOrdersBy(customerId);
 
         if (CollectionUtils.isEmpty(listOrdersAll)) {

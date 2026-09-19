@@ -4,9 +4,12 @@ import br.com.daniel.java.quarkus.general.config.handler.errors.ApiErrorResponse
 import br.com.daniel.java.quarkus.general.config.handler.errors.ResponseDataError;
 import br.com.daniel.java.quarkus.general.exceptions.HttpException;
 import br.com.daniel.java.quarkus.general.utils.FunctionalUtils;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import io.netty.handler.codec.http.HttpResponseStatus;
 import io.vertx.core.http.HttpServerRequest;
 import jakarta.inject.Inject;
+import jakarta.validation.ConstraintViolationException;
+import jakarta.ws.rs.BadRequestException;
 import jakarta.ws.rs.WebApplicationException;
 import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.Response;
@@ -20,6 +23,7 @@ import org.jboss.logging.Logger;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Provider
@@ -40,18 +44,34 @@ public class HandlerAdviceController implements ExceptionMapper<Exception> {
 
     private Response mapExceptionToResponse(Exception exception) {
         return switch (exception) {
+            case BadRequestException badRequestException -> Response.status(HttpResponseStatus.BAD_REQUEST.code())
+                    .entity(badRequestException.getMessage())
+                    .build();
             case WebApplicationException webAppEx -> {
                 var originalErrorResponse = webAppEx.getResponse();
                 yield Response.fromResponse(originalErrorResponse)
                         .entity(originalErrorResponse.getStatusInfo().getReasonPhrase())
                         .build();
             }
-            case IllegalArgumentException e -> Response.status(HttpResponseStatus.NOT_FOUND.code())
+            case ConstraintViolationException violationException -> Response.status(HttpResponseStatus.BAD_REQUEST.code())
+                    .entity(buildValidationMessage(violationException))
+                    .build();
+            case JsonProcessingException jsonException -> Response.status(HttpResponseStatus.BAD_REQUEST.code())
+                    .entity("Payload inválido: " + jsonException.getOriginalMessage())
+                    .build();
+            case IllegalArgumentException e -> Response.status(HttpResponseStatus.BAD_REQUEST.code())
                     .entity(e.getMessage())
                     .build();
             case HttpException httpEx -> toResponseFromCustomizeApplication(httpEx);
             default -> toResponseInternalServerError(exception);
         };
+    }
+
+    private String buildValidationMessage(ConstraintViolationException exception) {
+        return exception.getConstraintViolations()
+                .stream()
+                .map(violation -> violation.getPropertyPath() + " " + violation.getMessage())
+                .collect(Collectors.joining("; "));
     }
 
     public Response toResponseInternalServerError(final Exception throwable) {

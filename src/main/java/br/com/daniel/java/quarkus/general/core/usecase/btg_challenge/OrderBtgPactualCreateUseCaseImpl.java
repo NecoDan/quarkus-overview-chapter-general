@@ -25,6 +25,10 @@ public class OrderBtgPactualCreateUseCaseImpl implements OrderBtgPactualCreateUs
 
     @Override
     public OrderCreatedBtgPactualOutput createOrder(OrderBtgPactualInput input) {
+        if (input == null) {
+            throw new IllegalArgumentException("payload do pedido não pode ser nulo");
+        }
+
         log.info("Inicializando fluxo para criação de Pedido. Payload: {}", input);
 
         try {
@@ -32,6 +36,9 @@ public class OrderBtgPactualCreateUseCaseImpl implements OrderBtgPactualCreateUs
             var orderBtgPactualSaved = orderBtgPactualPort.saveOrder(orderBtgPactual);
 
             return OrderCreatedBtgPactualOutput.from(orderBtgPactualSaved.get().getToStringId());
+        } catch (IllegalArgumentException e) {
+            log.error("Payload inválido ao criar um novo Pedido. Payload: {}. Erro: {}", input, e.getMessage());
+            throw e;
         } catch (Exception e) {
             log.error("Erro ao criar um novo Pedido. Payload: {}. Erro: {}", input, e.getMessage());
             throw new OrderBtgPactualCreateFailedException("Erro ao criar um novo Pedido. Payload: %s. Erro: %s".formatted(input, e.getMessage()), e);
@@ -40,6 +47,10 @@ public class OrderBtgPactualCreateUseCaseImpl implements OrderBtgPactualCreateUs
 
     @Override
     public void createOrderFrom(OrderCreatedEventBtgPactualInput input) {
+        if (input == null) {
+            throw new IllegalArgumentException("payload do pedido não pode ser nulo");
+        }
+
         log.info("Inicializando fluxo para criação de Pedido a partir do evento. Payload: {}", input);
 
         try {
@@ -60,6 +71,9 @@ public class OrderBtgPactualCreateUseCaseImpl implements OrderBtgPactualCreateUs
             var orderBtgPactual = new OrderBtgPactual(orderBtgPactualInput);
 
             orderBtgPactualPort.saveOrder(orderBtgPactual);
+        } catch (IllegalArgumentException e) {
+            log.error("Payload inválido ao criar Pedido a partir do evento. Payload: {}. Erro: {}", input, e.getMessage());
+            throw e;
         } catch (Exception e) {
             log.error("Erro ao criar Pedido a partir do evento. Payload: {}. Erro: {}", input, e.getMessage());
             throw new OrderBtgPactualCreateFailedException("Erro ao criar Pedido a partir do evento. Payload: %s. Erro: %s".formatted(input, e.getMessage()), e);

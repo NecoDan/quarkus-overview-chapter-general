@@ -33,6 +33,10 @@ public class BtgPactualOrderConsumer {
     @Blocking
     public void consumerProcessOrders(String payload) {
         try {
+            if (payload == null || payload.isBlank()) {
+                throw new IllegalArgumentException("payload do evento não pode ser nulo ou vazio");
+            }
+
             MdcUtils.putTransactionIdRandom();
             log.info("BTG_PACTUAL_CHALLENGE - RabbitMQ evento/payload recebido na fila {}.", queeNameConsumer);
             log.debug("BTG_PACTUAL_CHALLENGE - Payload recebido: {}", payload);
