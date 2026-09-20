@@ -167,6 +167,12 @@ br.com.daniel.java.quarkus.general
 ./mvnw compile quarkus:dev
 # Acesso: http://localhost:8080/q/dev (Dev UI)
 
+# Compilar o módulo BTG junto com suas dependências internas
+./mvnw -pl btg-pactual-integration -am compile
+
+# Executar qualquer build completo a partir do reactor Maven
+./mvnw clean test
+
 # Empacotamento JAR
 ./mvnw package
 
