@@ -1,10 +1,10 @@
 package br.com.daniel.java.quarkus.general.adapter.in.http.controllers.btg_challenge;
 
-import br.com.daniel.java.quarkus.general.core.usecase.btg_challenge.OrderBtgPactualCreateUseCase;
-import br.com.daniel.java.quarkus.general.core.usecase.btg_challenge.OrderBtgPactualGetsUseCase;
-import br.com.daniel.java.quarkus.general.core.usecase.btg_challenge.input.OrderBtgPactualInput;
-import br.com.daniel.java.quarkus.general.core.usecase.btg_challenge.output.OrderCreatedBtgPactualOutput;
-import br.com.daniel.java.quarkus.general.core.usecase.btg_challenge.output.OrderTotalQuantityValuesBtgPactualOutput;
+import br.com.daniel.java.quarkus.general.core.usecase.OrderBtgPactualCreateUseCase;
+import br.com.daniel.java.quarkus.general.core.usecase.OrderBtgPactualGetsUseCase;
+import br.com.daniel.java.quarkus.general.core.usecase.input.OrderBtgPactualInput;
+import br.com.daniel.java.quarkus.general.core.usecase.output.OrderCreatedBtgPactualOutput;
+import br.com.daniel.java.quarkus.general.core.usecase.output.OrderTotalQuantityValuesBtgPactualOutput;
 import br.com.daniel.java.quarkus.general.utils.logs.MdcUtils;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;

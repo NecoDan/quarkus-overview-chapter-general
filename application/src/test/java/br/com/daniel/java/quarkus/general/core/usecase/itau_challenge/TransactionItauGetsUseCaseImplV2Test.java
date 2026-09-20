@@ -5,7 +5,6 @@ import br.com.daniel.java.quarkus.general.core.usecase.itau_challenge.output.Tra
 import br.com.daniel.java.quarkus.general.exceptions.api.TransactionItauNotFoundException;
 import br.com.daniel.java.quarkus.general.util.factory.ItauTransactionFactory;
 import br.com.daniel.java.quarkus.general.utils.RandomUtils;
-import io.quarkus.test.junit.QuarkusTest;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import org.apache.commons.collections4.CollectionUtils;

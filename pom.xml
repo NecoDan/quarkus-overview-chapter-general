@@ -16,6 +16,7 @@
     </modules>
 
     <properties>
+        <!-- Properties Maven -->
         <compiler-plugin.version>3.8.1</compiler-plugin.version>
         <maven.compiler.parameters>true</maven.compiler.parameters>
         <maven.compiler.release>21</maven.compiler.release>
@@ -23,12 +24,21 @@
         <maven.compiler.target>21</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
+        <!-- Properties Quarkus Framework -->
         <quarkus.platform.artifact-id>quarkus-bom</quarkus.platform.artifact-id>
         <quarkus.platform.group-id>io.quarkus.platform</quarkus.platform.group-id>
         <quarkus.platform.version>3.33.3</quarkus.platform.version>
+
+        <!-- Properties Libs in Project -->
         <lombok.version>1.18.34</lombok.version>
         <mapstruct.version>1.6.3</mapstruct.version>
         <google.guava.version>33.4.0-jre</google.guava.version>
+        <assertj-core-version>3.27.7</assertj-core-version>
+        <commons.beanutils.version>1.9.4</commons.beanutils.version>
+        <github.javafaker.version>1.0.2</github.javafaker.version>
+        <apache.commons.collections.version>4.5.0-M2</apache.commons.collections.version>
+        <yaml.snakeyaml.version>2.2</yaml.snakeyaml.version>
     </properties>
 
     <dependencyManagement>
