@@ -29,21 +29,24 @@ Este é um projeto de demonstração/aprendizado baseado em **Quarkus** (Java fr
 
 ```
 quarkus-overview-chapter-general/
-├── pom.xml                          # Configuração Maven (dependências e plugins)
+├── pom.xml                          # Agregador Maven dos subprojetos
+├── common-utils/                    # Tipos e utilitários compartilhados
+├── btg-pactual-integration/         # Integração completa com o BTG Pactual
+├── application/                     # Aplicação principal e demais desafios
 ├── mvnw / mvnw.cmd                  # Maven Wrapper (Linux/Windows)
 ├── README.md                        # Documentação básica
 ├── .gitignore                       # Exclusões Git
 ├── .dockerignore                    # Exclusões Docker
 ├── .github/                         # Configurações GitHub (workflows, etc)
 │
-├── src/main/
+└── application/src/main/
 │   ├── java/br/com/daniel/java/     # Código-fonte principal (estrutura de pacotes)
 │   │   └── [módulos de negócio]     # A definir conforme desenvolvimento
 │   │
 │   └── resources/                   # Recursos da aplicação
 │       └── [arquivos de config]     # application.properties, arquivos estáticos
 │
-├── src/test/
+└── application/src/test/
 │   ├── java/                        # Testes unitários e integração
 │   └── resources/                   # Recursos para testes
 │
@@ -164,6 +167,12 @@ br.com.daniel.java.quarkus.general
 ./mvnw compile quarkus:dev
 # Acesso: http://localhost:8080/q/dev (Dev UI)
 
+# Compilar o módulo BTG junto com suas dependências internas
+./mvnw -pl btg-pactual-integration -am compile
+
+# Executar qualquer build completo a partir do reactor Maven
+./mvnw clean test
+
 # Empacotamento JAR
 ./mvnw package
 
@@ -214,6 +223,10 @@ GET /q/health           # Health geral
 GET /q/health/live      # Liveness probe (Kubernetes)
 GET /q/health/ready     # Readiness probe (Kubernetes)
 ```
+
+O `quarkus-smallrye-health` disponibiliza endpoints JSON de health; ele não fornece
+uma rota `health-ui`. Use os endpoints acima ou uma ferramenta de observabilidade
+para visualizar os resultados.
 
 Logging estruturado em JSON através de `quarkus-logging-json`.
 

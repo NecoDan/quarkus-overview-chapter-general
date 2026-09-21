@@ -1,0 +1,64 @@
+{
+  "vingadores": [
+    {
+      "codinome": "Homem de Ferro"
+    },
+    {
+      "codinome": "Capitão América"
+    },
+    {
+      "codinome": "Thor"
+    },
+    {
+      "codinome": "Hulk"
+    },
+    {
+      "codinome": "Viúva Negra"
+    },
+    {
+      "codinome": "Gavião Arqueiro"
+    },
+    {
+      "codinome": "Homem-Aranha"
+    },
+    {
+      "codinome": "Pantera Negra"
+    },
+    {
+      "codinome": "Doutor Estranho"
+    },
+    {
+      "codinome": "Wolverine"
+    },
+    {
+      "codinome": "Jean Grey"
+    },
+    {
+      "codinome": "Ciclope"
+    },
+    {
+      "codinome": "Tempestade"
+    },
+    {
+      "codinome": "Magneto"
+    },
+    {
+      "codinome": "Professor X"
+    },
+    {
+      "codinome": "Deadpool"
+    },
+    {
+      "codinome": "Capitã Marvel"
+    },
+    {
+      "codinome": "Feiticeira Escarlate"
+    },
+    {
+      "codinome": "Visão"
+    },
+    {
+      "codinome": "Homem-Formiga"
+    }
+  ]
+}
