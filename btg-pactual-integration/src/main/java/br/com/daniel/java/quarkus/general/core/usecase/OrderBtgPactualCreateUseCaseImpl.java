@@ -11,6 +11,8 @@ import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.Objects;
+
 @Singleton
 @Slf4j
 public class OrderBtgPactualCreateUseCaseImpl implements OrderBtgPactualCreateUseCase {
@@ -21,17 +23,18 @@ public class OrderBtgPactualCreateUseCaseImpl implements OrderBtgPactualCreateUs
 
     @Override
     public OrderCreatedBtgPactualOutput createOrder(OrderBtgPactualInput input) {
-        if (input == null) {
-            throw new IllegalArgumentException("payload do pedido não pode ser nulo");
-        }
-
         log.info("Inicializando fluxo para criação de Pedido. Payload: {}", input);
 
         try {
+            if (Objects.isNull(input)) throw new IllegalArgumentException("payload do pedido não pode ser nulo");
+
             var orderBtgPactual = new OrderBtgPactual(input);
             var orderBtgPactualSaved = orderBtgPactualPort.saveOrder(orderBtgPactual);
 
-            return OrderCreatedBtgPactualOutput.from(orderBtgPactualSaved.get().getToStringId());
+            return OrderCreatedBtgPactualOutput.from(orderBtgPactualSaved.orElseThrow(() ->
+                            new OrderBtgPactualCreateFailedException("Order could not be saved"))
+                    .getToStringId()
+            );
         } catch (IllegalArgumentException e) {
             log.error("Payload inválido ao criar um novo Pedido. Payload: {}. Erro: {}", input, e.getMessage());
             throw e;
@@ -43,13 +46,11 @@ public class OrderBtgPactualCreateUseCaseImpl implements OrderBtgPactualCreateUs
 
     @Override
     public void createOrderFrom(OrderCreatedEventBtgPactualInput input) {
-        if (input == null) {
-            throw new IllegalArgumentException("payload do pedido não pode ser nulo");
-        }
-
         log.info("Inicializando fluxo para criação de Pedido a partir do evento. Payload: {}", input);
 
         try {
+            if (Objects.isNull(input)) throw new IllegalArgumentException("payload do pedido não pode ser nulo");
+
             var optionalOrderBtgPactual = orderBtgPactualPort.getOrderByOrderIdExternal(input.orderId());
 
             if (optionalOrderBtgPactual.isPresent()) {
