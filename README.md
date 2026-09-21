@@ -224,6 +224,10 @@ GET /q/health/live      # Liveness probe (Kubernetes)
 GET /q/health/ready     # Readiness probe (Kubernetes)
 ```
 
+O `quarkus-smallrye-health` disponibiliza endpoints JSON de health; ele não fornece
+uma rota `health-ui`. Use os endpoints acima ou uma ferramenta de observabilidade
+para visualizar os resultados.
+
 Logging estruturado em JSON através de `quarkus-logging-json`.
 
 ---
