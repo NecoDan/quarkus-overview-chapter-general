@@ -30,7 +30,7 @@ Este é um projeto de demonstração/aprendizado baseado em **Quarkus** (Java fr
 ```
 quarkus-overview-chapter-general/
 ├── pom.xml                          # Agregador Maven dos subprojetos
-├── common/                          # Tipos e utilitários compartilhados
+├── common-utils/                    # Tipos e utilitários compartilhados
 ├── btg-pactual-integration/         # Integração completa com o BTG Pactual
 ├── application/                     # Aplicação principal e demais desafios
 ├── mvnw / mvnw.cmd                  # Maven Wrapper (Linux/Windows)

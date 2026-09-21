@@ -17,7 +17,7 @@
     <dependencies>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>quarkus-overview-chapter-general-common</artifactId>
+            <artifactId>quarkus-overview-chapter-general-common-utils</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
