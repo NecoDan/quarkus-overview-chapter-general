@@ -1,10 +1,9 @@
 package br.com.daniel.java.quarkus.general.utils.logs;
 
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.slf4j.MDC;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class MdcUtilsTest {
 
@@ -17,11 +16,11 @@ class MdcUtilsTest {
     void storesAndClearsTransactionId() {
         MdcUtils.putTransactionId("transaction-1");
 
-        assertEquals("transaction-1", MDC.get("transactionId"));
+        Assertions.assertEquals("transaction-1", MDC.get("transactionId"));
 
         MdcUtils.clear();
 
-        assertNull(MDC.get("transactionId"));
+        Assertions.assertNull(MDC.get("transactionId"));
     }
 
     @Test
@@ -29,7 +28,7 @@ class MdcUtilsTest {
         MdcUtils.putTransactionIdRandom();
 
         var value = MDC.get("transactionId");
-        assertNotNull(value);
-        assertDoesNotThrow(() -> java.util.UUID.fromString(value));
+        Assertions.assertNotNull(value);
+        Assertions.assertDoesNotThrow(() -> java.util.UUID.fromString(value));
     }
 }

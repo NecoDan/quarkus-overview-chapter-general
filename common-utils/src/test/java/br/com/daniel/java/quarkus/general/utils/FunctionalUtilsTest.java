@@ -1,7 +1,9 @@
 package br.com.daniel.java.quarkus.general.utils;
 
 import io.smallrye.config.SmallRyeConfig;
+import org.assertj.core.api.AssertionsForClassTypes;
 import org.eclipse.microprofile.config.ConfigProvider;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -9,6 +11,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.NullAndEmptySource;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.mockito.MockedStatic;
+import org.mockito.Mockito;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -16,10 +19,6 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
-
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
 
 class FunctionalUtilsTest {
 
@@ -37,8 +36,8 @@ class FunctionalUtilsTest {
         var objectId = FunctionalUtils.uuidToObjectIdMongoDb(uuid);
 
         // -- 03_Verificação_Validação
-        assertThat(objectId).isNotNull();
-        assertThat(objectId.toHexString()).isEqualTo(expectedHex);
+        AssertionsForClassTypes.assertThat(objectId).isNotNull();
+        AssertionsForClassTypes.assertThat(objectId.toHexString()).isEqualTo(expectedHex);
     }
 
     @Test
@@ -53,13 +52,13 @@ class FunctionalUtilsTest {
         var objectId2 = FunctionalUtils.uuidToObjectIdMongoDb(uuid2);
 
         // -- 03_Verificação_Validação
-        assertThat(objectId1).isEqualTo(objectId2);
+        AssertionsForClassTypes.assertThat(objectId1).isEqualTo(objectId2);
     }
 
     @Test
     @DisplayName("Deve lançar NullPointerException quando o UUID for nulo")
     void shouldThrowNullPointerExceptionWhenUuidIsNull() {
-        assertThrows(NullPointerException.class, () -> {
+        Assertions.assertThrows(NullPointerException.class, () -> {
             FunctionalUtils.uuidToObjectIdMongoDb(null);
         });
     }
@@ -68,29 +67,29 @@ class FunctionalUtilsTest {
     void formatsCreationDatesAndHandlesNull() {
         var date = LocalDateTime.of(2026, 8, 25, 14, 30, 45);
 
-        assertEquals("25/08/2026 14:30:45", FunctionalUtils.formatCreationDate(date));
-        assertEquals("25/08/2026 14:30:45", FunctionalUtils.formatCreationDateBy(date));
-        assertEquals("", FunctionalUtils.formatCreationDate(null));
+        Assertions.assertEquals("25/08/2026 14:30:45", FunctionalUtils.formatCreationDate(date));
+        Assertions.assertEquals("25/08/2026 14:30:45", FunctionalUtils.formatCreationDateBy(date));
+        Assertions.assertEquals("", FunctionalUtils.formatCreationDate(null));
     }
 
     @Test
     void formatsNumbersWithTwoDecimalPlaces() {
-        assertEquals("10.24", FunctionalUtils.formatDecimalNumber(new BigDecimal("10.235")));
-        assertEquals("10.50", FunctionalUtils.formatDecimalNumberBy(10.5));
+        Assertions.assertEquals("10.24", FunctionalUtils.formatDecimalNumber(new BigDecimal("10.235")));
+        Assertions.assertEquals("10.50", FunctionalUtils.formatDecimalNumberBy(10.5));
     }
 
     @Test
     void rejectsNullNumericValue() {
-        var error = assertThrows(IllegalArgumentException.class,
+        var error = Assertions.assertThrows(IllegalArgumentException.class,
                 () -> FunctionalUtils.formatDecimalNumber(null));
 
-        assertEquals("Valor numerico encontra-se inválido e/ou inexsitente.", error.getMessage());
+        Assertions.assertEquals("Valor numerico encontra-se inválido e/ou inexsitente.", error.getMessage());
     }
 
     @Test
     void formatsCpfWithOrWithoutPunctuation() {
-        assertEquals("123.456.789-01", FunctionalUtils.formatCpf("12345678901"));
-        assertEquals("123.456.789-01", FunctionalUtils.formatCpf("123.456.789-01"));
+        Assertions.assertEquals("123.456.789-01", FunctionalUtils.formatCpf("12345678901"));
+        Assertions.assertEquals("123.456.789-01", FunctionalUtils.formatCpf("123.456.789-01"));
     }
 
     @Test
@@ -99,13 +98,13 @@ class FunctionalUtilsTest {
         Constructor<FunctionalUtils> constructor = FunctionalUtils.class.getDeclaredConstructor();
         constructor.setAccessible(true);
 
-        InvocationTargetException exception = assertThrows(
+        InvocationTargetException exception = Assertions.assertThrows(
                 InvocationTargetException.class,
                 constructor::newInstance
         );
 
-        assertInstanceOf(IllegalStateException.class, exception.getCause());
-        assertEquals("This is a utility class FunctionalUtils and cannot be instantiated", exception.getCause().getMessage());
+        Assertions.assertInstanceOf(IllegalStateException.class, exception.getCause());
+        Assertions.assertEquals("This is a utility class FunctionalUtils and cannot be instantiated", exception.getCause().getMessage());
     }
 
     @Nested
@@ -115,20 +114,20 @@ class FunctionalUtilsTest {
         @Test
         @DisplayName("Deve retornar a lista de perfis ativos do SmallRyeConfig com sucesso")
         void getActiveProfiles_ShouldReturnProfiles() {
-            try (MockedStatic<ConfigProvider> mockedConfigProvider = mockStatic(ConfigProvider.class)) {
-                org.eclipse.microprofile.config.Config mockConfig = mock(org.eclipse.microprofile.config.Config.class);
-                SmallRyeConfig mockSmallRyeConfig = mock(SmallRyeConfig.class);
+            try (MockedStatic<ConfigProvider> mockedConfigProvider = Mockito.mockStatic(ConfigProvider.class)) {
+                org.eclipse.microprofile.config.Config mockConfig = Mockito.mock(org.eclipse.microprofile.config.Config.class);
+                SmallRyeConfig mockSmallRyeConfig = Mockito.mock(SmallRyeConfig.class);
                 List<String> expectedProfiles = List.of("dev", "test");
 
                 mockedConfigProvider.when(ConfigProvider::getConfig).thenReturn(mockConfig);
-                when(mockConfig.unwrap(SmallRyeConfig.class)).thenReturn(mockSmallRyeConfig);
-                when(mockSmallRyeConfig.getProfiles()).thenReturn(expectedProfiles);
+                Mockito.when(mockConfig.unwrap(SmallRyeConfig.class)).thenReturn(mockSmallRyeConfig);
+                Mockito.when(mockSmallRyeConfig.getProfiles()).thenReturn(expectedProfiles);
 
                 List<String> activeProfiles = FunctionalUtils.getActiveProfiles();
 
-                assertNotNull(activeProfiles);
-                assertEquals(2, activeProfiles.size());
-                assertEquals(expectedProfiles, activeProfiles);
+                Assertions.assertNotNull(activeProfiles);
+                Assertions.assertEquals(2, activeProfiles.size());
+                Assertions.assertEquals(expectedProfiles, activeProfiles);
             }
         }
     }
@@ -144,7 +143,7 @@ class FunctionalUtilsTest {
 
             String result = FunctionalUtils.formatCreationDate(dateTime);
 
-            assertEquals("27/08/2026 14:30:45", result);
+            Assertions.assertEquals("27/08/2026 14:30:45", result);
         }
 
         @Test
@@ -152,7 +151,7 @@ class FunctionalUtilsTest {
         void formatCreationDate_ShouldReturnEmptyStringWhenNull() {
             String result = FunctionalUtils.formatCreationDate(null);
 
-            assertEquals("", result);
+            Assertions.assertEquals("", result);
         }
     }
 
@@ -167,8 +166,8 @@ class FunctionalUtilsTest {
 
             LocalDateTime result = FunctionalUtils.onlyLocalDateTimeDefaultEnglish(dateStr);
 
-            assertNotNull(result);
-            assertEquals(LocalDateTime.of(2026, 8, 27, 15, 45, 0), result);
+            Assertions.assertNotNull(result);
+            Assertions.assertEquals(LocalDateTime.of(2026, 8, 27, 15, 45, 0), result);
         }
 
         @Test
@@ -178,8 +177,8 @@ class FunctionalUtilsTest {
 
             LocalDateTime result = FunctionalUtils.onlyLocalDateTimeDefaultEnglish(dateStr);
 
-            assertNotNull(result);
-            assertEquals(LocalDateTime.of(2026, 8, 27, 15, 45, 0), result);
+            Assertions.assertNotNull(result);
+            Assertions.assertEquals(LocalDateTime.of(2026, 8, 27, 15, 45, 0), result);
         }
 
         @ParameterizedTest
@@ -187,7 +186,7 @@ class FunctionalUtilsTest {
         @ValueSource(strings = {"   "})
         @DisplayName("Deve lançar IllegalStateException quando a data enviada for inválida ou nula")
         void onlyLocalDateTimeDefaultEnglish_ShouldThrowExceptionWhenInvalid(String input) {
-            assertThrows(
+            Assertions.assertThrows(
                     IllegalStateException.class,
                     () -> FunctionalUtils.onlyLocalDateTimeDefaultEnglish(input)
             );
@@ -201,19 +200,19 @@ class FunctionalUtilsTest {
 
             LocalDateTime result = FunctionalUtils.onlyLocalDateTimeBy(dateStr, pattern);
 
-            assertNotNull(result);
-            assertEquals(LocalDateTime.of(2026, 8, 27, 16, 20), result);
+            Assertions.assertNotNull(result);
+            Assertions.assertEquals(LocalDateTime.of(2026, 8, 27, 16, 20), result);
         }
 
         @Test
         @DisplayName("Deve lançar IllegalStateException no onlyLocalDateTimeBy quando formato ou valor forem inválidos")
         void onlyLocalDateTimeBy_ShouldThrowExceptionWhenArgumentsInvalid() {
-            assertThrows(
+            Assertions.assertThrows(
                     IllegalStateException.class,
                     () -> FunctionalUtils.onlyLocalDateTimeBy(null, "yyyy-MM-dd")
             );
 
-            assertThrows(
+            Assertions.assertThrows(
                     IllegalStateException.class,
                     () -> FunctionalUtils.onlyLocalDateTimeBy("2026-08-27", "")
             );
@@ -228,34 +227,34 @@ class FunctionalUtilsTest {
         @DisplayName("Deve extrair apenas números e converter para long")
         void onlyLongNumbers_ShouldReturnLongValue() {
             long result = FunctionalUtils.onlyLongNumbers("ABC-12345-XYZ");
-            assertEquals(12345L, result);
+            Assertions.assertEquals(12345L, result);
         }
 
         @Test
         @DisplayName("Deve retornar 0L ao passar String nula ou sem números para long")
         void onlyLongNumbers_ShouldReturnZeroWhenInvalid() {
-            assertEquals(0L, FunctionalUtils.onlyLongNumbers(null));
-            assertEquals(0L, FunctionalUtils.onlyLongNumbers("   "));
+            Assertions.assertEquals(0L, FunctionalUtils.onlyLongNumbers(null));
+            Assertions.assertEquals(0L, FunctionalUtils.onlyLongNumbers("   "));
         }
 
         @Test
         @DisplayName("Deve remover todos os não-dígitos da String")
         void onlyNumbers_ShouldRemoveNonDigits() {
             String result = FunctionalUtils.onlyNumbers("123.456.789-00");
-            assertEquals("12345678900", result);
+            Assertions.assertEquals("12345678900", result);
         }
 
         @Test
         @DisplayName("Deve retornar String vazia no onlyNumbers quando entrada for nula")
         void onlyNumbers_ShouldReturnEmptyWhenNull() {
-            assertEquals("", FunctionalUtils.onlyNumbers(null));
+            Assertions.assertEquals("", FunctionalUtils.onlyNumbers(null));
         }
 
         @Test
         @DisplayName("Deve converter String numérica simples para inteiro via onlyIntNumbers e onlyIntegerNumbers")
         void onlyIntegerNumbers_ShouldReturnInteger() {
-            assertEquals(987, FunctionalUtils.onlyIntNumbers("987"));
-            assertEquals(987, FunctionalUtils.onlyIntegerNumbers("987"));
+            Assertions.assertEquals(987, FunctionalUtils.onlyIntNumbers("987"));
+            Assertions.assertEquals(987, FunctionalUtils.onlyIntegerNumbers("987"));
         }
 
         @ParameterizedTest
@@ -263,8 +262,8 @@ class FunctionalUtilsTest {
         @ValueSource(strings = {"   "})
         @DisplayName("Deve retornar 0 quando a String para conversão de inteiro for inválida/nula")
         void onlyIntegerNumbers_ShouldReturnZeroWhenInvalid(String input) {
-            assertEquals(0, FunctionalUtils.onlyIntNumbers(input));
-            assertEquals(0, FunctionalUtils.onlyIntegerNumbers(input));
+            Assertions.assertEquals(0, FunctionalUtils.onlyIntNumbers(input));
+            Assertions.assertEquals(0, FunctionalUtils.onlyIntegerNumbers(input));
         }
     }
 
@@ -275,7 +274,7 @@ class FunctionalUtilsTest {
         @Test
         @DisplayName("Deve retornar true para String preenchida e válida")
         void isStringValida_ShouldReturnTrue() {
-            assertTrue(FunctionalUtils.isStringValida("Texto Valido"));
+            Assertions.assertTrue(FunctionalUtils.isStringValida("Texto Valido"));
         }
 
         @ParameterizedTest
@@ -283,7 +282,7 @@ class FunctionalUtilsTest {
         @ValueSource(strings = {"   ", "\t", "\n"})
         @DisplayName("Deve retornar false para Strings nulas, vazias ou em branco")
         void isStringValida_ShouldReturnFalseForInvalidStrings(String input) {
-            assertFalse(FunctionalUtils.isStringValida(input));
+            Assertions.assertFalse(FunctionalUtils.isStringValida(input));
         }
     }
 
@@ -298,7 +297,7 @@ class FunctionalUtilsTest {
 
             String result = FunctionalUtils.formatDecimalNumber(value);
 
-            assertEquals("1234.57", result); // Arredondamento HALF_UP
+            Assertions.assertEquals("1234.57", result); // Arredondamento HALF_UP
         }
 
         @Test
@@ -308,7 +307,7 @@ class FunctionalUtilsTest {
 
             String result = FunctionalUtils.formatDecimalNumberBy(value);
 
-            assertEquals("15.50", result);
+            Assertions.assertEquals("15.50", result);
         }
 
         @Test
@@ -316,12 +315,12 @@ class FunctionalUtilsTest {
         void formatDecimalNumber_ShouldThrowExceptionWhenNull() {
             BigDecimal nullValue = null;
 
-            IllegalArgumentException exception = assertThrows(
+            IllegalArgumentException exception = Assertions.assertThrows(
                     IllegalArgumentException.class,
                     () -> FunctionalUtils.formatDecimalNumber(nullValue)
             );
 
-            assertEquals("Valor numerico encontra-se inválido e/ou inexsitente.", exception.getMessage());
+            Assertions.assertEquals("Valor numerico encontra-se inválido e/ou inexsitente.", exception.getMessage());
         }
     }
 
@@ -335,8 +334,8 @@ class FunctionalUtilsTest {
             String rawCpf = "12345678901";
             String maskedCpf = "123.456.789-01";
 
-            assertEquals("123.456.789-01", FunctionalUtils.formatCpf(rawCpf));
-            assertEquals("123.456.789-01", FunctionalUtils.formatCpf(maskedCpf));
+            Assertions.assertEquals("123.456.789-01", FunctionalUtils.formatCpf(rawCpf));
+            Assertions.assertEquals("123.456.789-01", FunctionalUtils.formatCpf(maskedCpf));
         }
     }
 }

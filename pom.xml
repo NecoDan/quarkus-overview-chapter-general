@@ -39,6 +39,9 @@
         <github.javafaker.version>1.0.2</github.javafaker.version>
         <apache.commons.collections.version>4.5.0-M2</apache.commons.collections.version>
         <yaml.snakeyaml.version>2.2</yaml.snakeyaml.version>
+        <apache.commons.lang.version>3.18.0</apache.commons.lang.version>
+        <apache.commons.csv.version>1.10.0</apache.commons.csv.version>
+        <open.csv.version>5.8</open.csv.version>
     </properties>
 
     <dependencyManagement>

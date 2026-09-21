@@ -1,11 +1,14 @@
 package br.com.daniel.java.quarkus.general.utils;
 
 import org.apache.commons.lang3.StringUtils;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
+import org.mockito.ArgumentMatchers;
 import org.mockito.MockedStatic;
+import org.mockito.Mockito;
 
 import java.io.IOException;
 import java.net.URL;
@@ -14,10 +17,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 import java.util.stream.Stream;
-
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.*;
 
 class FileUtilsV2Test {
 
@@ -33,10 +32,10 @@ class FileUtilsV2Test {
         List<String> result = FileUtils.getFileNameList(tempDir.toString());
 
         // -- 03_Verificação_Validação
-        assertNotNull(result);
-        assertEquals(2, result.size());
-        assertTrue(result.contains("vingadores.csv"));
-        assertTrue(result.contains("liga_da_justica.csv"));
+        Assertions.assertNotNull(result);
+        Assertions.assertEquals(2, result.size());
+        Assertions.assertTrue(result.contains("vingadores.csv"));
+        Assertions.assertTrue(result.contains("liga_da_justica.csv"));
     }
 
     @Test
@@ -46,8 +45,8 @@ class FileUtilsV2Test {
         List<String> result = FileUtils.getFileNameList(tempDir.toString());
 
         // -- 03_Verificação_Validação
-        assertNotNull(result);
-        assertTrue(result.isEmpty());
+        Assertions.assertNotNull(result);
+        Assertions.assertTrue(result.isEmpty());
     }
 
     @Test
@@ -57,12 +56,12 @@ class FileUtilsV2Test {
         String invalidPath = "/caminho/invalido/que/nao/existe";
 
         // -- 02_Ação & Assert
-        IllegalStateException exception = assertThrows(
+        IllegalStateException exception = Assertions.assertThrows(
                 IllegalStateException.class,
                 () -> FileUtils.getFileNameList(invalidPath)
         );
 
-        assertTrue(exception.getMessage().contains("Error reading directory"));
+        Assertions.assertTrue(exception.getMessage().contains("Error reading directory"));
     }
 
     @Nested
@@ -76,8 +75,8 @@ class FileUtilsV2Test {
             Path result = FileUtils.getDefaultResourcesFolderPath();
 
             // Assert
-            assertNotNull(result);
-            assertTrue(result.toString().contains("target")
+            Assertions.assertNotNull(result);
+            Assertions.assertTrue(result.toString().contains("target")
                     || result.toString().contains("build")
                     || result.toString().contains("classes")
             );
@@ -87,20 +86,20 @@ class FileUtilsV2Test {
         @DisplayName("Deve lançar IllegalStateException quando resourceUrl for nulo")
         void getDefaultResourcesFolderPath_ShouldThrowExceptionWhenResourceUrlIsNull() {
             // Arrange
-            ClassLoader mockClassLoader = mock(ClassLoader.class);
-            when(mockClassLoader.getResource(StringUtils.EMPTY)).thenReturn(null);
+            ClassLoader mockClassLoader = Mockito.mock(ClassLoader.class);
+            Mockito.when(mockClassLoader.getResource(StringUtils.EMPTY)).thenReturn(null);
 
-            try (MockedStatic<FileUtils> mockUtils = mockStatic(FileUtils.class, CALLS_REAL_METHODS)) {
+            try (MockedStatic<FileUtils> mockUtils = Mockito.mockStatic(FileUtils.class, Mockito.CALLS_REAL_METHODS)) {
                 mockUtils.when(FileUtils::getClassLoader)
                         .thenReturn(mockClassLoader);
 
                 // Act & Assert
-                IllegalStateException exception = assertThrows(
+                IllegalStateException exception = Assertions.assertThrows(
                         IllegalStateException.class,
                         FileUtils::getDefaultResourcesFolderPath
                 );
 
-                assertTrue(exception.getMessage().contains("Resources folder not found"));
+                Assertions.assertTrue(exception.getMessage().contains("Resources folder not found"));
             }
         }
 
@@ -109,22 +108,22 @@ class FileUtilsV2Test {
         void getDefaultResourcesFolderPath_ShouldCatchAndReThrowExceptionWhenPathsGetFails() throws Exception {
             // Arrange
             URL mockUrl = new URL("file:/caminho/invalido");
-            ClassLoader mockClassLoader = mock(ClassLoader.class);
-            when(mockClassLoader.getResource(StringUtils.EMPTY)).thenReturn(mockUrl);
+            ClassLoader mockClassLoader = Mockito.mock(ClassLoader.class);
+            Mockito.when(mockClassLoader.getResource(StringUtils.EMPTY)).thenReturn(mockUrl);
 
-            try (MockedStatic<FunctionalUtils> mockUtils = mockStatic(FunctionalUtils.class, CALLS_REAL_METHODS);
-                 MockedStatic<Paths> mockPaths = mockStatic(Paths.class)) {
+            try (MockedStatic<FunctionalUtils> mockUtils = Mockito.mockStatic(FunctionalUtils.class, Mockito.CALLS_REAL_METHODS);
+                 MockedStatic<Paths> mockPaths = Mockito.mockStatic(Paths.class)) {
 
                 mockUtils.when(FileUtils::getClassLoader).thenReturn(mockClassLoader);
-                mockPaths.when(() -> Paths.get(anyString())).thenThrow(new IllegalArgumentException("Path inválido"));
+                mockPaths.when(() -> Paths.get(ArgumentMatchers.anyString())).thenThrow(new IllegalArgumentException("Path inválido"));
 
                 // Act & Assert
-                IllegalStateException exception = assertThrows(
+                IllegalStateException exception = Assertions.assertThrows(
                         IllegalStateException.class,
                         FileUtils::getDefaultResourcesFolderPath
                 );
 
-                assertTrue(exception.getMessage().contains("Resources folder not found: Path inválido"));
+                Assertions.assertTrue(exception.getMessage().contains("Resources folder not found: Path inválido"));
             }
         }
     }
@@ -137,17 +136,17 @@ class FileUtilsV2Test {
         @DisplayName("Deve capturar IOException de Files.list e lançar IllegalStateException")
         void shouldThrowIllegalStateExceptionWhenFilesListFails() {
             // -- 01_Cenário
-            try (MockedStatic<Files> mockedFiles = mockStatic(Files.class)) {
-                mockedFiles.when(() -> Files.list(any(Path.class)))
+            try (MockedStatic<Files> mockedFiles = Mockito.mockStatic(Files.class)) {
+                mockedFiles.when(() -> Files.list(ArgumentMatchers.any(Path.class)))
                         .thenThrow(new IOException("Acesso negado ou erro de I/O"));
 
                 // -- 02_Ação & Assert
-                IllegalStateException exception = assertThrows(
+                IllegalStateException exception = Assertions.assertThrows(
                         IllegalStateException.class,
                         () -> FileUtils.getFileNameList("qualquer_caminho")
                 );
 
-                assertEquals("Error reading directory: Acesso negado ou erro de I/O", exception.getMessage());
+                Assertions.assertEquals("Error reading directory: Acesso negado ou erro de I/O", exception.getMessage());
             }
         }
 
@@ -158,17 +157,17 @@ class FileUtilsV2Test {
             Path path1 = Paths.get("/tmp/heroes/codinomes1.json");
             Path path2 = Paths.get("/tmp/heroes/codinomes2.json");
 
-            try (MockedStatic<Files> mockedFiles = mockStatic(Files.class)) {
-                mockedFiles.when(() -> Files.list(any(Path.class)))
+            try (MockedStatic<Files> mockedFiles = Mockito.mockStatic(Files.class)) {
+                mockedFiles.when(() -> Files.list(ArgumentMatchers.any(Path.class)))
                         .thenReturn(Stream.of(path1, path2));
 
                 // -- 02_Ação
                 List<String> result = FileUtils.getFileNameList("/tmp/heroes");
 
                 // -- 03_Verificação_Validação
-                assertNotNull(result);
-                assertEquals(2, result.size());
-                assertEquals(List.of("codinomes1.json", "codinomes2.json"), result);
+                Assertions.assertNotNull(result);
+                Assertions.assertEquals(2, result.size());
+                Assertions.assertEquals(List.of("codinomes1.json", "codinomes2.json"), result);
             }
         }
     }

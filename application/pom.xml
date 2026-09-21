@@ -2,15 +2,18 @@
 <project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd"
          xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-
     <modelVersion>4.0.0</modelVersion>
+
+    <!-- Maven Project Parent (Pai) -->
     <parent>
         <groupId>br.com.daniel.java.quarkus.general</groupId>
         <artifactId>quarkus-overview-chapter-general-parent</artifactId>
         <version>1.0.0-SNAPSHOT</version>
     </parent>
-    <groupId>br.com.daniel.java.quarkus.general</groupId>
+
+    <!-- Maven Project Artifact -->
     <artifactId>quarkus-overview-chapter-general-application</artifactId>
+
     <version>1.0.0-SNAPSHOT</version>
     <name>quarkus-overview-chapter-general</name>
     <description>Quarkus API General</description>
