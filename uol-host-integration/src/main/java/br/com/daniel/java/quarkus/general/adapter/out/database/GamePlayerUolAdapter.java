@@ -17,8 +17,12 @@ import java.util.Objects;
 @Slf4j
 public class GamePlayerUolAdapter implements GamePlayerUolPort {
 
+    private final GamePlayerUolRepository repository;
+
     @Inject
-    GamePlayerUolRepository repository;
+    public GamePlayerUolAdapter(GamePlayerUolRepository repository) {
+        this.repository = repository;
+    }
 
     @Override
     public List<String> findListExistingCodenames(TypeHeroGroup typeHeroGroup) {

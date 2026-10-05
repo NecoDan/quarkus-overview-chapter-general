@@ -18,7 +18,7 @@ class HeroGroupUolApiRestClientAdapterTest {
 
     @BeforeEach
     void setUp() {
-        adapter = new HeroGroupUolApiRestClientAdapter();
+        adapter = new HeroGroupUolApiRestClientAdapter(client);
     }
 
     @Test

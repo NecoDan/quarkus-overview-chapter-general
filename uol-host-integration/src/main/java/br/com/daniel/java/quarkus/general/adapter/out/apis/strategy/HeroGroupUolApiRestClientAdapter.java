@@ -14,9 +14,12 @@ import org.eclipse.microprofile.rest.client.inject.RestClient;
 @ApplicationScoped
 public class HeroGroupUolApiRestClientAdapter implements HeroGroupUolApiPort {
 
+    private final HeroGroupUolClient heroGroupUolClient;
+
     @Inject
-    @RestClient
-    HeroGroupUolClient heroGroupUolClient;
+    public HeroGroupUolApiRestClientAdapter(@RestClient HeroGroupUolClient heroGroupUolClient) {
+        this.heroGroupUolClient = heroGroupUolClient;
+    }
 
     @Override
     public AvengersMarvelOutputDTO getMarvelSuperHeroGroups() {

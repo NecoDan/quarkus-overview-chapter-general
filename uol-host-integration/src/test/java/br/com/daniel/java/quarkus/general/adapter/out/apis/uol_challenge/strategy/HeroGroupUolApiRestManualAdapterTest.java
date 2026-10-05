@@ -18,9 +18,7 @@ class HeroGroupUolApiRestManualAdapterTest {
 
     @BeforeEach
     void setUp() {
-        adapter = new HeroGroupUolApiRestManualAdapter();
-//        adapter.httpNativeClient = client;
-//        adapter.url = "https://example.test";
+        adapter = new HeroGroupUolApiRestManualAdapter(client, "https://example.test");
     }
 
     @Test

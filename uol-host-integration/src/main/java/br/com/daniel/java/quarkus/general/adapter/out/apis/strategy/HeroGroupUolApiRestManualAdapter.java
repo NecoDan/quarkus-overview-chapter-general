@@ -20,11 +20,17 @@ public class HeroGroupUolApiRestManualAdapter implements HeroGroupUolApiPort {
 
     private static final URI PATH = URI.create("/test-backEnd-Java/master/referencias");
 
-    @Inject
-    HttpNativeClient httpNativeClient;
+    private final HttpNativeClient httpNativeClient;
 
-    @ConfigProperty(name = "uol.herogroup.marvel-or-dc-comics.service.url")
-    String url;
+    private final String url;
+
+    @Inject
+    public HeroGroupUolApiRestManualAdapter(
+            HttpNativeClient httpNativeClient,
+            @ConfigProperty(name = "uol.herogroup.marvel-or-dc-comics.service.url") String url) {
+        this.httpNativeClient = httpNativeClient;
+        this.url = url;
+    }
 
     @Override
     public AvengersMarvelOutputDTO getMarvelSuperHeroGroups() {

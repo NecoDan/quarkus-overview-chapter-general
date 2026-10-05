@@ -21,8 +21,7 @@ class GamePlayerUolAdapterTest {
 
     @BeforeEach
     void setUp() {
-        adapter = new GamePlayerUolAdapter();
-//        adapter.repository = repository;
+        adapter = new GamePlayerUolAdapter(repository);
     }
 
     @Test

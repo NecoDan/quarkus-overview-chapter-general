@@ -18,8 +18,7 @@ class HeroGroupUolApiAdapterTest {
 
     @BeforeEach
     void setUp() {
-        adapter = new HeroGroupUolApiAdapter();
-//        adapter.heroGroupUolApiRestManualAdapter = manualAdapter;
+        adapter = new HeroGroupUolApiAdapter(manualAdapter);
     }
 
     @Test
