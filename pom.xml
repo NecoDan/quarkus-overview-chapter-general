@@ -13,6 +13,7 @@
         <module>common-utils</module>
         <module>btg-pactual-integration</module>
         <module>application</module>
+        <module>uol-host-integration</module>
     </modules>
 
     <properties>

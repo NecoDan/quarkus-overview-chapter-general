@@ -1,10 +1,10 @@
 package br.com.daniel.java.quarkus.general.adapter.in.http.controllers.uol_challenge;
 
-import br.com.daniel.java.quarkus.general.core.usecase.uol_challenge.GamePlayerUolCreateUseCase;
-import br.com.daniel.java.quarkus.general.core.usecase.uol_challenge.GamePlayerUolGetUseCase;
-import br.com.daniel.java.quarkus.general.core.usecase.uol_challenge.input.GamePlayerInput;
-import br.com.daniel.java.quarkus.general.core.usecase.uol_challenge.output.GamePlayerOutput;
-import br.com.daniel.java.quarkus.general.core.usecase.uol_challenge.output.GamePlayerReportOutput;
+import br.com.daniel.java.quarkus.general.core.usecase.GamePlayerUolCreateUseCase;
+import br.com.daniel.java.quarkus.general.core.usecase.GamePlayerUolGetUseCase;
+import br.com.daniel.java.quarkus.general.core.usecase.input.GamePlayerInput;
+import br.com.daniel.java.quarkus.general.core.usecase.output.GamePlayerOutput;
+import br.com.daniel.java.quarkus.general.core.usecase.output.GamePlayerReportOutput;
 import br.com.daniel.java.quarkus.general.utils.logs.MdcUtils;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;

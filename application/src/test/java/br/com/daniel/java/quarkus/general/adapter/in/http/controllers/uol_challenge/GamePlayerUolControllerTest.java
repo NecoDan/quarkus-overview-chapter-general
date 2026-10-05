@@ -1,17 +1,17 @@
 package br.com.daniel.java.quarkus.general.adapter.in.http.controllers.uol_challenge;
 
-import br.com.daniel.java.quarkus.general.core.usecase.uol_challenge.GamePlayerUolCreateUseCase;
-import br.com.daniel.java.quarkus.general.core.usecase.uol_challenge.GamePlayerUolGetUseCase;
-import br.com.daniel.java.quarkus.general.core.usecase.uol_challenge.input.GamePlayerInput;
-import br.com.daniel.java.quarkus.general.core.usecase.uol_challenge.output.GamePlayerOutput;
-import br.com.daniel.java.quarkus.general.core.usecase.uol_challenge.output.GamePlayerReportOutput;
+import br.com.daniel.java.quarkus.general.core.usecase.GamePlayerUolCreateUseCase;
+import br.com.daniel.java.quarkus.general.core.usecase.GamePlayerUolGetUseCase;
+import br.com.daniel.java.quarkus.general.core.usecase.input.GamePlayerInput;
+import br.com.daniel.java.quarkus.general.core.usecase.output.GamePlayerOutput;
+import br.com.daniel.java.quarkus.general.core.usecase.output.GamePlayerReportOutput;
 import jakarta.ws.rs.core.Response;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.mockito.Mockito.*;
 
@@ -36,7 +36,7 @@ class GamePlayerUolControllerTest {
 
         var response = controller.create(input);
 
-        assertEquals(Response.Status.CREATED.getStatusCode(), response.getStatus());
+        Assertions.assertEquals(Response.Status.CREATED.getStatusCode(), response.getStatus());
         assertSame(output, response.getEntity());
         verify(createUseCase).createPlayer(input);
     }
@@ -49,7 +49,7 @@ class GamePlayerUolControllerTest {
 
         var response = controller.getAll();
 
-        assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());
+        Assertions.assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());
         assertSame(players, response.getEntity());
         verify(getUseCase).getAll();
     }
