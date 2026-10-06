@@ -1,7 +1,6 @@
 package br.com.daniel.java.quarkus.general.adapter.in.http.controllers.btg_challenge;
 
-import br.com.daniel.java.quarkus.general.core.usecase.OrderBtgPactualCreateUseCase;
-import br.com.daniel.java.quarkus.general.core.usecase.OrderBtgPactualGetsUseCase;
+import br.com.daniel.java.quarkus.general.adapter.out.services.OrderBtgPactualUseCaseAdapter;
 import br.com.daniel.java.quarkus.general.core.usecase.input.OrderBtgPactualInput;
 import br.com.daniel.java.quarkus.general.core.usecase.output.OrderCreatedBtgPactualOutput;
 import br.com.daniel.java.quarkus.general.core.usecase.output.OrderTotalQuantityValuesBtgPactualOutput;
@@ -31,10 +30,7 @@ import java.util.UUID;
 public class OrderBtgPactualController {
 
     @Inject
-    OrderBtgPactualCreateUseCase orderBtgPactualCreateUseCase;
-
-    @Inject
-    OrderBtgPactualGetsUseCase orderBtgPactualGetsUseCase;
+    OrderBtgPactualUseCaseAdapter orderBtgPactualUseCaseAdapter;
 
     @POST
     @Path(value = "/v1")
@@ -70,7 +66,7 @@ public class OrderBtgPactualController {
             log.info("BTG_PACTUAL_CHALLENGE - Inicializando rota de criação do Pedido");
 
             return Response.status(Response.Status.CREATED)
-                    .entity(orderBtgPactualCreateUseCase.createOrder(input))
+                    .entity(orderBtgPactualUseCaseAdapter.createOrder(input))
                     .build();
         } finally {
             MdcUtils.clear();
@@ -86,7 +82,7 @@ public class OrderBtgPactualController {
             MdcUtils.putTransactionIdRandom();
             log.info("BTG_PACTUAL_CHALLENGE - Inicializando rota de busca de todo(s) pedido(s)");
 
-            return Response.ok(orderBtgPactualGetsUseCase.getAllPageable(page, size, expandItems)).build();
+            return Response.ok(orderBtgPactualUseCaseAdapter.getAllPageable(page, size, expandItems)).build();
         } finally {
             MdcUtils.clear();
         }
@@ -99,7 +95,7 @@ public class OrderBtgPactualController {
             MdcUtils.putTransactionIdRandom();
             log.info("BTG_PACTUAL_CHALLENGE - Inicializando rota de busca de pedido por ID: {}", id);
 
-            return Response.ok(orderBtgPactualGetsUseCase.getById(id)).build();
+            return Response.ok(orderBtgPactualUseCaseAdapter.getById(id)).build();
         } finally {
             MdcUtils.clear();
         }
@@ -112,7 +108,7 @@ public class OrderBtgPactualController {
             MdcUtils.putTransactionIdRandom();
             log.info("BTG_PACTUAL_CHALLENGE - Inicializando rota de busca do valor total do pedido por ID: {}", id);
 
-            return Response.ok(orderBtgPactualGetsUseCase.getTotalAmountBy(id)).build();
+            return Response.ok(orderBtgPactualUseCaseAdapter.getTotalAmountBy(id)).build();
         } finally {
             MdcUtils.clear();
         }
@@ -158,7 +154,7 @@ public class OrderBtgPactualController {
             MdcUtils.putTransactionIdRandom();
             log.info("BTG_PACTUAL_CHALLENGE - Inicializando a busca ");
 
-            return Response.ok(orderBtgPactualGetsUseCase.getAllOrdersPageableByCustomer(
+            return Response.ok(orderBtgPactualUseCaseAdapter.getAllOrdersPageableByCustomer(
                             customerId, page, size, expandItems
                     )
             ).build();
@@ -204,7 +200,7 @@ public class OrderBtgPactualController {
             MdcUtils.putTransactionIdRandom();
             log.info("BTG_PACTUAL_CHALLENGE - Inicializando a busca ");
 
-            return Response.ok(orderBtgPactualGetsUseCase.getTotalQuantityOrdersBy(customerId)).build();
+            return Response.ok(orderBtgPactualUseCaseAdapter.getTotalQuantityOrdersBy(customerId)).build();
         } finally {
             MdcUtils.clear();
         }
