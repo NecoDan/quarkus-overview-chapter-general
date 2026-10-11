@@ -117,17 +117,24 @@
             <groupId>io.quarkus</groupId>
             <artifactId>quarkus-hibernate-validator</artifactId>
         </dependency>
-        <!-- Database H2 - Memory -->
+
+        <!-- Database MySQL -->
         <dependency>
             <groupId>io.quarkus</groupId>
-            <artifactId>quarkus-jdbc-h2</artifactId>
+            <artifactId>quarkus-jdbc-mysql</artifactId>
         </dependency>
+
+        <!-- Database H2 - Memory -->
+        <!--        <dependency>-->
+        <!--            <groupId>io.quarkus</groupId>-->
+        <!--            <artifactId>quarkus-jdbc-h2</artifactId>-->
+        <!--        </dependency>-->
         <!-- Database SQLite -->
-        <dependency>
-            <groupId>io.quarkiverse.jdbc</groupId>
-            <artifactId>quarkus-jdbc-sqlite</artifactId>
-            <version>3.0.11</version>
-        </dependency>
+        <!--        <dependency>-->
+        <!--            <groupId>io.quarkiverse.jdbc</groupId>-->
+        <!--            <artifactId>quarkus-jdbc-sqlite</artifactId>-->
+        <!--            <version>3.0.11</version>-->
+        <!--        </dependency>-->
 
         <!-- Testes -->
         <dependency>
@@ -298,7 +305,10 @@
                 <configuration>
                     <forkCount>2C</forkCount>
                     <reuseForks>false</reuseForks>
-                    <argLine>@{argLine} -javaagent:${settings.localRepository}/org/mockito/mockito-core/${mockito.version}/mockito-core-${mockito.version}.jar -Xmx256m</argLine>
+                    <argLine>@{argLine}
+                        -javaagent:${settings.localRepository}/org/mockito/mockito-core/${mockito.version}/mockito-core-${mockito.version}.jar
+                        -Xmx256m
+                    </argLine>
                     <systemPropertyVariables>
                         <java.util.logging.manager>org.jboss.logmanager.LogManager</java.util.logging.manager>
                         <maven.home>${maven.home}</maven.home>
