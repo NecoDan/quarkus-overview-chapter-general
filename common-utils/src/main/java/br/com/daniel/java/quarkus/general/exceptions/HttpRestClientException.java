@@ -1,6 +1,5 @@
 package br.com.daniel.java.quarkus.general.exceptions;
 
-import br.com.daniel.java.quarkus.general.exceptions.HttpException;
 import io.netty.handler.codec.http.HttpResponseStatus;
 
 public class HttpRestClientException extends HttpException {

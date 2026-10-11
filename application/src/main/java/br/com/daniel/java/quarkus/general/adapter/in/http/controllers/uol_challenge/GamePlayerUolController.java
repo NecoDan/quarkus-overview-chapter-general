@@ -1,7 +1,6 @@
 package br.com.daniel.java.quarkus.general.adapter.in.http.controllers.uol_challenge;
 
-import br.com.daniel.java.quarkus.general.core.usecase.GamePlayerUolCreateUseCase;
-import br.com.daniel.java.quarkus.general.core.usecase.GamePlayerUolGetUseCase;
+import br.com.daniel.java.quarkus.general.adapter.out.services.GamePlayerUolUseCaseAdapter;
 import br.com.daniel.java.quarkus.general.core.usecase.input.GamePlayerInput;
 import br.com.daniel.java.quarkus.general.core.usecase.output.GamePlayerOutput;
 import br.com.daniel.java.quarkus.general.core.usecase.output.GamePlayerReportOutput;
@@ -27,10 +26,7 @@ import org.eclipse.microprofile.openapi.annotations.responses.APIResponses;
 public class GamePlayerUolController {
 
     @Inject
-    GamePlayerUolCreateUseCase gamePlayerUolCreateUseCase;
-
-    @Inject
-    GamePlayerUolGetUseCase gamePlayerUolGetUseCase;
+    GamePlayerUolUseCaseAdapter gamePlayerUolUseCaseAdapter;
 
     @POST
     @Path(value = "/v1")
@@ -66,7 +62,7 @@ public class GamePlayerUolController {
             log.info("UOL_CHALLENGE - Inicializando rota de criação de um novo jogador com o codinome");
 
             return Response.status(Response.Status.CREATED)
-                    .entity(gamePlayerUolCreateUseCase.createPlayer(input))
+                    .entity(gamePlayerUolUseCaseAdapter.createPlayer(input))
                     .build();
         } finally {
             MdcUtils.clear();
@@ -107,7 +103,7 @@ public class GamePlayerUolController {
             log.info("UOL_CHALLENGE - Inicializando a busca de todos os jogadores cadastrados");
 
             return Response.status(Response.Status.OK)
-                    .entity(gamePlayerUolGetUseCase.getAll())
+                    .entity(gamePlayerUolUseCaseAdapter.getAll())
                     .build();
         } finally {
             MdcUtils.clear();

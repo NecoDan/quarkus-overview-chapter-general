@@ -12,10 +12,10 @@
     </parent>
 
     <!-- Maven Project Artifact -->
-    <artifactId>quarkus-overview-chapter-general-application</artifactId>
+    <artifactId>quarkus-overview-application</artifactId>
 
     <version>1.0.0-SNAPSHOT</version>
-    <name>quarkus-overview-chapter-general</name>
+    <name>quarkus-overview-application</name>
     <description>Quarkus API General</description>
 
     <properties>
@@ -55,7 +55,7 @@
         <!-- Libs Projetos Internos -->
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>quarkus-overview-chapter-general-common-utils</artifactId>
+            <artifactId>quarkus-common-utils</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
@@ -66,6 +66,11 @@
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>uol-host-integration</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>itau-integration</artifactId>
             <version>${project.version}</version>
         </dependency>
 
@@ -117,31 +122,11 @@
             <groupId>io.quarkus</groupId>
             <artifactId>quarkus-jdbc-h2</artifactId>
         </dependency>
-        <!-- Database MySQL -->
-        <dependency>
-            <groupId>io.quarkus</groupId>
-            <artifactId>quarkus-jdbc-mysql</artifactId>
-        </dependency>
         <!-- Database SQLite -->
         <dependency>
             <groupId>io.quarkiverse.jdbc</groupId>
             <artifactId>quarkus-jdbc-sqlite</artifactId>
             <version>3.0.11</version>
-        </dependency>
-        <!-- NOSQL - MongoDB -->
-        <dependency>
-            <groupId>io.quarkus</groupId>
-            <artifactId>quarkus-mongodb-client</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>io.quarkus</groupId>
-            <artifactId>quarkus-mongodb-panache</artifactId>
-        </dependency>
-
-        <!-- Mensageria -->
-        <dependency>
-            <groupId>io.quarkus</groupId>
-            <artifactId>quarkus-messaging-rabbitmq</artifactId>
         </dependency>
 
         <!-- Testes -->

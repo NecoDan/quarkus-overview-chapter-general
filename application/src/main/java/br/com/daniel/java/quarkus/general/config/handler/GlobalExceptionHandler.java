@@ -1,6 +1,6 @@
 package br.com.daniel.java.quarkus.general.config.handler;
 
-import br.com.daniel.java.quarkus.general.exceptions.api.TransactionItauNotFoundException;
+import br.com.daniel.java.quarkus.general.exceptions.TransactionItauNotFoundException;
 import jakarta.ws.rs.core.Response;
 //import org.jboss.resteasy.reactive.ServerExceptionMapper;
 

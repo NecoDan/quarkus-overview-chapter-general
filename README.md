@@ -2,13 +2,13 @@
 
 ## Relatório técnico final
 
-O relatório técnico final, incluindo plano previsto versus realizado, arquitetura, modelagem de dados, implantação, testes e referências, está disponível em [`docs/relatorio-tecnico-final.md`](docs/relatorio-tecnico-final.md).
+O relatório técnico final, incluindo plano previsto versus realizado, arquitetura, modelagem de dados, implantação, testes e referências, está disponível em [`docs/relatorio-tecnico-final.md`](00-docs/relatorio-tecnico-final.md).
 
 ## Arquitetura
 
-- Arquitetura detalhada: [`docs/arquitetura.md`](docs/arquitetura.md)
-- Visão executiva: [`docs/arquitetura-executiva.md`](docs/arquitetura-executiva.md)
-- Visão técnica: [`docs/arquitetura-tecnica.md`](docs/arquitetura-tecnica.md)
+- Arquitetura detalhada: [`docs/arquitetura.md`](00-docs/arquitetura.md)
+- Visão executiva: [`docs/arquitetura-executiva.md`](00-docs/arquitetura-executiva.md)
+- Visão técnica: [`docs/arquitetura-tecnica.md`](00-docs/arquitetura-tecnica.md)
 
 ### 1. **Visão Geral do Projeto**
 

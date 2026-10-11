@@ -12,7 +12,7 @@
     </parent>
 
     <!-- Maven Project Artifact -->
-    <artifactId>quarkus-overview-chapter-general-common-utils</artifactId>
+    <artifactId>quarkus-common-utils</artifactId>
 
     <dependencies>
         <dependency>

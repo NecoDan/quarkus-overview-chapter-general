@@ -14,6 +14,7 @@
         <module>btg-pactual-integration</module>
         <module>application</module>
         <module>uol-host-integration</module>
+        <module>itau-integration</module>
     </modules>
 
     <properties>

@@ -1,7 +1,6 @@
 package br.com.daniel.java.quarkus.general.adapter.in.http.controllers.uol_challenge;
 
-import br.com.daniel.java.quarkus.general.core.usecase.GamePlayerUolCreateUseCase;
-import br.com.daniel.java.quarkus.general.core.usecase.GamePlayerUolGetUseCase;
+import br.com.daniel.java.quarkus.general.adapter.out.services.GamePlayerUolUseCaseAdapter;
 import br.com.daniel.java.quarkus.general.core.usecase.input.GamePlayerInput;
 import br.com.daniel.java.quarkus.general.core.usecase.output.GamePlayerOutput;
 import br.com.daniel.java.quarkus.general.core.usecase.output.GamePlayerReportOutput;
@@ -17,40 +16,39 @@ import static org.mockito.Mockito.*;
 
 class GamePlayerUolControllerTest {
 
-    private final GamePlayerUolCreateUseCase createUseCase = mock(GamePlayerUolCreateUseCase.class);
-    private final GamePlayerUolGetUseCase getUseCase = mock(GamePlayerUolGetUseCase.class);
+    private final GamePlayerUolUseCaseAdapter gamePlayerUolUseCaseAdapter = mock(GamePlayerUolUseCaseAdapter.class);
+
     private GamePlayerUolController controller;
 
     @BeforeEach
     void setUp() {
         controller = new GamePlayerUolController();
-        controller.gamePlayerUolCreateUseCase = createUseCase;
-        controller.gamePlayerUolGetUseCase = getUseCase;
+        controller.gamePlayerUolUseCaseAdapter = gamePlayerUolUseCaseAdapter;
     }
 
     @Test
     void createsPlayerWithCreatedStatus() {
         var input = new GamePlayerInput("Clark", "clark@example.com", "999999999", 2);
         var output = GamePlayerOutput.from("Superman", "Liga da Justiça");
-        when(createUseCase.createPlayer(input)).thenReturn(output);
+        when(gamePlayerUolUseCaseAdapter.createPlayer(input)).thenReturn(output);
 
         var response = controller.create(input);
 
         Assertions.assertEquals(Response.Status.CREATED.getStatusCode(), response.getStatus());
         assertSame(output, response.getEntity());
-        verify(createUseCase).createPlayer(input);
+        verify(gamePlayerUolUseCaseAdapter).createPlayer(input);
     }
 
     @Test
     void returnsAllPlayersWithOkStatus() {
         var players = List.of(new GamePlayerReportOutput(
                 "Clark", "clark@example.com", "999999999", "Superman", "Liga da Justiça"));
-        when(getUseCase.getAll()).thenReturn(players);
+        when(gamePlayerUolUseCaseAdapter.getAll()).thenReturn(players);
 
         var response = controller.getAll();
 
         Assertions.assertEquals(Response.Status.OK.getStatusCode(), response.getStatus());
         assertSame(players, response.getEntity());
-        verify(getUseCase).getAll();
+        verify(gamePlayerUolUseCaseAdapter).getAll();
     }
 }
