@@ -1,0 +1,64 @@
+package br.com.daniel.java.quarkus.general.adapter.in.rabbitmq;
+
+import br.com.daniel.java.quarkus.general.config.jacksonmapper.CustomObjectMapper;
+import br.com.daniel.java.quarkus.general.core.usecase.OrderBtgPactualCreateUseCase;
+import br.com.daniel.java.quarkus.general.core.usecase.input.OrderCreatedEventBtgPactualInput;
+import br.com.daniel.java.quarkus.general.exceptions.api.OrderBtgPactualCreateFailedException;
+import br.com.daniel.java.quarkus.general.utils.logs.MdcUtils;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import io.smallrye.common.annotation.Blocking;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
+import lombok.extern.slf4j.Slf4j;
+import org.eclipse.microprofile.config.inject.ConfigProperty;
+import org.eclipse.microprofile.reactive.messaging.Incoming;
+
+
+@ApplicationScoped
+@Slf4j
+public class BtgPactualOrderConsumer {
+
+    @ConfigProperty(defaultValue = "mp.messaging.incoming.btg-pactual-orderbtgpactual-created-in.queue.name")
+    String queeNameConsumer;
+
+    @Inject
+    OrderBtgPactualCreateUseCase orderBtgPactualCreateUseCase;
+
+    @Inject
+    @CustomObjectMapper
+    ObjectMapper objectMapper;
+
+    @Incoming("btg-pactual-orderbtgpactual-created-in")
+    @Blocking
+    public void consumerProcessOrders(String payload) {
+        try {
+            if (payload == null || payload.isBlank()) {
+                throw new IllegalArgumentException("payload do evento não pode ser nulo ou vazio");
+            }
+
+            MdcUtils.putTransactionIdRandom();
+            log.info("BTG_PACTUAL_CHALLENGE - RabbitMQ evento/payload recebido na fila {}.", queeNameConsumer);
+            log.debug("BTG_PACTUAL_CHALLENGE - Payload recebido: {}", payload);
+
+            var payloadEventInput = objectMapper.readValue(payload, OrderCreatedEventBtgPactualInput.class);
+            orderBtgPactualCreateUseCase.createOrderFrom(payloadEventInput);
+
+            log.info("BTG_PACTUAL_CHALLENGE - RabbitMQ evento/payload processado com sucesso na fila {}.", queeNameConsumer);
+        } catch (IllegalArgumentException | IllegalStateException e) {
+            log.error("BTG_PACTUAL_CHALLENGE - RabbitMQ erro de validação ao consumir evento/payload na fila {}: {}",
+                    queeNameConsumer, e.getMessage(), e);
+            throw new OrderBtgPactualCreateFailedException("Erro ao processar pedido: " + e.getMessage(), e);
+        } catch (JsonProcessingException e) {
+            log.error("BTG_PACTUAL_CHALLENGE - RabbitMQ erro ao desserializar JSON do payload na fila {}: {}",
+                    queeNameConsumer, e.getMessage(), e);
+            throw new OrderBtgPactualCreateFailedException("Erro ao desserializar JSON: " + e.getMessage(), e);
+        } catch (Exception e) {
+            log.error("BTG_PACTUAL_CHALLENGE - RabbitMQ erro inesperado ao consumir evento/payload na fila {}: {}",
+                    queeNameConsumer, e.getMessage(), e);
+            throw new OrderBtgPactualCreateFailedException("Erro inesperado ao processar pedido: " + e.getMessage(), e);
+        } finally {
+            MdcUtils.clear();
+        }
+    }
+}

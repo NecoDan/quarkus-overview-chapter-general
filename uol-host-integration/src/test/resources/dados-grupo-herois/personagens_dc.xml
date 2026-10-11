@@ -1,0 +1,63 @@
+<?xml version='1.0' encoding='utf-8'?>
+<dc_personagens>
+    <personagem>
+        <codinome>Superman</codinome>
+    </personagem>
+    <personagem>
+        <codinome>Batman</codinome>
+    </personagem>
+    <personagem>
+        <codinome>Mulher-Maravilha</codinome>
+    </personagem>
+    <personagem>
+        <codinome>Flash</codinome>
+    </personagem>
+    <personagem>
+        <codinome>Aquaman</codinome>
+    </personagem>
+    <personagem>
+        <codinome>Lanterna Verde</codinome>
+    </personagem>
+    <personagem>
+        <codinome>Caçador de Marte</codinome>
+    </personagem>
+    <personagem>
+        <codinome>Ciborgue</codinome>
+    </personagem>
+    <personagem>
+        <codinome>Shazam</codinome>
+    </personagem>
+    <personagem>
+        <codinome>Arqueiro Verde</codinome>
+    </personagem>
+    <personagem>
+        <codinome>Canário Negro</codinome>
+    </personagem>
+    <personagem>
+        <codinome>Robin</codinome>
+    </personagem>
+    <personagem>
+        <codinome>Batgirl</codinome>
+    </personagem>
+    <personagem>
+        <codinome>Asa Noturna</codinome>
+    </personagem>
+    <personagem>
+        <codinome>Coringa</codinome>
+    </personagem>
+    <personagem>
+        <codinome>Lex Luthor</codinome>
+    </personagem>
+    <personagem>
+        <codinome>Mulher-Gato</codinome>
+    </personagem>
+    <personagem>
+        <codinome>Arlequina</codinome>
+    </personagem>
+    <personagem>
+        <codinome>Sinestro</codinome>
+    </personagem>
+    <personagem>
+        <codinome>Adão Negro</codinome>
+    </personagem>
+</dc_personagens>
