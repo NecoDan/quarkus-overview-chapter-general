@@ -239,6 +239,7 @@ Logging estruturado em JSON através de `quarkus-logging-json`.
 
 #### **Produção:**
 - **MySQL:** Requer configuração via `application.properties`
+- **Perfil Itaú:** Execute a aplicação com `-Dquarkus.profile=itau` e defina `ITAU_DB_PASSWORD` no ambiente. `ITAU_DB_URL` e `ITAU_DB_USERNAME` são opcionais; `/q/health/ready` valida a conexão JDBC.
 
 #### **ORM:**
 - **Hibernate + Panache:** Abstração sobre JPA com métodos helpers
