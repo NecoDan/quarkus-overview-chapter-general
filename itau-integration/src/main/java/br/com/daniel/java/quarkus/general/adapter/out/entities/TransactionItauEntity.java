@@ -5,10 +5,7 @@ import br.com.daniel.java.quarkus.general.core.domain.TransactionItau;
 import br.com.daniel.java.quarkus.general.exceptions.ParseEntityFailedException;
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.apache.commons.beanutils.BeanUtils;
 
 import java.io.Serial;
@@ -21,6 +18,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@EqualsAndHashCode(callSuper = false)
 @Entity
 @Table(name = "tb_itau_transaction")
 public class TransactionItauEntity extends PanacheEntityBase implements Serializable {
