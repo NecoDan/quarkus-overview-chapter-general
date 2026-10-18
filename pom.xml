@@ -9,10 +9,11 @@
     <version>1.0.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
+    <!-- Todos os meus módulos integrados -->
     <modules>
+        <module>application</module>
         <module>common-utils</module>
         <module>btg-pactual-integration</module>
-        <module>application</module>
         <module>uol-host-integration</module>
         <module>itau-integration</module>
     </modules>
