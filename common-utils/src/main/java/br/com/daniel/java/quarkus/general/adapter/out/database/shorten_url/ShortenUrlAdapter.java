@@ -39,7 +39,7 @@ public class ShortenUrlAdapter implements ShortenUrlPort {
         var shortenUrlEntities = shortenUrlRepository.listAll();
 
         return shortenUrlEntities.stream()
-                .map(entity -> shortenUrlMapper.toDomain((ShortenUrlEntity) entity))
+                .map(entity -> shortenUrlMapper.toDomain(entity))
                 .toList();
     }
 
@@ -49,7 +49,7 @@ public class ShortenUrlAdapter implements ShortenUrlPort {
         var shortenUrlEntity = shortenUrlRepository.findById(id);
 
         return Optional.ofNullable(shortenUrlEntity)
-                .map(entity -> shortenUrlMapper.toDomain((ShortenUrlEntity) entity));
+                .map(entity -> shortenUrlMapper.toDomain(entity));
     }
 
     @Override

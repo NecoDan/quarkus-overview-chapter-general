@@ -206,7 +206,7 @@ public class ShortenUrlController {
             MdcUtils.putTransactionIdRandom();
             log.info("[COMMONS_UTILS][v3] - Inicializando rota de criação de um novo link encurtado com a url de origem: {}", input.linkUrl());
 
-            return buildSavedResponse(shortenUrlUseCaseAdapter.createV2(input));
+            return buildSavedResponse(shortenUrlUseCaseAdapter.createV3(input));
         } finally {
             log.info("[COMMONS_UTILS][v3] - Finalizado a criação do encurta link");
             MdcUtils.clear();
@@ -224,6 +224,4 @@ public class ShortenUrlController {
                 .path(shortenUrlOutput.shortenUrl())
                 .build();
     }
-
-
 }

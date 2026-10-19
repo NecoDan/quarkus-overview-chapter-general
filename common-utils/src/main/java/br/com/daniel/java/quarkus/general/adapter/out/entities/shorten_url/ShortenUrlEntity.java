@@ -34,7 +34,7 @@ public class ShortenUrlEntity extends PanacheEntityBase implements Serializable 
     @Column(name = "shorten_url_link")
     private String shortenUrlLink;
 
-    @NotNull(message = "A data de criação é obrigatória")
+    @NotNull(message = "A data de criação é obrigatória. Não pode ser vazio e/ou null")
     @Column(name = "created_at_date")
     private LocalDateTime expiredDtAt;
 
@@ -43,4 +43,8 @@ public class ShortenUrlEntity extends PanacheEntityBase implements Serializable 
 
     @Column(name = "expired")
     private Boolean expired;
+
+    @NotNull(message = "Dias de expiraçaão é obrigatório. Não pode ser vazio e/ou null")
+    @Column(name = "days_to_expire")
+    private Integer daysToExpire;
 }

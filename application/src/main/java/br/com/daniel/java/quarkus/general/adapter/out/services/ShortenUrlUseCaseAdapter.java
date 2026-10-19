@@ -28,7 +28,7 @@ public class ShortenUrlUseCaseAdapter {
      * @return Objeto contendo os dados do link encurtado salvo.
      */
     public ShortenUrlOutputSaved createV1(ShortenUrlInput shortenUrLInput) {
-        log.info("[COMMONS_UTILS][v1] - Criando um novo link encurtado com os dados fornecidos no corpo da requisição.");
+        log.info("[COMMONS_UTILS][v1] - Criando um novo link encurtado a partir da url de origem: {}.", shortenUrLInput);
         return shortenUrlUseCase.createShortenUrlV1(shortenUrLInput.linkUrl());
     }
 
@@ -39,7 +39,18 @@ public class ShortenUrlUseCaseAdapter {
      * @return Objeto contendo os dados do link encurtado salvo.
      */
     public ShortenUrlOutputSaved createV2(ShortenUrlInput shortenUrLInput) {
-        log.info("[COMMONS_UTILS][v2] - Criando um novo link encurtado com os dados fornecidos no corpo da requisição.");
+        log.info("[COMMONS_UTILS][v2] - Criando um novo link encurtado a partir da url de origem: {}.", shortenUrLInput);
+        return shortenUrlUseCase.createShortenUrlV2(shortenUrLInput.linkUrl());
+    }
+
+    /**
+     * Cria um novo link encurtado utilizando a versão 3 do caso de uso.
+     *
+     * @param shortenUrLInput Objeto contendo os dados necessários para criar o link encurtado.
+     * @return Objeto contendo os dados do link encurtado salvo.
+     */
+    public ShortenUrlOutputSaved createV3(ShortenUrlInput shortenUrLInput) {
+        log.info("[COMMONS_UTILS][v3] - Criando um novo link encurtado a partir da url de origem: {}.", shortenUrLInput);
         return shortenUrlUseCase.createShortenUrlV3(shortenUrLInput.linkUrl());
     }
 
@@ -53,6 +64,12 @@ public class ShortenUrlUseCaseAdapter {
         return shortenUrlUseCase.getAllShortenUrls();
     }
 
+    /**
+     * Recupera os dados de um link encurtado com base no link encurtado fornecido.
+     *
+     * @param shortenUrlLink O link encurtado utilizado para buscar os dados.
+     * @return Objeto contendo os dados do link encurtado correspondente.
+     */
     public ShortenUrlOutput getByShortenUrlLink(final String shortenUrlLink) {
         log.info("[COMMONS_UTILS] - Buscando a link da url origem completa por meio do link encurtado: {}", shortenUrlLink);
         return shortenUrlUseCase.getByShortenUrlLink(shortenUrlLink);

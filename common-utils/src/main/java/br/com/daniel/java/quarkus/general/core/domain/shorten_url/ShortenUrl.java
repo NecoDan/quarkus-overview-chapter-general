@@ -18,10 +18,12 @@ public class ShortenUrl implements Serializable {
     private LocalDateTime expiredDtAt;
     private LocalDateTime updatedExpiredDtAt;
     private Boolean expired;
+    private Integer daysToExpire;
 
     public ShortenUrl(String originalUrl, Integer daysToExpire) {
         this.originalUrlLink = originalUrl;
         this.expiredDtAt = LocalDateTime.now().plusDays(daysToExpire);
         this.expired = Boolean.FALSE;
+        this.daysToExpire = daysToExpire;
     }
 }

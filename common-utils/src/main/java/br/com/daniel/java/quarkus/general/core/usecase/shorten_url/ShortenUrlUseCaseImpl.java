@@ -119,12 +119,4 @@ public class ShortenUrlUseCaseImpl implements ShortenUrlUseCase {
 
         return shortenUrlMapper.toShortenUrlOutput(shortenUrlEntity);
     }
-
-
-    //
-    //        if (Objects.isNull(shortenUrlEntity)) {
-    //            log.warn("[COMMONS_UTILS] ShortenUrl não encontrado com shortenUrlLink: {}", shortenUrlLink);
-    //            return null;
-    //        }
-    //        return shortenUrlMapper.toDomain(shortenUrlEntity);
 }
