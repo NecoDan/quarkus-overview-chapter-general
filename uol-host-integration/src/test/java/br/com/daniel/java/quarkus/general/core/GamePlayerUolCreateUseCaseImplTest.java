@@ -8,7 +8,7 @@ import br.com.daniel.java.quarkus.general.core.port.GamePlayerUolFilePort;
 import br.com.daniel.java.quarkus.general.core.port.GamePlayerUolPort;
 import br.com.daniel.java.quarkus.general.core.usecase.GamePlayerUolCreateUseCaseImpl;
 import br.com.daniel.java.quarkus.general.core.usecase.input.GamePlayerInput;
-import br.com.daniel.java.quarkus.general.exceptions.GamePlayerUolCreateFailedException;
+import br.com.daniel.java.quarkus.general.exceptions.ShortenUrlCreateFailedException;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -71,12 +71,12 @@ class GamePlayerUolCreateUseCaseImplTest {
         when(gamePlayerUolPort.findListExistingCodenames(TypeHeroGroup.DC_LIGA_JUSTICA))
                 .thenReturn(List.of("Batman"));
 
-        final var exception = assertThrows(GamePlayerUolCreateFailedException.class,
+        final var exception = assertThrows(ShortenUrlCreateFailedException.class,
                 () -> useCase.createPlayer(input)
         );
 
         assertNotNull(exception);
-        assertInstanceOf(GamePlayerUolCreateFailedException.class, exception);
+        assertInstanceOf(ShortenUrlCreateFailedException.class, exception);
 
         verify(gamePlayerUolPort, never()).salvarGamePlayer(any());
     }

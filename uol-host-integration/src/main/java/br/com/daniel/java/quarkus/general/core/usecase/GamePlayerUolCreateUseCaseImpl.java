@@ -6,7 +6,7 @@ import br.com.daniel.java.quarkus.general.core.port.GamePlayerUolFilePort;
 import br.com.daniel.java.quarkus.general.core.port.GamePlayerUolPort;
 import br.com.daniel.java.quarkus.general.core.usecase.input.GamePlayerInput;
 import br.com.daniel.java.quarkus.general.core.usecase.output.GamePlayerOutput;
-import br.com.daniel.java.quarkus.general.exceptions.GamePlayerUolCreateFailedException;
+import br.com.daniel.java.quarkus.general.exceptions.ShortenUrlCreateFailedException;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import lombok.extern.slf4j.Slf4j;
@@ -48,7 +48,7 @@ public class GamePlayerUolCreateUseCaseImpl implements GamePlayerUolCreateUseCas
             );
         } catch (Exception e) {
             log.error("UOL_CHALLENGE - Falha ao criar um novo jogador. Payload: {}. Erro: {}", input, e.getMessage());
-            throw new GamePlayerUolCreateFailedException("Falha ao criar um novo jogador. Payload: %s. Erro: %s"
+            throw new ShortenUrlCreateFailedException("Falha ao criar um novo jogador. Payload: %s. Erro: %s"
                     .formatted(input, e.getMessage()), e
             );
         }
@@ -60,7 +60,7 @@ public class GamePlayerUolCreateUseCaseImpl implements GamePlayerUolCreateUseCas
         if (gamePlayerUol.isJusticeLeague() && gamePlayerUol.isCodenameInValid()) {
             log.error("UOL_CHALLENGE - Falha ao criar um novo jogador. Payload: {}. Erro: Codinome não disponiveis para o grupo de herois: {}",
                     input, gamePlayerUol.getGroupCode());
-            throw new GamePlayerUolCreateFailedException("Falha ao criar um novo jogador. Erro: " +
+            throw new ShortenUrlCreateFailedException("Falha ao criar um novo jogador. Erro: " +
                     "Codinome não disponiveis para o grupo de herois: %s".formatted(gamePlayerUol.getGroupCode()));
         }
     }

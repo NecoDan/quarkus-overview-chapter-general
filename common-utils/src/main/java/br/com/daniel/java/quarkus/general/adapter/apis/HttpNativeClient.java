@@ -1,4 +1,4 @@
-package br.com.daniel.java.quarkus.general.adapter;
+package br.com.daniel.java.quarkus.general.adapter.apis;
 
 import br.com.daniel.java.quarkus.general.exceptions.HttpRestClientException;
 import com.fasterxml.jackson.databind.ObjectMapper;
