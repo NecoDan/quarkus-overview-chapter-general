@@ -4,10 +4,12 @@ import br.com.daniel.java.quarkus.general.adapter.out.services.ShortenUrlUseCase
 import br.com.daniel.java.quarkus.general.core.usecase.shorten_url.input.ShortenUrlInput;
 import br.com.daniel.java.quarkus.general.core.usecase.shorten_url.output.ShortenUrlOutput;
 import br.com.daniel.java.quarkus.general.core.usecase.shorten_url.output.ShortenUrlOutputSaved;
+import br.com.daniel.java.quarkus.general.utils.ShortenUrlUtils;
 import br.com.daniel.java.quarkus.general.utils.logs.MdcUtils;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MediaType;
@@ -76,6 +78,22 @@ public class ShortenUrlController {
         }
     }
 
+    @GET
+    @Path(value = "/v1/{shortURL}")
+    public Response getByShortenUrl(@PathParam("shortURL") @NotNull(message = "link encurtado é obrigatório") String shortURL) {
+        try {
+            MdcUtils.putTransactionIdRandom();
+            log.info("COMMONS_UTILS - Obtendo link original por meio do link encurtado: {}", shortURL);
+
+            var shortenUrlOutput = shortenUrlUseCaseAdapter.getByShortenUrlLink(shortURL);
+            var uri = URI.create(shortenUrlOutput.getRedirectUrl());
+
+            return Response.seeOther(uri).build();
+        } finally {
+            MdcUtils.clear();
+        }
+    }
+
     @POST
     @Path(value = "/v1")
     @Operation(
@@ -110,6 +128,7 @@ public class ShortenUrlController {
             log.info("[COMMONS_UTILS][v1] - Inicializando rota de criação de um novo link encurtado com a url de origem: {}", input.linkUrl());
             return buildSavedResponse(shortenUrlUseCaseAdapter.createV1(input));
         } finally {
+            log.info("[COMMONS_UTILS][v1] - Finalizado a criação do encurta link");
             MdcUtils.clear();
         }
     }
@@ -149,6 +168,47 @@ public class ShortenUrlController {
 
             return buildSavedResponse(shortenUrlUseCaseAdapter.createV2(input));
         } finally {
+            log.info("[COMMONS_UTILS][v2] - Finalizado a criação do encurta link");
+            MdcUtils.clear();
+        }
+    }
+
+    @POST
+    @Path(value = "/v3")
+    @Operation(
+            summary = "[v3] Cria um link encurtado",
+            description = "[v3] Cria um novo link encurtado por meio da url de origem fornecida no corpo da requisição."
+    )
+    @APIResponses(value = {
+            @APIResponse(
+                    responseCode = "201",
+                    description = "[v3] Link encurtado gerado/criado com sucesso",
+                    content = @Content(
+                            mediaType = MediaType.APPLICATION_JSON,
+                            schema = @Schema(implementation = ShortenUrlInput.class)
+                    )
+            ),
+            @APIResponse(
+                    responseCode = "422",
+                    description = "[v3] Campos não atendem os requisitos para a criação do link encurtado"
+            ),
+            @APIResponse(
+                    responseCode = "400",
+                    description = "[v3] Requisição inválida"
+            ),
+            @APIResponse(
+                    responseCode = "500",
+                    description = "[v3] Erro interno do servidor"
+            )
+    })
+    public Response createV3(@Valid ShortenUrlInput input) {
+        try {
+            MdcUtils.putTransactionIdRandom();
+            log.info("[COMMONS_UTILS][v3] - Inicializando rota de criação de um novo link encurtado com a url de origem: {}", input.linkUrl());
+
+            return buildSavedResponse(shortenUrlUseCaseAdapter.createV2(input));
+        } finally {
+            log.info("[COMMONS_UTILS][v3] - Finalizado a criação do encurta link");
             MdcUtils.clear();
         }
     }
@@ -165,21 +225,5 @@ public class ShortenUrlController {
                 .build();
     }
 
-    //    @RequestMapping(value="/{shortURL}", method=RequestMethod.GET)
-    //    public ResponseEntity<URL> find(@PathVariable String shortURL) throws URISyntaxException {
-    //
-    //        URL obj = service.findByShortURL(shortURL);
-    //        if (obj == null) {
-    //            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
-    //        }
-    //        String redirectTo = obj.getOriginalURL();
-    //        if (!redirectTo.substring(0, HTTP_PREFIX.length()).equals(HTTP_PREFIX) &&
-    //                !redirectTo.substring(0, HTTPS_PREFIX.length()).equals(HTTPS_PREFIX)) {
-    //            redirectTo = HTTP_PREFIX.concat(redirectTo);
-    //        }
-    //        URI uri = new URI(redirectTo);
-    //        HttpHeaders httpHeaders = new HttpHeaders();
-    //        httpHeaders.setLocation(uri);
-    //        return new ResponseEntity<>(httpHeaders, HttpStatus.SEE_OTHER);
-    //    }
+
 }

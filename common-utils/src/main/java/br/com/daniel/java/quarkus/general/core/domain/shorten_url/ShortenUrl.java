@@ -12,18 +12,16 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class ShortenUrl implements Serializable {
 
-    private static final Integer DAYS_TO_EXPIRE = 1;
-
     private Long id;
     private String originalUrlLink;
     private String shortenUrlLink;
-    private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
-    private Boolean active;
+    private LocalDateTime expiredDtAt;
+    private LocalDateTime updatedExpiredDtAt;
+    private Boolean expired;
 
-    public ShortenUrl(String originalUrl) {
+    public ShortenUrl(String originalUrl, Integer daysToExpire) {
         this.originalUrlLink = originalUrl;
-        this.createdAt = LocalDateTime.now().plusDays(DAYS_TO_EXPIRE);
-        this.active = Boolean.TRUE;
+        this.expiredDtAt = LocalDateTime.now().plusDays(daysToExpire);
+        this.expired = Boolean.FALSE;
     }
 }

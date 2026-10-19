@@ -1,13 +1,12 @@
 package br.com.daniel.java.quarkus.general.adapter.out.entities.shorten_url;
 
-import io.quarkus.hibernate.orm.panache.PanacheEntity;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
@@ -18,7 +17,14 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Entity
 @Table(name = "tb_shorten_url")
-public class ShortenUrlEntity extends PanacheEntity implements Serializable {
+public class ShortenUrlEntity extends PanacheEntityBase implements Serializable {
+
+    @Serial private static final long serialVersionUID = -5471522162103268843L;
+
+    @Id
+    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @NotBlank(message = "A url de origem não pode ser vazia e/ou null")
     @Column(name = "original_url_link")
@@ -30,11 +36,11 @@ public class ShortenUrlEntity extends PanacheEntity implements Serializable {
 
     @NotNull(message = "A data de criação é obrigatória")
     @Column(name = "created_at_date")
-    private LocalDateTime createdAt;
+    private LocalDateTime expiredDtAt;
 
     @Column(name = "updated_at_date")
-    private LocalDateTime updatedAt;
+    private LocalDateTime updatedExpiredDtAt;
 
-    @Column(name = "active")
-    private Boolean active;
+    @Column(name = "expired")
+    private Boolean expired;
 }

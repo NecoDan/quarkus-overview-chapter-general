@@ -1,5 +1,6 @@
 package br.com.daniel.java.quarkus.general.adapter.out.database.shorten_url;
 
+import br.com.daniel.java.quarkus.general.adapter.out.database.shorten_url.repository.ShortenUrlRepository;
 import br.com.daniel.java.quarkus.general.adapter.out.entities.shorten_url.ShortenUrlEntity;
 import br.com.daniel.java.quarkus.general.core.domain.shorten_url.ShortenUrl;
 import br.com.daniel.java.quarkus.general.core.mappers.ShortenUrlMapper;
@@ -17,6 +18,9 @@ import java.util.Optional;
 public class ShortenUrlAdapter implements ShortenUrlPort {
 
     @Inject
+    ShortenUrlRepository shortenUrlRepository;
+
+    @Inject
     ShortenUrlMapper shortenUrlMapper;
 
     @Override
@@ -25,14 +29,14 @@ public class ShortenUrlAdapter implements ShortenUrlPort {
         log.info("[COMMONS_UTILS] Criando link encurtado com os seguintes dados: {}", shortenUrl);
         var shortenUrlEntity = shortenUrlMapper.toEntity(shortenUrl);
 
-        shortenUrlEntity.persistAndFlush();
+        shortenUrlRepository.persistAndFlush(shortenUrlEntity);
         return shortenUrlMapper.toDomain(shortenUrlEntity);
     }
 
     @Override
     public List<ShortenUrl> getAll() {
         log.info("[COMMONS_UTILS] Buscando todos os links encurtados salvo(s).");
-        var shortenUrlEntities = ShortenUrlEntity.listAll();
+        var shortenUrlEntities = shortenUrlRepository.listAll();
 
         return shortenUrlEntities.stream()
                 .map(entity -> shortenUrlMapper.toDomain((ShortenUrlEntity) entity))
@@ -41,8 +45,8 @@ public class ShortenUrlAdapter implements ShortenUrlPort {
 
     @Override
     public Optional<ShortenUrl> findById(final Long id) {
-        log.info("[COMMONS_UTILS] Buscando ShortenUrl com id: {}", id);
-        var shortenUrlEntity = ShortenUrlEntity.findById(id);
+        log.info("[COMMONS_UTILS] Buscando o link encurtado com id: {}", id);
+        var shortenUrlEntity = shortenUrlRepository.findById(id);
 
         return Optional.ofNullable(shortenUrlEntity)
                 .map(entity -> shortenUrlMapper.toDomain((ShortenUrlEntity) entity));
@@ -51,9 +55,10 @@ public class ShortenUrlAdapter implements ShortenUrlPort {
     @Override
     public Optional<ShortenUrl> findByShortenUrlLink(final String shortenUrlLink) {
         log.info("[COMMONS_UTILS] Buscando ShortenUrl com shortenUrlLink: {}", shortenUrlLink);
-        var shortenUrlEntity = ShortenUrlEntity.find("shortenUrlLink", shortenUrlLink).firstResult();
+        var shortenUrlEntity = shortenUrlRepository.find("shortenUrlLink", shortenUrlLink)
+                .firstResult();
 
         return Optional.ofNullable(shortenUrlEntity)
-                .map(entity -> shortenUrlMapper.toDomain((ShortenUrlEntity) entity));
+                .map(entity -> shortenUrlMapper.toDomain(entity));
     }
 }
