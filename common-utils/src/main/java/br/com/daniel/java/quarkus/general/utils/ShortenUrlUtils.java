@@ -3,19 +3,51 @@ package br.com.daniel.java.quarkus.general.utils;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.StringUtils;
 
+import java.security.SecureRandom;
+
 public final class ShortenUrlUtils {
 
     public static final String HTTP_PREFIX = "http://";
     public static final String HTTPS_PREFIX = "https://";
-    private static String BASE_CHARACTERS = StringUtils.EMPTY;
-    public static final Integer BASE = 62;
+    private static final String CHAR_POOL = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+    private static final String BASE_CHARACTERS = new BaseCaracteresUtils().getBaseCharacters();
+    private static final SecureRandom SECURE_RANDOM = new SecureRandom();
+    private static final Integer BASE = 62;
 
     private ShortenUrlUtils() {
         throw new IllegalStateException("This is a utility class ShortenUrlUtils and cannot be instantiated");
     }
 
+    public static String generateShortenUrlLink(final int minLength, final int maxLength) {
+        return RandomStringUtils.secureStrong().nextAlphanumeric(minLength, maxLength);
+    }
+
+    public static String generateRandomKey(final int minLength, final int maxLength) {
+        int length = minLength + SECURE_RANDOM.nextInt(maxLength - minLength + 1);
+        var strBuilder = new StringBuilder(length);
+
+        for (int i = 0; i < length; i++) {
+            strBuilder.append(
+                    CHAR_POOL.charAt(SECURE_RANDOM.nextInt(CHAR_POOL.length()))
+            );
+        }
+
+        return strBuilder.toString();
+    }
+
+    public static String generateRandomKeyFrom(final int minLength, final int maxLength) {
+        int length = minLength + SECURE_RANDOM.nextInt((maxLength - minLength) + 1);
+        var strBuilder = new StringBuilder(length);
+
+        for (int i = 0; i < length; i++) {
+            int index = SECURE_RANDOM.nextInt(CHAR_POOL.length());
+            strBuilder.append(CHAR_POOL.charAt(index));
+        }
+
+        return strBuilder.toString();
+    }
+
     public static String toBase62(String input) {
-        initialize();
         int inputValue = Integer.parseInt(input);
 
         if (inputValue == 0)
@@ -43,16 +75,5 @@ public final class ShortenUrlUtils {
         }
 
         return String.valueOf(aux);
-    }
-
-    public static String generateShortenUrlLink(final int minLength, final int maxLength) {
-        return RandomStringUtils.secureStrong().nextAlphanumeric(minLength, maxLength);
-    }
-
-    private static void initialize() {
-        BASE_CHARACTERS = StringUtils.EMPTY;
-        for (char i = '0'; i <= '9'; i++) BASE_CHARACTERS += i;
-        for (char i = 'a'; i <= 'z'; i++) BASE_CHARACTERS += i;
-        for (char i = 'A'; i <= 'Z'; i++) BASE_CHARACTERS += i;
     }
 }

@@ -23,7 +23,7 @@ public class ShortenUrlUseCaseAdapter {
 
     public ShortenUrlOutputSaved createV2(ShortenUrlInput shortenUrLInput) {
         log.info("[COMMONS_UTILS][v2] - Criando um novo link encurtado com os dados fornecidos no corpo da requisição.");
-        return shortenUrlUseCase.createShortenUrlV2(shortenUrLInput.linkUrl());
+        return shortenUrlUseCase.createShortenUrlV3(shortenUrLInput.linkUrl());
     }
 
     public List<ShortenUrlOutput> getAll() {

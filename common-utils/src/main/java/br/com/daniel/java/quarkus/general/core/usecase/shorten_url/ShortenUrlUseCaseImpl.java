@@ -64,6 +64,24 @@ public class ShortenUrlUseCaseImpl implements ShortenUrlUseCase {
         }
     }
 
+    @Override
+    @Transactional
+    public ShortenUrlOutputSaved createShortenUrlV3(String originalUrl) {
+        try {
+            log.info("[COMMONS_UTILS][v3] Criando ShortenUrl com originalUrl: {}", originalUrl);
+
+            var shortenUrl = new ShortenUrl(originalUrl);
+            shortenUrl.setShortenUrlLink(
+                    ShortenUrlUtils.generateRandomKey(SHORTEN_URL_LENGTH_MIN, SHORTEN_URL_LENGTH_MAX)
+            );
+
+            return finalizeAndSaved(originalUrl, shortenUrl);
+        } catch (Exception e) {
+            log.error("[COMMONS_UTILS][v3] Erro ao criar um novo link encurtado com o url link de origem: {}", originalUrl, e);
+            throw new ShortenUrlCreateFailedException("Erro ao criar um novo link encurtado com o url link de origem: " + originalUrl, e);
+        }
+    }
+
     @Transactional
     public ShortenUrlOutputSaved finalizeAndSaved(String originalUrl, ShortenUrl shortenUrl) {
         var shortenUrlSaved = shortenUrlPort.create(shortenUrl);
