@@ -1,4 +1,4 @@
-package br.com.daniel.java.quarkus.general.adapter.out.entities;
+package br.com.daniel.java.quarkus.general.adapter.out.entities.itau;
 
 import br.com.daniel.java.quarkus.general.config.EncryptoManagerConfig;
 import br.com.daniel.java.quarkus.general.core.domain.TransactionItau;

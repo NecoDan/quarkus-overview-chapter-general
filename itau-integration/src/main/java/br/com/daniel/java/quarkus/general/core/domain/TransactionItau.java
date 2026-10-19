@@ -1,6 +1,6 @@
 package br.com.daniel.java.quarkus.general.core.domain;
 
-import br.com.daniel.java.quarkus.general.adapter.out.entities.TransactionItauEntity;
+import br.com.daniel.java.quarkus.general.adapter.out.entities.itau.TransactionItauEntity;
 import br.com.daniel.java.quarkus.general.config.EncryptoManagerConfig;
 import br.com.daniel.java.quarkus.general.core.usecase.input.TransactionItauInput;
 import br.com.daniel.java.quarkus.general.exceptions.ParseEntityFailedException;

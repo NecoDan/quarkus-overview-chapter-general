@@ -1,7 +1,7 @@
 package br.com.daniel.java.quarkus.general.adapter.out.database;
 
 import br.com.daniel.java.quarkus.general.adapter.out.database.repository.TransactionItauRepository;
-import br.com.daniel.java.quarkus.general.adapter.out.entities.TransactionItauEntity;
+import br.com.daniel.java.quarkus.general.adapter.out.entities.itau.TransactionItauEntity;
 import br.com.daniel.java.quarkus.general.core.domain.TransactionItau;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

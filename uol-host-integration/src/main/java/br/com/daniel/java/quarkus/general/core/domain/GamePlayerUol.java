@@ -1,6 +1,6 @@
 package br.com.daniel.java.quarkus.general.core.domain;
 
-import br.com.daniel.java.quarkus.general.adapter.out.entities.GamePlayerUolEntity;
+import br.com.daniel.java.quarkus.general.adapter.out.entities.uol.GamePlayerUolEntity;
 import br.com.daniel.java.quarkus.general.config.EncryptoManagerConfig;
 import br.com.daniel.java.quarkus.general.core.usecase.input.GamePlayerInput;
 import br.com.daniel.java.quarkus.general.exceptions.ParseEntityFailedException;

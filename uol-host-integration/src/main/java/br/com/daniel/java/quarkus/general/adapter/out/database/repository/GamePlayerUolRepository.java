@@ -1,6 +1,6 @@
 package br.com.daniel.java.quarkus.general.adapter.out.database.repository;
 
-import br.com.daniel.java.quarkus.general.adapter.out.entities.GamePlayerUolEntity;
+import br.com.daniel.java.quarkus.general.adapter.out.entities.uol.GamePlayerUolEntity;
 import br.com.daniel.java.quarkus.general.core.domain.TypeHeroGroup;
 import io.quarkus.hibernate.orm.panache.PanacheRepository;
 import jakarta.enterprise.context.ApplicationScoped;

@@ -1,6 +1,6 @@
 package br.com.daniel.java.quarkus.general.adapter.out.files;
 
-import br.com.daniel.java.quarkus.general.adapter.out.entities.GamePlayerUolEntity;
+import br.com.daniel.java.quarkus.general.adapter.out.entities.uol.GamePlayerUolEntity;
 import br.com.daniel.java.quarkus.general.adapter.out.files.repository.GamePlayerUolFileRepository;
 import br.com.daniel.java.quarkus.general.core.domain.GamePlayerUol;
 import br.com.daniel.java.quarkus.general.core.domain.TypeHeroGroup;

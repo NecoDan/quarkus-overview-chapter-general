@@ -1,6 +1,6 @@
 package br.com.daniel.java.quarkus.general.adapter.out.entity;
 
-import br.com.daniel.java.quarkus.general.adapter.out.entities.TypeHeroEntity;
+import br.com.daniel.java.quarkus.general.adapter.out.entities.uol.TypeHeroEntity;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validation;
 import jakarta.validation.Validator;

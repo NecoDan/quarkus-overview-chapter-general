@@ -1,4 +1,4 @@
-package br.com.daniel.java.quarkus.general.adapter.out.entities;
+package br.com.daniel.java.quarkus.general.adapter.out.entities.uol;
 
 import br.com.daniel.java.quarkus.general.utils.validations.IntervaloValido;
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
