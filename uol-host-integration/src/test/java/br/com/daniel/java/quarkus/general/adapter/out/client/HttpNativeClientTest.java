@@ -1,7 +1,7 @@
 package br.com.daniel.java.quarkus.general.adapter.out.client;
 
-import br.com.daniel.java.quarkus.general.adapter.HttpNativeClient;
-import br.com.daniel.java.quarkus.general.adapter.HttpNativeManagerClient;
+import br.com.daniel.java.quarkus.general.adapter.apis.HttpNativeClient;
+import br.com.daniel.java.quarkus.general.adapter.apis.HttpNativeManagerClient;
 import br.com.daniel.java.quarkus.general.exceptions.HttpRestClientException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;

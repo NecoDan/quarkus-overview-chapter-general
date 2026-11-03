@@ -1,6 +1,6 @@
 package br.com.daniel.java.quarkus.general.adapter.out.apis.strategy;
 
-import br.com.daniel.java.quarkus.general.adapter.HttpNativeClient;
+import br.com.daniel.java.quarkus.general.adapter.apis.HttpNativeClient;
 import br.com.daniel.java.quarkus.general.adapter.out.dto.AvengersMarvelOutputDTO;
 import br.com.daniel.java.quarkus.general.adapter.out.dto.JusticeLeagueDcDTO;
 import br.com.daniel.java.quarkus.general.adapter.out.apis.HeroGroupUolApiPort;
